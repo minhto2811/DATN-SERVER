@@ -1,9 +1,14 @@
 const users = require('./user.route')
 
 function route(app) {
+
+    
     app.get('/', (req, res) => {
-        res.send('Hey this is my API running 🥳')
+        res.render('login', {default: false})
     });
+
+
+
     app.use('/api/user', users)
 
 }

@@ -1,9 +1,22 @@
 const express = require('express')
+const expressHbs = require('express-handlebars')
 require('dotenv').config()
+const path = require('path')
 
 const app = express()
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
+
+app.engine('.hbs', expressHbs.engine({
+    extname: '.hbs',
+    defaultLayout: 'main',
+    layoutsDir: path.join(__dirname, '/src/public/views/layouts'),
+    partialsDir: path.join(__dirname, '/src/public/views/partials')
+}))
+
+app.set('view engine', '.hbs')
+app.set('views', path.join(__dirname, '/src/public/views'))
+app.enable('view cache')
 
 const PORT = process.env.PORT | 3000
 const db = require('./src/config/db')
@@ -15,6 +28,7 @@ router(app)
 db.connect()
 
 app.listen(PORT, () => {
+
     console.log(`>>> Gửi otp  POST {username: String,forgotPassword:boolean }  
         http://localhost:${PORT}/api/user/receive-otp`)
 
