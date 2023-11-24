@@ -204,12 +204,22 @@ class Controller {
   }
 
   async logout(req, res) {
+  
+    res.render('auth/logout', {layout: "layouts/main"})
+   
+    
+  }
+
+  async logoutP(req, res) {
+  
     req.logout(function(err) {
       if (err) { return next(err); }
       res.redirect('/');
     });
+   
   }
 
+ 
 }
 
 

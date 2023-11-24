@@ -8,7 +8,7 @@ const TypeProduct = new Schema({
     name: { type: String, require: true, unique: true },
     time: { type: Date, default: Date.now }
 }, {
-    collection: "TypeProduct"
+    collection: "TypeProduct" 
 })
 
 

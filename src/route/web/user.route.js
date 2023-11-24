@@ -19,6 +19,7 @@ router.post('/insert', controller.insert)
 router.delete('/delete/:id', controller.delete)
 
 router.get('/logout', controller.logout)
+router.get('/logoutP', controller.logoutP)
 
 
 

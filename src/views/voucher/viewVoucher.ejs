@@ -15,9 +15,9 @@
     <table class="table table-striped table-sm">
       <thead>
         <tr>
-          <th scope="col">Value</th>
           <th scope="col">Created at</th>
           <th scope="col">Expiration at</th>
+          <th scope="col">Value</th>
           <th scope="col" class="text-end">Action</th>
         </tr>
       </thead>
@@ -25,9 +25,9 @@
       <tbody>
         <% for (let voucher of data) {%>
           <tr class="align-middle">
-            <td><%= voucher.discount_value %></td>
             <td><%= voucher.release_date.toLocaleString('en') %></td>
             <td><%= voucher.expiration_date.toLocaleString('en') %></td>
+            <td><%= voucher.discount_value %></td>
             <td class="text-end">
   
               <div class="d-flex flex-row justify-content-end gap-2">
