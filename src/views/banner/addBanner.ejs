@@ -30,15 +30,34 @@
 
   <div class="row form-group mb-4">
     <div class="col">
-      <label style="margin: 5px;" for="lastName">Brand</label>
-      <select id="brand" name="brand" class="form-select">
-        <% for(var i=0; i <arrBrand.length; i++) { %>
-          <option value="<%= arrBrand[i].brand %>">
-            <%= arrBrand[i].brand %>
-          </option>
-          <%}%>
-      </select>
+      <label style="margin: 5px;" for="lastName">Title</label>
+      <input
+      type="text"
+      class="form-control"
+      id="title"
+      name="title"
+      value=""
+      placeholder="Title"
+      required
+    />
     </div>
+    <div class="col">
+      <label style="margin: 5px;" for="lastName">Keyword</label>
+      <input
+      type="text"
+      class="form-control"
+      id="keyword"
+      name="keyword"
+      value=""
+      placeholder="Keyword"
+      required
+    />
+    </div>
+  </div>
+
+  <div class="row form-group mb-4">
+   
+
     <div class="col">
         <label style="margin: 5px;" for="lastName">Image</label>
         <input

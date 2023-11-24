@@ -33,18 +33,20 @@ class Controller {
           body.image = url;
         }
 
-        await bannerModel
-          .create(body)
-          .then((rs) => {
-            res.redirect(`/banner/edit/${rs._id}`);
-          })
-          .catch((err) => res.json(err));
+        // await bannerModel
+        //   .create(body)
+        //   .then((rs) => {
+        //     res.redirect(`/banner`);
+        //   })
+        //   .catch((err) => res.json(err));
+          await bannerModel.create(body);
+          return res.redirect("/banner");
       } catch (error) {
         console.log(error);
       }
     }
-    const arrBrand = await Brand.find();
-    res.render("banner/addBanner", { layout: "layouts/main", arrBrand  });
+
+    res.render("banner/addBanner", { layout: "layouts/main"});
   }
 
   async putContent(req, res) {
@@ -75,12 +77,10 @@ class Controller {
   async edit(req, res) {
     const id = req.params.id;
     const data = await bannerModel.findById({ _id: req.params.id });
-    const arrBrand = await Brand.find();
 
     res.render("banner/editBanner", {
       layout: "layouts/main",
-      data,
-      arrBrand
+      data
     });
   }
 
@@ -112,9 +112,9 @@ class Controller {
         if (!banner) {
           throw "Banner not found!";
         }
-        for (let i = 0; i < banner.content.length; i++) {
-            deleteImage(banner.content[i].image)
-          }
+        // for (let i = 0; i < banner.content.length; i++) {
+        //     deleteImage(banner.content[i].image)
+        //   }
         deleteImage(banner.image);
         res.redirect("/banner");
       })
