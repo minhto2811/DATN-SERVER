@@ -3,6 +3,22 @@
     class="d-flex justify-content-between flex-wrap flex-md nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"
   >
     <h1 class="h2">DashBoard</h1>
+
+    <form action="/bill/dashboard" method="POST">
+      <div class="row form-group mb-4" >
+        <div class="col">
+        <label for="tel">Start at</label>
+          <input class="form-control" type="date" name="start_at" required />
+        </div>
+        <div class="col">
+        <label for="tel">Expries at</label>
+          <input class="form-control" type="date" name="expries_at" required />
+        </div>
+        <div class="col">
+          <button style="margin-top: 20px;" type="submit" class="btn btn-primary">Search</button>
+        </div>
+      </div>
+    </form>
     
   </div>
 
