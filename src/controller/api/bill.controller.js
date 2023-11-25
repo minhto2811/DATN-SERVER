@@ -211,7 +211,7 @@ class ApiController {
             }
             if (bill.status != 0)
                 throw "Đơn hàng không thể hùy"
-            bill.status = 4
+            bill.status = -1
             bill.cancel_order = cancel_order
             await bill.save()
             res.json({ code: 200, message: "Hủy đơn thành công" })
