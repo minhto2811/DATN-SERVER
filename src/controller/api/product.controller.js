@@ -162,7 +162,8 @@ class ApiController {
             const productId = req.params.id
             const product = await Product.findById(productId)
             if (!product) throw "Không tìm thấy sản phẩm"
-            const listProduct = await Product.find({ product_type_id: product.product_type_id, brand_id: product.brand_id })
+            const listProduct = await Product.find({ _id: { $ne: productId }, product_type_id: product.product_type_id, brand_id: product.brand_id })
+            console.log(listProduct)
             res.json(listProduct)
         } catch (error) {
             console.log(error)
