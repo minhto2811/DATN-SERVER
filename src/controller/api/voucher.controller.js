@@ -56,6 +56,7 @@ class ApiController {
         const userId = req.body.userId
         const voucherCode = req.body.voucherCode
         const voucherId = req.body.voucherId
+        console.log(userId,voucherCode,voucherId)
         try {
             const voucherUser = await Voucher.findOne({ userId: userId, code: voucherCode })
             if (voucherUser) {
@@ -77,6 +78,10 @@ class ApiController {
             console.log(error)
             res.json(error)
         }
+    }
+
+    create(req,res){
+        Voucher.create(req.body).then((ok)=>res.json(ok)).catch((ok)=>res.json(ok))
     }
 }
 
