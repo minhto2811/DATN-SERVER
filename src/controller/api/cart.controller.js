@@ -50,6 +50,7 @@ class ApiController {
 
     async add(req, res) {
         const data = req.body
+        console.log(data)
         try {
             const variations = await Variations.findOne({ _id: data.variations_id, delete: false })
             if (!variations) {
