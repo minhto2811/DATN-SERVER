@@ -14,7 +14,7 @@ class Controller {
   async detail(req, res) {
     try {
       const data = await Voucher.findById({ _id: req.params.id });
-      res.render("brand/detailBrand", { layout: "layouts/main", data: data });
+      res.render("voucher/detailVoucher", { layout: "layouts/main", data: data });
     } catch (error) {
       res.json(error);
     }
@@ -25,62 +25,55 @@ class Controller {
       try {
         const body = req.body;
 
-        if (req.file != null && req.file != undefined) {
-          const filename = req.file.filename;
-          const filepath = req.file.path;
-          const url = await uploadImage(filepath, filename);
-          body.image = url;
-        }
-  
         await Voucher.create(body);
-        return res.redirect("/brand");
+        return res.redirect("/voucher");
       } catch (error) {
         console.log(error);
       }
      
     }
-    res.render("brand/addBrand", { layout: "layouts/main" });
+    res.render("voucher/addVoucher", { layout: "layouts/main" });
   }
 
   async edit(req, res) {
     const data = await Voucher.findById({ _id: req.params.id });
 
-    res.render("brand/editBrand", {
+    res.render("voucher/editVoucher", {
       layout: "layouts/main",
       data,
     });
   }
 
   async editPost(req, res) {
-    let { brand, description, image, _id, img } = req.body;
+    let { code, type, discount_type, discount_value, description, expiration_date, expiration_date2, _id} = req.body;
 
-    if (req.file != null && req.file != undefined) {
-      await deleteImage(img);
-      const filename = req.file.filename;
-      const filepath = req.file.path;
-      const url = await uploadImage(filepath, filename);
-      image = url;
+    if(expiration_date2 != ''){
+      expiration_date = expiration_date2;
     }
   
+    
     await Voucher.findByIdAndUpdate(_id,{
-      brand: brand,
+      code: code,
+      type: type,
+      discount_type: discount_type,
+      discount_value: discount_value,
+      expiration_date: expiration_date,
       description : description,
-      image: image
     });
   
-    res.redirect('/brand');
+    res.redirect('/voucher');
   }
 
   async delete(req, res) {
      const id = req.params.id;
 
     await Voucher.findByIdAndDelete(id)
-      .then((brand) => {
-        if (!brand) {
-          throw "Brand not found!";
+      .then((voucher) => {
+        if (!voucher) {
+          throw "Voucher not found!";
         }
-        deleteImage(brand.image);
-        res.redirect("/brand");
+
+        res.redirect('/voucher');
       })
       .catch((err) => {
         console.log(err);

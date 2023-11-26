@@ -1,4 +1,3 @@
-
 const Voucher = require('../../model/voucher')
 
 

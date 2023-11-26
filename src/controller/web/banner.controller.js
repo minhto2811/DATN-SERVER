@@ -49,30 +49,30 @@ class Controller {
     res.render("banner/addBanner", { layout: "layouts/main"});
   }
 
-  async putContent(req, res) {
-    const data = req.body;
-    const id_banner = req.params.id;
-    if (req.file != null && req.file != undefined) {
-      const filename = req.file.filename;
-      const filepath = req.file.path;
-      const url = await uploadImage(filepath, filename);
-      data.image = url;
-    }
-    if (Object.keys(data).length > 0) {
-      try {
-        const banner = await bannerModel.findById(id_banner);
-        if (!banner) {
-          throw "banner not found";
-        }
-        banner.content.push(data);
-        await banner.save();
-      } catch (error) {
-        console.log(error);
-        res.json(error);
-      }
-    }
-    res.redirect(`/banner/edit/${id_banner}`);
-  }
+  // async putContent(req, res) {
+  //   const data = req.body;
+  //   const id_banner = req.params.id;
+  //   if (req.file != null && req.file != undefined) {
+  //     const filename = req.file.filename;
+  //     const filepath = req.file.path;
+  //     const url = await uploadImage(filepath, filename);
+  //     data.image = url;
+  //   }
+  //   if (Object.keys(data).length > 0) {
+  //     try {
+  //       const banner = await bannerModel.findById(id_banner);
+  //       if (!banner) {
+  //         throw "banner not found";
+  //       }
+  //       banner.content.push(data);
+  //       await banner.save();
+  //     } catch (error) {
+  //       console.log(error);
+  //       res.json(error);
+  //     }
+  //   }
+  //   res.redirect(`/banner/edit/${id_banner}`);
+  // }
 
   async edit(req, res) {
     const id = req.params.id;
@@ -85,7 +85,7 @@ class Controller {
   }
 
   async editPost(req, res) {
-    let { brand, image, _id, img } = req.body;
+    let { title, keyword, image, _id, img } = req.body;
 
     if (req.file != null && req.file != undefined) {
       await deleteImage(img);
@@ -96,7 +96,8 @@ class Controller {
     }
 
     await bannerModel.findByIdAndUpdate(_id, {
-      brand: brand,
+      title: title,
+      keyword: keyword,
       image: image,
     });
 
