@@ -78,9 +78,9 @@ class ApiController {
                     }
                 })(),
                 (async () => {
-                    const username = req.body.username
-                    if (username) {
-                        const favorite = await Favorite.findOne({ username: username, product_id: product_id })
+                    const userId = req.body.userId
+                    if (userId) {
+                        const favorite = await Favorite.findOne({ userId: userId, product_id: product_id })
                         product.like = !!favorite
                     }
                 })(),
