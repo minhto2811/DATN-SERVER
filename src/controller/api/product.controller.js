@@ -5,6 +5,7 @@ const Variations = require('../../model/variations')
 const Description = require('../../model/description')
 const TypeProduct = require('../../model/typeProduct')
 const Favorite = require('../../model/favorite')
+const { json } = require('express')
 class ApiController {
     async getAll(req, res) {
         try {
@@ -141,6 +142,20 @@ class ApiController {
         }
     }
 
+    async getVariation(req, res) {
+        try {
+            const variationId = req.params.id
+            const variation = await Variations.findOne({ _id: variationId, delete: false })
+            if (!variation) throw "Sản phầm ngừng kinh doanh"
+            const product = await Product.findOne({ _id: variation.productId, delete: false })
+            if (!product) throw "Sản phầm ngừng kinh doanh"
+            variation.productName = product.product_name
+            res.json(variation)
+        } catch (error) {
+            console.log(error)
+            res.json(json)
+        }
+    }
 
 }
 
