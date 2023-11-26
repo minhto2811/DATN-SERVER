@@ -137,6 +137,9 @@ class ApiController {
             if (!user.avatar) {
                 user.avatar = "https://firebasestorage.googleapis.com/v0/b/shopping-6b085.appspot.com/o/user%2Fuser.png?alt=media&token=794ad4dc-302b-4708-b102-ccbaf80ea567&_gl=1*e1jpw6*_ga*NDE5OTAxOTY1LjE2OTUwMDQ5MjM.*_ga_CW55HF8NVT*MTY5NzExMzA0MS4yMS4xLjE2OTcxMTMzMjcuNTkuMC4w"
             }
+            if (!user.background) {
+                user.background = "https://s3.cloud.cmctelecom.vn/tinhte2/2019/07/4731556_Cover.jpg"
+            }
             const token = await jwt.sign({ userId: user._id, password: password }, SECRECT)
             res.json({ code: 200, message: "Đăng nhập thành công", user, token: token })
         } catch (error) {
@@ -148,9 +151,9 @@ class ApiController {
     async loginWithToken(req, res) {
         try {
             const token = req.headers['authorization']
-            if(!token) throw "Token null"
+            if (!token) throw "Token null"
             const account = await jwt.verify(token, SECRECT)
-            if(!account) throw "Token Không hợp lệ"
+            if (!account) throw "Token Không hợp lệ"
             const user = await User.findOne({ _id: account.userId, role: false, enable: true }).lean()
             if (!user) return res.json({ code: 404, message: "Token không hợp lệ" })
             const matches = await bcrypt.compare(account.password, user.password)
@@ -200,7 +203,7 @@ class ApiController {
             if (!isNumberPhone) {
                 throw "Số điện thoại không hợp lệ!"
             }
-            const user = await User.findOne({ username: data.username })
+            const user = await User.findById(data.userId)
             const address = await Address.create(data)
             // if (!user.default_address) {
             //     user.default_address = address
@@ -216,9 +219,9 @@ class ApiController {
 
 
     async getAddress(req, res) {
-        const username = req.body.username
+        const userId = req.body.userId
         try {
-            const address = await Address.find({ username: username })
+            const address = await Address.find({ userId: userId })
             console.log(address)
             if (!address) {
                 throw "Đã xảy ra lỗi!"
@@ -238,7 +241,7 @@ class ApiController {
                 throw "Không tìm thấy địa chỉ!"
             }
             await address.updateOne({ $set: data })
-            const user = await User.findOne({ username: data.username })
+            const user = await User.findById(data.userId)
 
             if (data._id == user.default_address._id) {
                 user.default_address = data
@@ -260,9 +263,9 @@ class ApiController {
                 throw "Không tìm thấy địa chỉ!"
             }
             await address.deleteOne()
-            const user = await User.findOne({ username: data.username })
+            const user = await User.findById(data.userId)
             if (user.default_address._id == data._id) {
-                const newAdress = await Address.findOne({ username: data.username })
+                const newAdress = await Address.findOne({ userId: data.userId })
                 if (newAdress) {
                     user.default_address = newAdress
                     await user.save()
@@ -276,13 +279,32 @@ class ApiController {
     }
 
     async updateAvatar(req, res) {
-        const username = req.body.username
+        const userId = req.body.userId
         if (req.file != null && req.file != undefined) {
             const filename = req.file.filename
             const filepath = req.file.path
             try {
                 const url = await uploadImage(filepath, filename)
-                const rs = await User.findOneAndUpdate({ username: username }, { $set: { avatar: url } })
+                const rs = await User.findOneAndUpdate({ userId: userId }, { $set: { avatar: url } })
+                console.log(rs)
+                res.json({ code: 200, message: url })
+            } catch (error) {
+                console.log(error)
+                res.json({ code: 500, message: "Cập nhật thất bại" })
+            }
+        } else {
+            res.json({ code: 500, message: "Cập nhật thất bại" })
+        }
+    }
+
+    async updateBackground(req, res) {
+        const userId = req.body.userId
+        if (req.file != null && req.file != undefined) {
+            const filename = req.file.filename
+            const filepath = req.file.path
+            try {
+                const url = await uploadImage(filepath, filename)
+                const rs = await User.findOneAndUpdate({ userId: userId }, { $set: { background: url } })
                 console.log(rs)
                 res.json({ code: 200, message: url })
             } catch (error) {
@@ -295,9 +317,9 @@ class ApiController {
     }
 
     updateFullname(req, res) {
-        const username = req.body.username
+        const userId = req.body.userId
         const fullname = req.body.fullname
-        User.findOneAndUpdate({ username: username }, { $set: { fullname: fullname } })
+        User.findOneAndUpdate({ userId: userId }, { $set: { fullname: fullname } })
             .then((rs) => {
                 console.log(rs)
                 res.json({ code: 200, message: fullname })
@@ -309,9 +331,9 @@ class ApiController {
     }
 
     async updatePassword(req, res) {
-        const { username, oldPass, newPass } = req.body
+        const { userId, oldPass, newPass } = req.body
         try {
-            const user = await User.findOne({ username: username })
+            const user = await User.findById(userId)
             if (!user) {
                 throw "Không tìm thấy user"
             }
