@@ -4,9 +4,9 @@ const Schema = mongoose.Schema
 
 
 const Cache = new Schema({
-    userId: { type: String, require: true },
-    productId: { type: String, require: true },
-    varitationId: { type: String, require: true },
+    userId: { type: Schema.ObjectId, require: true },
+    productId: { type: Schema.ObjectId, require: true },
+    varitationId: { type: Schema.ObjectId, require: true },
     time: { type: Date, default: Date.now, index: { expires: '14d' } }
 }, {
     collection: "Cache"

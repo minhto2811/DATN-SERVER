@@ -4,7 +4,7 @@ const Schema = mongoose.Schema
 
 
 const Notification = new Schema({
-    userId: { type: String, require: true },
+    userId: { type: Schema.ObjectId, require: true },
     title: { type: String, require: true },
     descrition: { type: String, require: true },
     image: { type: String, require: true },

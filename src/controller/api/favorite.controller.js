@@ -9,13 +9,13 @@ const TypeProduct = require('../../model/typeProduct')
 class ApiController {
     async add(req, res) {
         const userId = req.body.userId
-        const productId = req.body.productId
+        const product_id = req.body.product_id
         try {
-            const favoriteFind = await Favorite.findOne({ userId: userId, productId: productId })
+            const favoriteFind = await Favorite.findOne({ userId: userId, product_id: product_id })
             if (favoriteFind) {
-                return res.json({ code: 200, message: "Thêm sản phẩm yêu thích thành công" })
+                throw "Sản phẩm đã tồn tại trong danh sách yêu thích"
             }
-            const favorite = await Favorite.create({ userId: userId, productId: productId })
+            const favorite = await Favorite.create({ userId: userId, product_id: product_id })
             if (!favorite) {
                 throw "Thêm danh sách yêu thích thất bại"
             }
@@ -33,7 +33,7 @@ class ApiController {
             if (!favorite) throw "Không tìm thấy bản ghi danh sách yêu thích"
             var list_favorite = []
             await Promise.all(favorite.map(async (item) => {
-                let product = await Product.find({ _id: item.productId, delete: false }).lean()
+                let product = await Product.find({ _id: item.product_id, delete: false }).lean()
                 if (!product) return
                 await Promise.all([
                     (async () => {
@@ -64,9 +64,9 @@ class ApiController {
 
     async delete(req, res) {
         const userId = req.body.userId
-        const productId = req.body.productId
+        const product_id = req.body.product_id
         try {
-            const favorite = await Favorite.findOneAndDelete({ userId: userId, productId: productId })
+            const favorite = await Favorite.findOneAndDelete({ userId: userId, product_id: product_id })
             if (!favorite) {
                 throw "Không tìm thấy danh sách yêu thích"
             }
@@ -79,9 +79,9 @@ class ApiController {
 
     async check(req, res) {
         const userId = req.body.userId
-        const productId = req.body.productId
+        const product_id = req.body.product_id
         try {
-            const favorite = await Favorite.findOne({ userId: userId, productId: productId })
+            const favorite = await Favorite.findOne({ userId: userId, product_id: product_id })
             res.json(!(!favorite))
         } catch (error) {
             console.log(error)

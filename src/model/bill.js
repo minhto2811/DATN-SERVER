@@ -4,7 +4,7 @@ const Schema = mongoose.Schema
 
 
 const Bill = new Schema({
-    userId: { type: String, require: true },
+    userId: { type: Schema.ObjectId, require: true },
     address: { type: Object, require: true },
     products: [{
         variations_id: { type: String, required: true },

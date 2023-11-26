@@ -147,7 +147,7 @@ class ApiController {
 
     async loginWithToken(req, res) {
         try {
-            const token = req.headers['authorization']
+            const token = req.body.token
             const account = await jwt.verify(token, SECRECT)
             if(!account) throw "Token Không hợp lệ"
             const user = await User.findOne({ _id: account.userId, role: false, enable: true }).lean()
@@ -162,6 +162,7 @@ class ApiController {
             delete user.enable
             delete user.role
             delete user.__v
+            console.log(user)
             res.json({ code: 200, message: "Đăng nhập thành công", user })
         } catch (error) {
             console.log(error)
