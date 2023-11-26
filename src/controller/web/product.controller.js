@@ -6,6 +6,7 @@ const Banner = require("../../model/news")
 const Brand = require("../../model/brand")
 const { uploadImage, deleteImage } = require('../../utils/uploadImage')
 const TypeProduct = require("../../model/typeProduct")
+const { Schema } = require("mongoose")
 
 
 class Controller {
@@ -170,7 +171,7 @@ class Controller {
   }
 
   async pageVariations(req, res) {
-    const productId = req.params.id
+    const productId = Schema.ObjectId.cast(req.params.id)
     try {
       const data = await Variations.find({ productId: productId, delete: false }).sort({ _id: -1 })
       data.forEach(item => delete item.delete)

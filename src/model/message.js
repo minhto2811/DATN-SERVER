@@ -4,7 +4,7 @@ const Schema = mongoose.Schema
 
 
 const Message = new Schema({
-    roomId: { type: Schema.ObjectId, require: true },
+    roomId: { type: String, require: true },
     userId: { type: String, require: true },
     text: { type: String },
     image: [{ type: String }],

@@ -4,7 +4,7 @@ const Schema = mongoose.Schema
 
 
 const Voucher = new Schema({
-    userId: { type: Schema.ObjectId, require: true },
+    userId: { type: String, require: true },
     code: { type: String, require: true},
     description: { type: String, require: true },
     release_date: { type: Date, default: Date.now },
