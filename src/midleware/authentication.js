@@ -8,7 +8,7 @@ const SECRECT = process.env.SECRECT
 async function checkUser(req, res, next) {
 
     try {
-        const token = req.body.token
+        const token = req.headers['authorization']
         const account = await jwt.verify(token, SECRECT)
         if (!account) throw "token không tồn tại"
         console.log(account)
