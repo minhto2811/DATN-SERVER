@@ -49,7 +49,6 @@ function route(app) {
     app.use('/api/comment', commentApi)
     app.use('/api/message', messageApi)
 
-
     //web
 
 

@@ -2,6 +2,7 @@ require('dotenv').config()
 const Comment = require('../../model/comment')
 const Cache = require('../../model/Cache')
 const User = require('../../model/user')
+const Product = require('../../model/product')
 const Varitation = require('../../model/variations')
 const { uploadImage } = require('../../utils/uploadImage')
 class ApiController {
@@ -9,12 +10,12 @@ class ApiController {
         try {
             const productId = req.params.productId
             const comments = await Comment.find({ productId: productId }).lean()
-            if (!comments)
-                throw "Không tìm thấy loại sản phẩm"
+            if (!comments) throw "Không tìm thấy loại sản phẩm"
             await Promise.all(comments.map(async (item) => {
+                item.product = {}
                 await Promise.all([
                     (async () => {
-                        const user = await User.findOne({ userId: item.userId })
+                        const user = await User.findById(item.userId)
                         if (user) {
                             item.author = {}
                             item.author.fullname = user.fullname
@@ -23,18 +24,22 @@ class ApiController {
                     })(),
                     (async () => {
                         const variations = await Varitation.findById(item.varitationId)
-                        console.log(variations)
                         if (variations) {
-                            item.product = {}
                             item.product.image = variations.image
-                            let propety = `Màu sắc: ${variations.color}`
+                            let property = `Màu sắc: ${variations.color}`
                             if (variations.ram) {
-                                propety += `, bộ nhớ ngoài: ${variations.ram}`
+                                property += `, bộ nhớ ngoài: ${variations.ram}`
                             }
                             if (variations.rom) {
-                                propety += `, bộ nhớ trong: ${variations.rom}`
+                                property += `, bộ nhớ trong: ${variations.rom}`
                             }
-                            item.product.propety = propety
+                            item.product.property = property
+                        }
+                    })(),
+                    (async () => {
+                        const product = await Product.findById(item.productId)
+                        if (product) {
+                            item.product.name = product.product_name
                         }
                     })(),
                 ])
@@ -75,11 +80,24 @@ class ApiController {
     async check(req, res) {
         try {
             const data = req.body
-            const cache = await Cache.find({ userId: data.userId, productId: data.productId })
+            const cache = await Cache.find(data)
             if (!cache || cache.length == 0) return res.json([])
-            const listVariationId = []
-            cache.forEach((item) => listVariationId.push(item.varitationId))
-            res.json(listVariationId)
+            const listVariation = []
+            await Promise.all(cache.map(async (item) => {
+                const variation = await Varitation.findById(item.varitationId)
+                if (variation) {
+                    let property = `Màu sắc: ${variation.color}`
+                    if (variation.ram) {
+                        property += `, bộ nhớ ngoài: ${variation.ram}`
+                    }
+                    if (variation.rom) {
+                        property += `, bộ nhớ trong: ${variation.rom}`
+                    }
+                    const data = { variationId: variation._id, image: variation.image, property: property }
+                    return listVariation.push(data)
+                }
+            }))
+            res.json(listVariation)
         } catch (error) {
             console.log(error)
             res.json(error)

@@ -69,20 +69,20 @@ class Controller {
       await Promise.all(
         bill.products.map(async (item) => {
           const cacheCheck = await Cache.findOne({
-            username: bill.username,
+            userId: bill.userId,
             varitationId: item.variations_id,
           });
           if (cacheCheck) {
             await cacheCheck.deleteOne();
             await Cache.create({
-              username: cacheCheck.username,
+              userId: cacheCheck.userId,
               productId: cacheCheck.productId,
               varitationId: cacheCheck.varitationId,
             });
           } else {
             const variations = await Variations.findById(item.variations_id);
             await Cache.create({
-              username: bill.username,
+              userId: bill.userId,
               productId: variations.productId,
               varitationId: item.variations_id,
             });

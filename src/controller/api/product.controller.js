@@ -42,8 +42,8 @@ class ApiController {
     }
     async getItem(req, res) {
         try {
-            const product_id = req.params.id
-            const product = await Product.findOne({ _id: product_id, delete: false }).lean()
+            const productId = req.params.id
+            const product = await Product.findOne({ _id: productId, delete: false }).lean()
             if (!product) {
                 throw "Không tìm thấy sản phẩm"
             }
@@ -51,7 +51,7 @@ class ApiController {
             product.total_quantity = 0
             await Promise.all([
                 (async () => {
-                    const variations = await Variations.find({ productId: product_id, delete: false, quantity: { $gt: 0 } }).lean()
+                    const variations = await Variations.find({ productId: productId, delete: false, quantity: { $gt: 0 } }).lean()
                     if (variations) {
                         variations.forEach((item) => {
                             delete item.productId
@@ -81,12 +81,12 @@ class ApiController {
                 (async () => {
                     const userId = req.body.userId
                     if (userId) {
-                        const favorite = await Favorite.findOne({ userId: userId, product_id: product_id })
-                        product.like = !!favorite
+                        const favorite = await Favorite.findOne({ userId: userId, productId: productId})
+                        product.like = favorite != null
                     }
                 })(),
                 (async () => {
-                    const description = await Description.find({ id_follow: product_id }).lean()
+                    const description = await Description.find({ id_follow: productId }).lean()
                     if (description) {
                         description.forEach((item) => {
                             delete item._id
