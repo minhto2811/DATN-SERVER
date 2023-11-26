@@ -147,7 +147,8 @@ class ApiController {
 
     async loginWithToken(req, res) {
         try {
-            const token = req.body.token
+            const token = req.headers['authorization']
+            if(!token) throw "Token null"
             const account = await jwt.verify(token, SECRECT)
             if(!account) throw "Token Không hợp lệ"
             const user = await User.findOne({ _id: account.userId, role: false, enable: true }).lean()
@@ -201,10 +202,10 @@ class ApiController {
             }
             const user = await User.findOne({ username: data.username })
             const address = await Address.create(data)
-            if (!user.default_address) {
-                user.default_address = address
-                await user.save()
-            }
+            // if (!user.default_address) {
+            //     user.default_address = address
+            //     await user.save()
+            // }
             res.json({ code: 200, message: "Thêm địa chỉ thành công", address: address })
         } catch (error) {
             console.log(error)
