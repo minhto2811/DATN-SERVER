@@ -33,26 +33,26 @@ class Controller {
         }
   
         await Noti.create(body);
-        return res.redirect("/brand");
+        return res.redirect("/notification");
       } catch (error) {
         console.log(error);
       }
      
     }
-    res.render("brand/addBrand", { layout: "layouts/main" });
+    res.render("notification/addNoti", { layout: "layouts/main" });
   }
 
   async edit(req, res) {
     const data = await Noti.findById({ _id: req.params.id });
 
-    res.render("brand/editBrand", {
+    res.render("notification/editNoti", {
       layout: "layouts/main",
       data,
     });
   }
 
   async editPost(req, res) {
-    let { brand, description, image, _id, img } = req.body;
+    let { title, description, image, _id, img } = req.body;
 
     if (req.file != null && req.file != undefined) {
       await deleteImage(img);
@@ -63,24 +63,24 @@ class Controller {
     }
   
     await Noti.findByIdAndUpdate(_id,{
-      brand: brand,
+      title: title,
       description : description,
       image: image
     });
   
-    res.redirect('/brand');
+    res.redirect('/notification');
   }
 
   async delete(req, res) {
      const id = req.params.id;
 
     await Noti.findByIdAndDelete(id)
-      .then((brand) => {
-        if (!brand) {
-          throw "Brand not found!";
+      .then((notification) => {
+        if (!notification) {
+          throw "Notification not found!";
         }
-        deleteImage(brand.image);
-        res.redirect("/brand");
+        deleteImage(notification.image);
+        res.redirect("/notification");
       })
       .catch((err) => {
         console.log(err);

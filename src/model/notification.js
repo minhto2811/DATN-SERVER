@@ -6,9 +6,9 @@ const Schema = mongoose.Schema
 const Notification = new Schema({
     userId: { type: Schema.ObjectId, require: true },
     title: { type: String, require: true },
-    descrition: { type: String, require: true },
+    description: { type: String, require: true },
     image: { type: String, require: true },
-    seen:{type:Boolean,default:false},
+    seen:{type:Boolean, default:false},
     action:{
         type:{type:Number,default:0},
         //mặc định id  =  undefine

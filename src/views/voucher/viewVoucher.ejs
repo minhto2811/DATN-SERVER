@@ -90,7 +90,7 @@
 
         var btn_del = document.getElementById('btn-delete-product')
         btn_del.onclick = function () {
-            deleteForm.action = 'voucher/delete/' + id + "?_method=DELETE"
+            deleteForm.action = '/voucher/delete/' + id + "?_method=DELETE"
             deleteForm.submit()
         }
     });

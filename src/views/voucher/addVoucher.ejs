@@ -1,0 +1,141 @@
+<div
+  class="d-flex justify-content-between flex-wrap flex-md nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"
+>
+  <h1 class="h2">Voucher</h1>
+  <div class="btn-toolbar mb-2 mb-md 0">
+    <div class="btn-group me-2">
+      <button class="btn btn-sm btn-outline-secondary">?</button>
+    </div>
+  </div>
+</div>
+
+<div class="col py-3">
+  <div class="row">
+    <div class="col">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/voucher">Voucher</a></li>
+          <li class="breadcrumb-item active">New Voucher</li>
+        </ol>
+      </nav>
+    </div>
+    <div class="col text-end fw-lighter">
+      <b>Voucher</b>
+    </div>
+  </div>
+</div>
+
+<form action="/voucher/insert" method="POST"  >
+  
+
+  <div class="row form-group mb-4">
+    <div class="col">
+      <label style="margin: 5px;" for="lastName">Code</label>
+      <input
+      type="text"
+      class="form-control"
+      id="code"
+      name="code"
+      value=""
+      placeholder="Code"
+      required
+    />
+    </div>
+  </div>
+
+  <div class="row form-group mb-4">
+    <div class="col">
+         
+        <legend class="col-form-label col-sm-2 pt-0">Radios</legend>
+        <div class="col-sm-10">
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="type"  value="0" checked>
+            <label class="form-check-label" for="gridRadios1">
+              Reduce shipping costs
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="type"  value="1">
+            <label class="form-check-label" for="gridRadios2">
+              Product discounts
+            </label>
+          </div>
+        </div>
+
+    </div>
+
+  </div>
+
+  <div class="row form-group mb-4">
+    <div class="col">
+         
+            <legend class="col-form-label col-sm-2 pt-0">Radios</legend>
+            <div class="col-sm-10">
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="discount_type"  value="0" checked>
+                <label class="form-check-label" for="gridRadios1">
+                  Cash reduction
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="discount_type"  value="1">
+                <label class="form-check-label" for="gridRadios2">
+                  Percent reduction
+                </label>
+              </div>
+            </div>
+
+    </div>
+
+  </div>
+
+  <div class="row form-group mb-4">
+    <div class="col">
+      <label style="margin: 5px;" for="lastName">Discount value</label>
+      <input
+      type="text"
+      class="form-control"
+      id="discount_value"
+      name="discount_value"
+      value=""
+      placeholder="Discount value"
+      required
+    />
+    </div>
+    <div class="col">
+        <label style="margin: 5px;" for="lastName">Expiration date</label>
+        <input
+        type="date"
+        class="form-control"
+        id="expiration_date"
+        name="expiration_date"
+        value=""
+        placeholder="Expiration date"
+        required
+      />
+      </div>
+  </div>
+
+  <div class="row form-group mb-4">
+  
+    <div class="col">
+        <label style="margin: 5px;" for="lastName">Description</label>
+        <input
+        type="text"
+        class="form-control"
+        id="description"
+        name="description"
+        value=""
+        placeholder="Description"
+        required
+      />
+      </div>
+  </div>
+
+  
+ 
+
+  <div class="form-group mb-4">
+    <button type="submit" class="btn btn-primary">Add Voucher</button>
+  </div>
+</form>

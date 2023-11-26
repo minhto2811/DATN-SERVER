@@ -1,0 +1,147 @@
+<div
+  class="d-flex justify-content-between flex-wrap flex-md nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"
+>
+  <h1 class="h2">Voucher</h1>
+  <div class="btn-toolbar mb-2 mb-md 0">
+    <div class="btn-group me-2">
+      <button class="btn btn-sm btn-outline-secondary">?</button>
+    </div>
+  </div>
+</div>
+
+<div class="col py-3">
+  <div class="row">
+    <div class="col">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/voucher">Voucher</a></li>
+          <li class="breadcrumb-item active">Edit Voucher</li>
+        </ol>
+      </nav>
+    </div>
+    <div class="col text-end fw-lighter">
+      <b>Voucher</b>
+    </div>
+  </div>
+</div>
+
+<form action="/voucher/edit" method="POST"  >
+  
+
+  <div class="row form-group mb-4">
+    <div class="col">
+      <label style="margin: 5px;" for="lastName">Code</label>
+      <input
+      type="text"
+      class="form-control"
+      id="code"
+      name="code"
+      value="<%= data.code %>"
+      placeholder="Code"
+      required
+    />
+    </div>
+  </div>
+
+  <div class="row form-group mb-4">
+    <div class="col">
+         
+        <legend class="col-form-label col-sm-2 pt-0">Radios</legend>
+        <div class="col-sm-10">
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="type"  value="0" <%=data.type==1 ? 'selected' :'checked' %> >
+            <label class="form-check-label" for="gridRadios1">
+              Reduce shipping costs
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="type"  value="1" <%=data.type==0 ? 'selected' :'checked' %>>
+            <label class="form-check-label" for="gridRadios2">
+              Product discounts
+            </label>
+          </div>
+        </div>
+
+    </div>
+
+  </div>
+
+  <div class="row form-group mb-4">
+    <div class="col">
+         
+            <legend class="col-form-label col-sm-2 pt-0">Radios</legend>
+            <div class="col-sm-10">
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="discount_type"  value="0" <%=data.discount_type==1 ? 'selected' :'checked' %> >
+                <label class="form-check-label" for="gridRadios1">
+                  Cash reduction
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="discount_type"  value="1" <%=data.discount_type==0 ? 'selected' :'checked' %>>
+                <label class="form-check-label" for="gridRadios2">
+                  Percent reduction
+                </label>
+              </div>
+            </div>
+
+    </div>
+
+  </div>
+
+  <div class="row form-group mb-4">
+    <div class="col">
+      <label style="margin: 5px;" for="lastName">Discount value</label>
+      <input
+      type="text"
+      class="form-control"
+      id="discount_value"
+      name="discount_value"
+      value="<%= data.discount_value %>"
+      placeholder="Discount value"
+      required
+    />
+    </div>
+    
+  </div>
+  <div class="row form-group mb-4">
+
+  <div class="col">
+    <label style="margin: 5px;" for="lastName">Expiration date</label>
+    <input
+    type="date"
+    class="form-control"
+    id="expiration_date2"
+    name="expiration_date2"
+    value=""
+    placeholder="Expiration date"
+
+  />
+  </div>
+  <div style="margin-left: 10px;"><%= data.expiration_date.toLocaleString('en')  %></div>
+
+  </div>
+
+  <div class="row form-group mb-4">
+  
+    <div class="col">
+        <label style="margin: 5px;" for="lastName">Descrition</label>
+        <input
+        type="text"
+        class="form-control"
+        id="description"
+        name="description"
+        value="<%= data.description %>"
+        placeholder="Descrition"
+        required
+      />
+      </div>
+  </div>
+
+  <input type="text" id="_id" name="_id" value="<%= data._id %>" hidden>
+ 
+
+  <div class="form-group mb-4">
+    <button type="submit" class="btn btn-primary">Edit Voucher</button>
+  </div>
+</form>

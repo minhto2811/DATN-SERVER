@@ -1,7 +1,7 @@
 <div
   class="d-flex justify-content-between flex-wrap flex-md nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"
 >
-  <h1 class="h2">Banner</h1>
+  <h1 class="h2">Notification</h1>
   <div class="btn-toolbar mb-2 mb-md 0">
     <div class="btn-group me-2">
       <button class="btn btn-sm btn-outline-secondary">?</button>
@@ -14,18 +14,18 @@
     <div class="col">
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="/banner">Banner</a></li>
-          <li class="breadcrumb-item active">Edit banner</li>
+          <li class="breadcrumb-item"><a href="/Notification">Notification</a></li>
+          <li class="breadcrumb-item active">Edit Notification</li>
         </ol>
       </nav>
     </div>
     <div class="col text-end fw-lighter">
-      <b>Banner</b>
+      <b>Notification</b>
     </div>
   </div>
 </div>
 
-<form action="/banner/edit" method="POST"  enctype="multipart/form-data">
+<form action="/notification/edit" method="POST"  enctype="multipart/form-data">
   
 
   <div class="row form-group mb-4">
@@ -42,13 +42,13 @@
     />
     </div>
     <div class="col">
-      <label style="margin: 5px;" for="lastName">Keyword</label>
+      <label style="margin: 5px;" for="lastName">Description</label>
       <input
       type="text"
       class="form-control"
-      id="keyword"
-      name="keyword"
-      value="<%= data.keyword %>"
+      id="description"
+      name="description"
+      value="<%= data.description %>"
       placeholder="Keyword"
       required
     />
