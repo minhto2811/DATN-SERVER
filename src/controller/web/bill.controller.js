@@ -70,21 +70,21 @@ class Controller {
         bill.products.map(async (item) => {
           const cacheCheck = await Cache.findOne({
             userId: bill.userId,
-            varitationId: item.variations_id,
+            variationId: item.variations_id,
           });
           if (cacheCheck) {
             await cacheCheck.deleteOne();
             await Cache.create({
               userId: cacheCheck.userId,
               productId: cacheCheck.productId,
-              varitationId: cacheCheck.varitationId,
+              variationId: cacheCheck.variationId,
             });
           } else {
             const variations = await Variations.findById(item.variations_id);
             await Cache.create({
               userId: bill.userId,
               productId: variations.productId,
-              varitationId: item.variations_id,
+              variationId: item.variations_id,
             });
           }
         })
