@@ -51,14 +51,15 @@ class ApiController {
                 if (!product) {
                     throw "Không tìm thấy sản phẩm"
                 }
+                const price_item = variations.price * (1 - product.percent_discount / 100)
                 data.products.push({
                     variations_id: variations_id,
-                    price: variations.price,
+                    price: price_item,
                     quantity: item.quantity
                 })
                 variations.quantity -= item.quantity
                 variationsUpdate.push(variations)
-                total_price += item.quantity * variations.price * product.percent_discount
+                total_price += item.quantity * price_item
             }))
 
 
