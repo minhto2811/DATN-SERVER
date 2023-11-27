@@ -23,7 +23,7 @@ class ApiController {
                         }
                     })(),
                     (async () => {
-                        const variations = await Varitation.findById(item.varitationId)
+                        const variations = await Varitation.findById(item.variationId)
                         if (variations) {
                             item.product.image = variations.image
                             let property = `Màu sắc: ${variations.color}`
@@ -55,7 +55,8 @@ class ApiController {
     async add(req, res) {
         try {
             const data = req.body
-            const cache = await Cache.findOne({ userId: data.userId, productId: data.productId, varitationId: data.varitationId })
+            console.log(data)
+            const cache = await Cache.findOne({ userId: data.userId, productId: data.productId, variationId: data.variationId })
             if (!cache) throw "Đã hết thời gian đánh giá sản phẩm"
             const uploadedFiles = req.files
             if (uploadedFiles != null && uploadedFiles.length > 0) {
@@ -69,11 +70,11 @@ class ApiController {
             }
             const comment = await Comment.create(data)
             if (!comment) throw "Đánh giá thất bại"
+            res.json({ code: 200, message: "Đánh giá thành công" })
             await cache.deleteOne()
-            res.json(comment)
         } catch (error) {
             console.log(error)
-            res.json(error)
+            res.json({ code: 500, message: error })
         }
     }
 
@@ -84,7 +85,7 @@ class ApiController {
             if (!cache || cache.length == 0) return res.json([])
             const listVariation = []
             await Promise.all(cache.map(async (item) => {
-                const variation = await Varitation.findById(item.varitationId)
+                const variation = await Varitation.findById(item.variationId)
                 if (variation) {
                     let property = `Màu sắc: ${variation.color}`
                     if (variation.ram) {
