@@ -116,11 +116,8 @@ class Controller {
     const id = req.params.id
     try {
       const product = await Product.findById(id)
-      if (!product) {
-        const banner = await Banner.findById(id)
-        if (!banner) {
-          throw "Không tìm id tương ứng"
-        }
+      if (!product) {  
+          throw "Không tìm id tương ứng"     
       }
 
       if (req.file != null) {
@@ -145,28 +142,53 @@ class Controller {
     }
   }
 
-  async deleteDescription(req, res) {
-    const id_product = req.params.id_product
-    const id_description = req.params.id_description
-    try {
-      const product = await Product.findOne({ _id: id_product });
-      if (!product) {
-        throw "Không tìm thấy sản phẩm";
-      }
+  async add2Description(req, res) {
+    const id = req.params.id
+    res.render('description/addDes', {layout: './layouts/main', productId: id})
+  }
+  async editDescription(req, res) {
+    const id = req.params.id;
+    const data = await Description.findById(id);
+    res.render('description/editDes', {layout: './layouts/main', data})
+  }
 
+  async edit2Description(req, res) {
+    let { title, description, image, _id, img, productId } = req.body;
 
-      for (let i = 0; i < product.description.length; i++) {
-        if (product.description[i]._id == id_description) {
-          product.description.slice(i, 1)
-          break
-        }
-      }
-      await product.save()
-      res.redirect(`/home/product/${id_product}`)
-    } catch (error) {
-      console.log(error);
-      res.json({ code: 500, message: "Đã xảy ra lỗi" });
+    if (req.file != null && req.file != undefined) {
+      await deleteImage(img);
+      const filename = req.file.filename;
+      const filepath = req.file.path;
+      const url = await uploadImage(filepath, filename);
+      image = url;
     }
+   
+    await Description.findByIdAndUpdate(_id,{
+      title : title,
+      description : description,
+      image: image
+    });
+
+    res.redirect(`/product/description/${productId}`);
+  }
+
+  async deleteDescription(req, res) {
+    const id = req.params.id
+    const id_product = req.params.id_product
+
+    await Description.findByIdAndDelete(id)
+      .then((description) => {
+        if (!description) {
+          throw "description not found!";
+        }
+        deleteImage(description.image);
+        res.redirect(`/product/description/${id_product}`);
+      })
+      .catch((err) => {
+        console.log(err);
+        res.json(err);
+      });
+   
   }
 
   async pageVariations(req, res) {
@@ -283,6 +305,47 @@ class Controller {
 
   }
 
+  async editVariations(req, res) {
+    const id = req.params.id;
+    const productId = req.params.product_id;
+
+    const product = await Product.findOne({ _id: productId, delete: false })
+    if (!product)
+      throw "Không tìm thấy sản phẩm"
+    const condition = (product.product_type_id == "6554f942866f4e5773778e10")
+
+    const variations = await Variations.findById(id);
+    console.log(productId);
+
+    res.render('product/editVariations',{layout: './layouts/main', condition, productId, data: variations} )
+
+  }
+
+  async editPostVariations(req, res) {
+    let { price, color, ram, rom, quantity, image, _id, img, productId } = req.body;
+
+    if (req.file != null && req.file != undefined) {
+      await deleteImage(img);
+      const filename = req.file.filename;
+      const filepath = req.file.path;
+      const url = await uploadImage(filepath, filename);
+      image = url;
+    }
+   
+  
+    await Variations.findByIdAndUpdate(_id,{
+      price: price,
+      color : color,
+      ram : ram,
+      rom : rom,
+      quantity : quantity,
+      image: image
+    });
+
+ 
+    res.redirect(`/product/${productId}/variations`);
+  }
+
 
   async pageDescription(req, res) {
     const id = req.params.id
@@ -292,7 +355,7 @@ class Controller {
       if (!descriptions) {
         throw "Không lấy được mô tả sản phẩm"
       }
-      res.render('description/description.ejs', { layout: './layouts/main', id_follow: id, descriptions: descriptions })
+      res.render('description/viewDes.ejs', { layout: './layouts/main', productId: id, descriptions: descriptions })
     } catch (error) {
       console.log(error)
       res.json(error)
@@ -302,12 +365,14 @@ class Controller {
 
   async deleteVariations(req, res) {
     const id = req.params.id
+    const id_product = req.params.product_id
+
     try {
       const variation = await Variations.findByIdAndUpdate(id, { $set: { delete: true } })
       if (!variation) {
         throw "Variations not found!"
       }
-      res.redirect(`/product/${product_id}/variations`)
+      res.redirect(`/product/${id_product}/variations`)
     } catch (error) {
       console.log(error)
       res.json(error)

@@ -1,0 +1,110 @@
+<div class="d-flex justify-content-between flex-wrap flex-md nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Product variations</h1>
+    <div class="btn-toolbar mb-2 mb-md 0">
+      <div class="btn-group me-2">
+        <button class="btn btn-sm btn-outline-secondary">?</button>
+      </div>
+    </div>
+  </div>
+  
+  <div class="col py-3">
+    <div class="row">
+      <div class="col">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/product/<%=productId%>/variations">Variations</a></li>
+            <li class="breadcrumb-item active">Edit Variations</li>
+          </ol>
+        </nav>
+      </div>
+      <div class="col text-end fw-lighter">
+        <b>Variations</b>
+      </div>
+    </div>
+  </div>
+  
+  <form action="/product/variations/edit" method="POST" enctype="multipart/form-data">
+  
+    <div class="row form-group mb-4">
+      <div class="col">
+        <img id="preview-image" style="display: none;height: 100px;width: 100px;" />
+      </div>
+    </div>
+  
+    <div class="row form-group mb-4">
+      <div class="col">
+        <label for="product_name">Hình ảnh:</label>
+        <input type="file" class="form-control" name="image" id="image"  onchange="showPreviewImage(event)" >
+      </div>
+    </div>
+  
+    <div class="row form-group mb-4">
+  
+      <div class="col">
+        <label for="color">Màu sắc:</label>
+        <input class="form-control" type="text" id="color" name="color" value="<%= data.color %>" required>
+  
+      </div>
+    </div>
+  
+    <% if (condition) { %>
+  
+      <div class="row form-group mb-4">
+        <div class="col">
+  
+          <label for="ram">Chọn loại ram:</label>
+          <select class="form-select" id="ram" name="ram">
+            <option value="<%= data.ram %>"><%= data.ram %></option>
+            <option value="2GB">2GB</option>
+            <option value="3GB">3GB</option>
+            <option value="4GB">4GB</option>
+            <option value="6GB">6GB</option>
+            <option value="8GB">8GB</option>
+            <option value="10GB">10GB</option>
+            <option value="12GB">12GB</option>
+            <option value="16GB">16GB</option>
+          </select>
+        </div>
+      </div>
+  
+  
+      <div class="row form-group mb-4">
+        <div class="col">
+  
+          <label for="rom">Chọn loại rom:</label>
+          <select class="form-select" id="rom" name="rom">
+            <option value="<%= data.rom %>"><%= data.rom %></option>
+            <option value="16GB">16GB</option>
+            <option value="32GB">32GB</option>
+            <option value="64GB">64GB</option>
+            <option value="128GB">128GB</option>
+            <option value="256GB">256GB</option>
+            <option value="512GB">512GB</option>
+            <option value="1T">1T</option>
+          </select>
+        </div>
+      </div>
+  
+      <% } %>
+        <div class="row form-group mb-4">
+          <div class="col">
+            <label for="quantity">Số lượng:</label>
+            <input class="form-control" type="number" id="quantity" name="quantity" step="1" min="0" value="<%= data.quantity %>" required>
+          </div>
+        </div>
+  
+        <div class="row form-group mb-4">
+          <div class="col">
+            <label for="price">Giá tiền:</label>
+            <input class="form-control" type="number" id="price" name="price" value="<%= data.price %>"  required step="1000" min="0">
+          </div>
+        </div>
+
+        <input type="text" id="_id" name="_id" value="<%= data._id %>" hidden>
+        <input type="text" id="img" name="img" value="<%= data.image %>" hidden>
+        <input type="text" id="productId" name="productId" value="<%= data.productId %>" hidden>
+  
+        <div class="form-group mb-4">
+          <button type="submit" class="btn btn-primary">Edit Variations</button>
+        </div>
+  </form>
