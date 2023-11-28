@@ -17,8 +17,10 @@
       <tr>
         <th scope="col">image</th>
         <th scope="col">color</th>
+        <%  if(data[0].ram || data[0].rom){ %>
         <th scope="col">ram</th>
         <th scope="col">rom</th>
+        <% }  %>
         <th scope="col">quantity</th>
         <th scope="col">price</th>
         <th scope="col" class="text-end">Action</th>
@@ -34,12 +36,14 @@
           <td>
             <%= sp.color %>
           </td>
+          <%  if(data[0].ram || data[0].rom){ %>
           <td>
             <%= sp.ram %>
           </td>
           <td>
             <%= sp.rom %>
           </td>
+          <% }  %>
           <td>
             <%= sp.quantity %>
           </td>
@@ -50,7 +54,7 @@
 
             <div class="d-flex flex-row justify-content-end gap-2">
 
-              <a href=" /product/<%=sp._id%>" type="button" class="btn btn-warning btn-small">
+              <a href="/product/<%=productId%>/variations/edit/<%=sp._id%>" type="button" class="btn btn-warning btn-small">
                 <i class="bi bi-pencil"></i>
               </a>
 

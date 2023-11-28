@@ -1,0 +1,115 @@
+<div class="d-flex justify-content-between flex-wrap flex-md nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Descriptions Product</h1>
+    <div class="col-md-3">
+    </div>
+    <div class="btn-toolbar mb-2 mb-md 0">
+      <div class="btn-group me-2">
+        <a href=" /product/description/add/<%=productId%>" class="btn btn-sm btn-outline-secondary">+ New description</a>
+      </div>
+    </div>
+  </div>
+  
+  
+  
+  <div class="table-responsive">
+    <table class="table table-striped table-sm">
+        <thead>
+            <tr>
+                <th scope="col">Image</th>
+                <th scope="col">Title</th>
+                <th scope="col">Description</th>
+                <th scope="col" class="text-end">Action</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <% for (let description of descriptions) {%>
+                <tr class="align-middle">
+                    <td>
+                        <% if (description.image) { %>
+                            <img src="<%= description.image %>" style="height: 30px; width: 50px;" />
+                            <% } else { %>
+                                Trống
+                                <% } %>
+                    </td>
+                   
+                    <td >
+                        <% if (description.title) { %>
+                            <%= description.title %>
+                                <% } else { %>
+                                    Trống
+                                    <% } %>
+
+                    </td>
+                    <td >
+                        <% if (description.description) { %>
+                            <%= description.description %>
+                                <% } else { %>
+                                    Trống
+                                    <% } %>
+                               
+                    </td>
+                   
+
+                    <td class="text-end">
+
+                        <div class="d-flex flex-row justify-content-end gap-2">
+                            <a href="/product/<%=productId%>/description/edit/<%=description._id%>" type="button" class="btn btn-warning btn-small">
+                                <i class="bi bi-pencil"></i>
+                              </a>
+                              
+                
+                            <div>
+                                <button type="button" class="btn btn-danger btn-small" data-bs-toggle="modal"
+                                    data-bs-target="#deleteModal" data-bs-id="<%=description._id%>"> <i
+                                        class="bi bi-trash"></i></button>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <% } %>
+        </tbody>
+    </table>
+</div>
+  
+  
+  <form method="post" name="delete-form"></form>
+  
+  
+  <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="modalLabel">Delete Product</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          Confirm product deletion?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Back</button>
+          <button type="button" class="btn btn-primary" id="btn-delete">Continue</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var id
+      var deleteForm = document.forms['delete-form']
+  
+      const deleteModal = document.getElementById('deleteModal')
+      deleteModal.addEventListener('show.bs.modal', event => {
+        const button = event.relatedTarget;
+        id = button.getAttribute('data-bs-id')
+      })
+  
+      var btn_del = document.getElementById('btn-delete')
+      btn_del.onclick = function () {
+        deleteForm.action = '/product/<%=productId%>/delete/description/' + id + "?_method=DELETE"
+        deleteForm.submit()
+      }
+    });
+  </script>

@@ -1,5 +1,5 @@
 <div class="d-flex justify-content-between flex-wrap flex-md nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-  <h1 class="h2">Biến thể sản phẩm</h1>
+  <h1 class="h2">Product variations</h1>
   <div class="btn-toolbar mb-2 mb-md 0">
     <div class="btn-group me-2">
       <button class="btn btn-sm btn-outline-secondary">?</button>
@@ -12,13 +12,13 @@
     <div class="col">
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="/product/<%=productId%>/variations">Biến thể</a></li>
-          <li class="breadcrumb-item active">Biến thể mới</li>
+          <li class="breadcrumb-item"><a href="/product/<%=productId%>/variations">Variations</a></li>
+          <li class="breadcrumb-item active">New Variations</li>
         </ol>
       </nav>
     </div>
     <div class="col text-end fw-lighter">
-      <b>Biến thể</b>
+      <b>Variations</b>
     </div>
   </div>
 </div>
@@ -53,7 +53,7 @@
       <div class="col">
 
         <label for="ram">Chọn loại ram:</label>
-        <select class="form-control" id="ram" name="ram">
+        <select class="form-select" id="ram" name="ram">
           <option value="2GB">2GB</option>
           <option value="3GB">3GB</option>
           <option value="4GB">4GB</option>
@@ -71,7 +71,7 @@
       <div class="col">
 
         <label for="rom">Chọn loại rom:</label>
-        <select class="form-control" id="rom" name="rom">
+        <select class="form-select" id="rom" name="rom">
           <option value="16GB">16GB</option>
           <option value="32GB">32GB</option>
           <option value="64GB">64GB</option>
@@ -99,6 +99,6 @@
       </div>
 
       <div class="form-group mb-4">
-        <button type="submit" class="btn btn-primary">Thêm mới</button>
+        <button type="submit" class="btn btn-primary">Add Variations</button>
       </div>
 </form>
