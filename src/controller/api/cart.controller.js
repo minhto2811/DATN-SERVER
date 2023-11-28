@@ -7,18 +7,17 @@ class ApiController {
     async getAll(req, res) {
         const userId = req.body.userId
         try {
-            const carts = await Cart.find({ userId: userId }).lean()
+            const carts = await Cart.find({ userId: userId }).sort({ _id: 1 }).lean()
             if (!carts) {
                 throw "Không lấy được danh sách giỏ hàng"
             }
             var rs = []
             await Promise.all(carts.map(async (item) => {
                 const variations = await Variations.findOne({ _id: item.variations_id, delete: false })
-                if (!variations)
-                    return
+                if (!variations) return
+
                 const product = await Product.findOne({ _id: variations.productId, delete: false })
-                if (!product)
-                    return
+                if (!product) return
                 await Promise.all([
                     (async () => {
                         if (!item.brand_id) {
@@ -31,10 +30,20 @@ class ApiController {
                         }
                     })(),
                     (() => {
+                        item.product_id = product._id
+                        item.max_quantity = variations.quantity
                         item.price = variations.price
                         item.image = variations.image
                         item.product_name = product.product_name
                         item.percent_discount = product.percent_discount
+                        let property = `Màu sắc: ${variations.color}`
+                        if (variations.ram) {
+                            property += `, bộ nhớ ngoài: ${variations.ram}`
+                        }
+                        if (variations.rom) {
+                            property += `, bộ nhớ trong: ${variations.rom}`
+                        }
+                        item.property = property
                     })()
                 ])
 

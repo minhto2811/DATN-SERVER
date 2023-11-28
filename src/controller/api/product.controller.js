@@ -145,11 +145,12 @@ class ApiController {
     async getVariation(req, res) {
         try {
             const variationId = req.params.id
-            const variation = await Variations.findOne({ _id: variationId, delete: false })
+            const variation = await Variations.findOne({ _id: variationId, delete: false }).lean()
             if (!variation) throw "Sản phầm ngừng kinh doanh"
             const product = await Product.findOne({ _id: variation.productId, delete: false })
             if (!product) throw "Sản phầm ngừng kinh doanh"
             variation.productName = product.product_name
+            delete variation.delete
             res.json(variation)
         } catch (error) {
             console.log(error)
