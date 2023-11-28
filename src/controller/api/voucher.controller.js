@@ -6,7 +6,7 @@ class ApiController {
 
     async getAll(req, res) {
         try {
-            const vouchers = await Voucher.find({ expiration_date: { $gte: new Date() } })
+            const vouchers = await Voucher.find({ userId: null, expiration_date: { $gte: new Date() } })
             if (!vouchers) {
                 throw "Không tìm thấy voucher"
             }
@@ -16,16 +16,18 @@ class ApiController {
             res.json(error)
         }
     }
-    
+
     async getAllByUser(req, res) {
         const userId = req.body.userId
+        console.log(userId)
         try {
             const voucherUser = await Voucher.find({ userId: userId })
-            let listId = []
-            if (!voucherUser) {
-                voucherUser.map((item) => listId.push(item._id))
+            let listCode = []
+            if (voucherUser.length > 0) {
+                listCode = voucherUser.map((item) => item.code)
             }
-            const vouchers = await Voucher.find({ _id: { $nin: listId }, used: false, expiration_date: { $gte: new Date() } })
+            console.log(listCode)
+            const vouchers = await Voucher.find({ code: { $nin: listCode }, used: false, expiration_date: { $gte: new Date() } })
             if (!vouchers) {
                 throw "Không tìm thấy voucher"
             }
@@ -55,7 +57,7 @@ class ApiController {
         const userId = req.body.userId
         const voucherCode = req.body.voucherCode
         const voucherId = req.body.voucherId
-        console.log(userId,voucherCode,voucherId)
+        console.log(userId, voucherCode, voucherId)
         try {
             const voucherUser = await Voucher.findOne({ userId: userId, code: voucherCode })
             if (voucherUser) {
@@ -79,8 +81,8 @@ class ApiController {
         }
     }
 
-    create(req,res){
-        Voucher.create(req.body).then((ok)=>res.json(ok)).catch((ok)=>res.json(ok))
+    create(req, res) {
+        Voucher.create(req.body).then((ok) => res.json(ok)).catch((ok) => res.json(ok))
     }
 }
 
