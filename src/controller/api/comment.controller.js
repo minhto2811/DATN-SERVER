@@ -10,7 +10,7 @@ class ApiController {
         try {
             const productId = req.params.productId
             const comments = await Comment.find({ productId: productId }).lean()
-            if (!comments) throw "Không tìm thấy loại sản phẩm"
+            if (comments.length == 0) return res.json([])
             await Promise.all(comments.map(async (item) => {
                 item.product = {}
                 await Promise.all([

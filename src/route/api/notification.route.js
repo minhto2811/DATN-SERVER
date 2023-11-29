@@ -4,7 +4,7 @@ const { checkUser } = require('../../midleware/authentication')
 
 
 
-router.post('/get-all', checkUser,controller.getAll)
+router.get('/get-all', checkUser,controller.getAll)
 
 router.post('/seen-all', checkUser,controller.seenAll)
 

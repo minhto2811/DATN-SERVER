@@ -7,9 +7,6 @@ class ApiController {
     async getAll(req, res) {
         try {
             const vouchers = await Voucher.find({ userId: null, expiration_date: { $gte: new Date() } })
-            if (!vouchers) {
-                throw "Không tìm thấy voucher"
-            }
             res.json(vouchers)
         } catch (error) {
             console.log(error)

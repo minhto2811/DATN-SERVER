@@ -10,23 +10,19 @@ class ApiController {
     async getAll(req, res) {
         try {
             const products = await Product.find({ delete: false }).sort({ time: -1 }).lean()
-            if (!products) throw "Không tìm thấy sản phẩm"
+            if (products.length == 0) return res.json([])
             await Promise.all(products.map(async (item) => {
                 await Promise.all([
                     (async () => {
                         const type_product = await TypeProduct.findById(item.product_type_id)
-                        if (type_product) {
-                            item.product_type = type_product.name
-                        }
+                        if (type_product) item.product_type = type_product.name
                     })(),
                     (async () => {
                         if (!item.brand_id) {
                             return
                         }
                         const brand = await Brand.findById(item.brand_id)
-                        if (brand) {
-                            item.brand_name = brand.brand
-                        }
+                        if (brand) item.brand_name = brand.brand
                     })(),
                     (() => {
                         delete item.delete
@@ -44,9 +40,7 @@ class ApiController {
         try {
             const productId = req.params.id
             const product = await Product.findOne({ _id: productId, delete: false }).lean()
-            if (!product) {
-                throw "Không tìm thấy sản phẩm"
-            }
+            if (!product) throw "Không tìm thấy sản phẩm"
             delete product.delete
             product.total_quantity = 0
             await Promise.all([
@@ -64,9 +58,7 @@ class ApiController {
                 })(),
                 (async () => {
                     const type_product = await TypeProduct.findById(product.product_type_id)
-                    if (type_product) {
-                        product.product_type = type_product.name
-                    }
+                    if (type_product) product.product_type = type_product.name
                 })(),
                 (async () => {
                     if (!product.brand_id) {
@@ -164,7 +156,6 @@ class ApiController {
             const product = await Product.findById(productId)
             if (!product) throw "Không tìm thấy sản phẩm"
             const listProduct = await Product.find({ _id: { $ne: productId }, product_type_id: product.product_type_id, brand_id: product.brand_id })
-            console.log(listProduct)
             res.json(listProduct)
         } catch (error) {
             console.log(error)
