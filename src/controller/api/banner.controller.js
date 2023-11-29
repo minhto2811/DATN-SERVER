@@ -43,9 +43,7 @@ class ApiController {
         const id = req.params.id
         try {
             const banner = await Banner.findOne({ _id: id })
-            if (!banner) {
-                throw "Banner not found"
-            }
+            if (!banner) throw "Banner not found"
             res.json(banner)
         } catch (error) {
             console.log(error)

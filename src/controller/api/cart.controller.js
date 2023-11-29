@@ -8,14 +8,11 @@ class ApiController {
         const userId = req.body.userId
         try {
             const carts = await Cart.find({ userId: userId }).sort({ _id: 1 }).lean()
-            if (!carts) {
-                throw "Không lấy được danh sách giỏ hàng"
-            }
+            if (carts.length == 0) return res.json([])
             var rs = []
             await Promise.all(carts.map(async (item) => {
                 const variations = await Variations.findOne({ _id: item.variations_id, delete: false })
                 if (!variations) return
-
                 const product = await Product.findOne({ _id: variations.productId, delete: false })
                 if (!product) return
                 await Promise.all([
@@ -93,11 +90,8 @@ class ApiController {
         const cart_id = req.body.cart_id
         const quantity = req.body.quantity
         try {
-            const cart = await Cart.findOneAndUpdate({ _id: cart_id }, { $set: { quantity: quantity } })
-            if (!cart) {
-                throw ""
-            }
             res.json({ code: 200, message: "Cập nhật giỏ hàng thành công" })
+            await Cart.findOneAndUpdate({ _id: cart_id }, { $set: { quantity: quantity } })
         } catch (error) {
             console.log(error)
             res.json({ code: 500, message: "Đã xảy ra lỗi" })

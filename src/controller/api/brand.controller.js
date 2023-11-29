@@ -6,8 +6,6 @@ class ApiController {
     async getAll(req, res) {
         try {
             const brand = await Brand.find({}).sort({ brand_name: 1 }).lean()
-            if (!brand)
-                throw "Không tìm thấy sản phẩm"
             res.json(brand)
         } catch (error) {
             console.log(error)
@@ -29,28 +27,22 @@ class ApiController {
     }
 
     async getBtBrand(req, res) {
-        const brand_id = req.params.brand_id
         try {
+            const brand_id = req.params.brand_id
             const products = await Product.find({ brand_id: brand_id }).sort({ time: -1 }).lean()
-            if (!products) {
-                throw "Không tìm thấy sản phẩm"
-            }
+            if (products.length == 0) return res.json([])
             await Promise.all(products.map(async (item) => {
                 await Promise.all([
                     (async () => {
                         const type_product = await TypeProduct.findById(item.product_type_id)
-                        if (type_product) {
-                            item.product_type = type_product.name
-                        }
+                        if (type_product) item.product_type = type_product.name
                     })(),
                     (async () => {
                         if (!item.brand_id) {
                             return
                         }
                         const brand = await Brand.findById(item.brand_id)
-                        if (brand) {
-                            item.brand_name = brand.brand
-                        }
+                        if (brand) item.brand_name = brand.brand
                     })(),
                     (() => {
                         delete item.delete

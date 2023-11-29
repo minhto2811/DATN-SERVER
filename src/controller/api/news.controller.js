@@ -28,12 +28,6 @@ class ApiController {
     async getAll(req, res) {
         try {
             const banners = await Banner.find({}).sort({ time: -1 }).lean()
-            if (!banners) {
-                throw ''
-            }
-            banners.map((item) => {
-                item.content.splice(1)
-            })
             res.json(banners)
         } catch (error) {
             console.log(error)
@@ -45,9 +39,6 @@ class ApiController {
         const id = req.params.id
         try {
             const banner = await Banner.findOne({ _id: id })
-            if (!banner) {
-                throw "Banner not found"
-            }
             res.json(banner)
         } catch (error) {
             console.log(error)
