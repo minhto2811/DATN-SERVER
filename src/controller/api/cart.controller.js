@@ -61,14 +61,14 @@ class ApiController {
         const data = req.body
         console.log(data)
         try {
-            const variations = await Variations.findOne({ _id: data.variations_id, delete: false })
-            if (!variations) {
-                throw "Biến thể không tồn tại"
-            }
-            const cart = await Cart.create(data)
+            const cart = await Cart.findOne({ variations_id: data.variations_id, userId: data.userId })
             if (!cart) {
-                throw "Thêm giỏ hàng thất bại"
+                const cartNew = await Cart.create(data)
+                if (!cartNew) throw "Thêm giỏ hàng thất bại"
+                return res.json(cartNew)
             }
+            cart.quantity += data.quantity
+            await cart.save()
             res.json(cart)
         } catch (error) {
             console.log(error)
