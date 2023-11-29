@@ -5,7 +5,8 @@ const { getIo } = require('../../config/socketManager')
 class ApiController {
     async getAll(req, res) {
         try {
-            const noti = await Notification.find({ userId: req.body.userId | null }).sort({ time: -1, seen: -1 })
+            if (!req.body.userId) return res.json([])
+            const noti = await Notification.find({ userId: req.body.userId }).sort({ time: -1, seen: -1 })
             res.json(noti)
         } catch (error) {
             console.log(error)
