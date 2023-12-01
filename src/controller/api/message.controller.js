@@ -10,11 +10,25 @@ class ApiController {
             res.json(message)
         } catch (error) {
             console.log(error)
-            res.json(error)
+            res.json([])
         }
 
     }
 
+
+    async seen(req, res) {
+        try {
+            const update = await Message.find({ roomId: req.body.userId, seen: false, userId: { $ne: req.body.userId } })
+            if (update.length == 0) return res.json({ code: 200 })
+            await Promise.all(update.map(async (item) => {
+                item.seen = true
+                return await item.save()
+            }))
+        } catch (error) {
+            console.log(error)
+            res.json({ code: 500 })
+        }
+    }
 
 
 

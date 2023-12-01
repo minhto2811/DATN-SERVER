@@ -102,14 +102,16 @@ class ApiController {
             const hashPass = await bcrypt.hash(password, salt)
             account.password = hashPass
             const user = await User.create(account)
+            if (!user) throw "Tạo tài khoản thất bại"
+            res.json({ code: 200, message: "Tạo tài khoản thành công" })
             let noti = {
-                username: user.username,
-                title: "Chào mừng bạn đến với ứng dụng mua sắm điện thoại E-tech",
-                descrition: "",
-                image: "https://firebasestorage.googleapis.com/v0/b/shopping-6b085.appspot.com/o/mnb.png?alt=media&token=8c4b965a-b06d-489e-97f8-fd60a2093da8"
+                userId: user._id,
+                title: `Hi, ${user.fullname}!`,
+                body: "Chào mừng bạn đến với ứng dụng mua sắm điện thoại E-tech",
+                image: "https://img.freepik.com/premium-vector/e-tech-logo_110852-50.jpg"
             }
             await Notification.create(noti)
-            res.json({ code: 200, message: "Tạo tài khoản thành công" })
+
         } catch (error) {
             console.log(error)
             res.json({ code: 500, message: "Tạo tài khoản thất bại" })

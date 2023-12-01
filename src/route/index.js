@@ -15,6 +15,7 @@ const typeApi = require('./api/type.route')
 const shippingApi = require('./api/shipping.route')
 const commentApi = require('./api/comment.route')
 const messageApi = require('./api/message.route')
+const tokenApi = require('./api/token.route')
 //route web
 
 const userWeb = require('./web/user.route')
@@ -48,7 +49,7 @@ function route(app) {
     app.use('/api/shipping', shippingApi) // Loại vận chuyển
     app.use('/api/comment', commentApi)
     app.use('/api/message', messageApi)
-
+    app.use('/api/token', tokenApi)
     //web
 
 
@@ -56,7 +57,7 @@ function route(app) {
         res.redirect('/user/login')
     })
 
-   
+
 
     app.use('/user', userWeb)
     app.use('/product', productWeb)

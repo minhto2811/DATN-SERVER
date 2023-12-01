@@ -9,6 +9,7 @@ const Message = new Schema({
     text: { type: String },
     image: [{ type: String }],
     time: { type: Date, default: Date.now, index: { expires: '30d' } },
+    seen: { type: Boolean, require: true, default: false }
 }, {
     collection: "Message"
 })

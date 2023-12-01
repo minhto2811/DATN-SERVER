@@ -17,7 +17,6 @@ async function checkUser(req, res, next) {
         if (!user) throw "không tìm thấy người dùng"
         const matches = await bcrypt.compare(account.password, user.password)
         if (matches != true) throw "Token hết hạn"
-        delete req.body.token
         req.body.userId = account.userId
         next()
     } catch (error) {
