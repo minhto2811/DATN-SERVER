@@ -6,7 +6,7 @@ class ApiController {
     async getAll(req, res) {
         try {
             if (!req.body.userId) return res.json([])
-            const noti = await Notification.find({ userId: req.body.userId }).sort({ time: -1, seen: -1 })
+            const noti = await Notification.find({ userId: req.body.userId }).sort({ time: -1, seen: 1 })
             res.json(noti)
         } catch (error) {
             console.log(error)
