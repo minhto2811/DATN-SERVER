@@ -3,6 +3,9 @@ const User = require("../../model/user");
 const Product = require("../../model/product");
 const Cache = require("../../model/Cache");
 const Variations = require("../../model/variations");
+const Notification = require("../../model/notification");
+const PushNotification = require('../../utils/pushNotification')
+
 
 class Controller {
   async list(req, res) {
@@ -65,6 +68,17 @@ class Controller {
       }
       await bill.save();
       res.redirect(`/bill/?status=${bill.status - 1}`);
+      const text = bill.status == 1 ? " đang trên đường vận chuyển" : " đã giao thành công"
+      let noti = {
+        userId: bill.userId,
+        title: "Thông báo mới",
+        body: `Đơn hàng ${bill._id} ${text}`,
+        image: "https://img.freepik.com/premium-vector/e-tech-logo_110852-50.jpg",
+        route: "OrderDetailScreen",
+        billId: bill._id
+      }
+      Notification.create(noti)
+      PushNotification.sendPushNotification(noti);
       if (bill.status != 2) return;
       await Promise.all(
         bill.products.map(async (item) => {
