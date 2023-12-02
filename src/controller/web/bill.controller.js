@@ -31,6 +31,9 @@ class Controller {
             case 2:
               array[i].statusText = "Delivered";
               break;
+            case -1:
+              array[i].statusText = "Canceled";
+              break;
             default:
               break;
           }
@@ -50,8 +53,67 @@ class Controller {
 
   async detail(req, res) {
     try {
-      const data = await Bill.findById({ _id: req.params.id });
-      res.render("bill/detailBill", { layout: "layouts/main", data: data });
+      const id = req.params.id;
+      const bill = await Bill.findOne({ _id: id, delete: false }).lean();
+      if (!bill) throw "Không tìm thấy hóa đơn";
+
+      const data = await User.findById(bill.userId);
+      bill.username = data.username;
+
+      if (bill.status != undefined) {
+        switch (bill.status) {
+          case 0:
+            bill.statusText = "Unconfimred";
+            break;
+          case 1:
+            bill.statusText = "Delivering";
+            break;
+          case 2:
+            bill.statusText = "Delivered";
+            break;
+          case -1:
+            bill.statusText = "Canceled";
+            break;
+          default:
+            break;
+        }
+      }
+
+      await Promise.all(
+        bill.products.map(async (i) => {
+          const variations = await Variations.findById(i.variations_id);
+          if (variations) {
+            i.ram = variations.ram;
+            i.rom = variations.rom;
+            i.image = variations.image;
+            i.color = variations.color;
+            i.totoal_price = i.quantity * i.price;
+            const product = await Product.findById(variations.productId);
+            if (product) i.product_name = product.product_name;
+          }
+        })
+      );
+
+      res.render("bill/detailBill", { layout: "layouts/main", data: bill });
+    } catch (error) {
+      res.json(error);
+    }
+  }
+
+  async canceled(req, res) {
+    try {
+      const id = req.params.id;
+      const bill = await Bill.findById(id);
+
+      if (bill.status == 0) {
+        bill.status = -1;
+        await bill.save();
+        res.redirect("/bill/?status=0");
+      } else {
+        bill.status = -1;
+        await bill.save();
+        res.redirect("/bill/?status=1");
+      }
     } catch (error) {
       res.json(error);
     }
@@ -65,6 +127,8 @@ class Controller {
         bill.status = 1;
       } else if (bill && bill.status == 1) {
         bill.status = 2;
+      } else {
+        bill.status = -1;
       }
       await bill.save();
       res.redirect(`/bill/?status=${bill.status - 1}`);
@@ -86,6 +150,7 @@ class Controller {
             userId: bill.userId,
             variationId: item.variations_id,
           });
+          const variations = await Variations.findById(item.variations_id);
           if (cacheCheck) {
             await cacheCheck.deleteOne();
             await Cache.create({
@@ -94,12 +159,17 @@ class Controller {
               variationId: cacheCheck.variationId,
             });
           } else {
-            const variations = await Variations.findById(item.variations_id);
             await Cache.create({
               userId: bill.userId,
               productId: variations.productId,
               variationId: item.variations_id,
             });
+          }
+
+          const product = await Product.findById(variations.productId);
+          if (product) {
+            product.sold += item.quantity;
+            await product.save();
           }
         })
       );
