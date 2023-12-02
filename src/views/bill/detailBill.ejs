@@ -15,7 +15,7 @@
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="/">Bill</a></li>
-            <li class="breadcrumb-item active"><%= data.products[0].product_name %>...</li>
+            <li class="breadcrumb-item active">...</li>
           </ol>
         </nav>
       </div>
@@ -26,13 +26,13 @@
   
   </div>
   
-  <ul class="list-group">
+  <ul class="list-group" style="margin-bottom: 50px;">
   
   
     <li class="list-group-item"> 
       <div class="row">
         <div class="col" style="max-width: 140px"> <b>User name:</b></div>
-        <div class="col"><%= data.username %></div>
+        <div class="col"><%= data?.username %></div>
       </div>
     </li>
   
@@ -40,19 +40,21 @@
     <li class="list-group-item"> 
       <div class="row">
         <div class="col" style="max-width: 140px"> <b>Product:</b></div>
-            <% for (let pro of data.products) {%>
+            <% for (let pro of data?.products) {%>
           <div class="col">
             <tr>
               <td>
-                  <img class="col" style="max-width: 150px" src="<%= pro.image_product %>" alt="">
+                  <img class="col" style="max-width: 150px" src="<%= pro.image %>" alt="">
               </td>
               <td class="text-bottom">
                 <div>Name: <%= pro.product_name %></div>
-                <div>Color: <%= pro.color_product %></div>
-                <div>Ram: <%= pro.ram_product %></div>
-                <div>Rom: <%= pro.rom_product %></div>
+                <div>Color: <%= pro.color %></div>
+                <% if(pro.ram != undefined){ %>
+                <div>Ram: <%= pro.ram %></div>
+                <div>Rom: <%= pro.rom %></div>
+                <% } %>
                 <div>Quantity: <%= pro.quantity %></div>
-                <div class="text-danger">Price: <%= pro.price_product.toLocaleString() %> VND</div>
+                <div class="text-danger">Price: <%= pro.price.toLocaleString() %> VND</div>
               </td>   
             </tr>   
           </div>         
@@ -61,27 +63,69 @@
     </li>
 
     <li class="list-group-item"> 
+      <div class="row">
+        <div class="col" style="max-width: 140px"> <b>Transport_fee:</b></div>
+        <div class="col"><%= data?.transport_fee%></div>
+      </div>
+    </li>
+
+    <li class="list-group-item"> 
+        <div class="row">
+          <div class="col" style="max-width: 140px"> <b>Shipping method:</b></div>
+          <div class="col"><%= data?.shipping_method%></div>
+        </div>
+      </li>
+
+      <li class="list-group-item"> 
+        <div class="row">
+          <div class="col" style="max-width: 140px"> <b>Payment method:</b></div>
+          <div class="col"><%= data?.payment_method%></div>
+        </div>
+      </li>
+
+      <li class="list-group-item"> 
+        <div class="row">
+          <div class="col" style="max-width: 140px"> <b>Voucher:</b></div>
+          <div class="col"><%= (data?.voucher) ? data?.voucher : "No data" %></div>
+        </div>
+      </li>
+
+      <li class="list-group-item"> 
+        <div class="row">
+          <div class="col" style="max-width: 140px"> <b>Status:</b></div>
+          <div class="col"><%= data?.statusText%></div>
+        </div>
+      </li>
+
+  
+      <li class="list-group-item"> 
         <div class="row">
           <div class="col" style="max-width: 140px"> <b>Note:</b></div>
-          <div class="col"><%= data.note%></div>
+          <div class="col"><%= (data?.note) ? data?.note : "No data" %></div>
+        </div>
+      </li>
+
+      <li class="list-group-item"> 
+        <div class="row">
+          <div class="col" style="max-width: 140px"> <b>Import total:</b></div>
+          <div class="col"><%= (data?.import_total) ? data?.import_total : "No data" %></div>
         </div>
       </li>
 
     <li class="list-group-item"> 
         <div class="row">
           <div class="col" style="max-width: 140px"> <b>Total:</b></div>
-          <div class="col"><%= data.total_price.toLocaleString() %> VND</div>
+          <div class="col"><%= data?.total_price.toLocaleString() %> VND</div>
         </div>
       </li>
-  
-   
+
+     
     <li class="list-group-item"> 
       <div class="row">
         <div class="col" style="max-width: 140px"> <b>Date Created:</b></div>
-        <div class="col"><%= data.time.toLocaleString('en') %></div>
+        <div class="col"><%= data?.time.toLocaleString('en') %></div>
       </div>
     </li>
   
     
-  
   </ul>
