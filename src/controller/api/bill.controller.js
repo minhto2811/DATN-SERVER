@@ -118,19 +118,6 @@ class ApiController {
             const status = req.params.status
             const bills = await Bill.find({ userId: userId, status: status, delete: false }).lean()
             if (!bills) throw "Không tìm thấy danh sách hóa đơn của bạn"
-            await Promise.all(bills.map(async (item) => {
-                await Promise.all(item.products.map(async (i) => {
-                    const variations = await Variations.findById(i.variations_id)
-                    if (variations) {
-                        i.ram = variations.ram
-                        i.rom = variations.rom
-                        i.image = variations.image
-                        const product = await Product.findById(variations.productId)
-                        if (product) i.product_name = product.product_name
-                    }
-                }))
-            }))
-
             res.json(bills)
         } catch (error) {
             console.log(error)
@@ -144,20 +131,6 @@ class ApiController {
             const userId = req.body.userId
             const bills = await Bill.find({ userId: userId, delete: false }).lean()
             if (!bills) throw "Không tìm thấy danh sách hóa đơn của bạn"
-            await Promise.all(bills.map(async (item) => {
-                await Promise.all(item.products.map(async (i) => {
-                    const variations = await Variations.findById(i.variations_id)
-                    if (variations) {
-                        i.ram = variations.ram
-                        i.rom = variations.rom
-                        i.image = variations.image
-                        console.log(variations.productId)
-                        const product = await Product.findById(variations.productId)
-                        if (product) i.product_name = product.product_name
-                    }
-                }))
-            }))
-
             res.json(bills)
         } catch (error) {
             console.log(error)
