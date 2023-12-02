@@ -224,10 +224,6 @@ class ApiController {
         const userId = req.body.userId
         try {
             const address = await Address.find({ userId: userId })
-            console.log(address)
-            if (!address) {
-                throw "Đã xảy ra lỗi!"
-            }
             res.json({ code: 200, data: address })
         } catch (error) {
             console.log(error)

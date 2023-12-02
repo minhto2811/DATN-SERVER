@@ -17,9 +17,9 @@ router.post('/forgot-password', controller.forgotPassword)
 
 //địa chỉ
 router.post('/address/new', checkUser, controller.addAddress)
-router.post('/address/get-all', checkUser, controller.getAddress)
+router.get('/address/get-all', checkUser, controller.getAddress)
 router.post('/address/update', checkUser, controller.updateAddress)
-router.post('/address/delete', checkUser, controller.deleteAddress)
+router.delete('/address/delete', checkUser, controller.deleteAddress)
 
 //Cập nhật
 router.post('/update/avatar',  upload.single('avatar') , checkUser, controller.updateAvatar)
