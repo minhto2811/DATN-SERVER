@@ -10,7 +10,9 @@ class ApiController {
     async createBill(req, res) {
         try {
             var data = req.body
+            console.log("----------------------\n", data)
             let total_price = 0
+            var listCart = []
             await Promise.all([
                 (() => {
                     delete data.address._id
@@ -23,6 +25,9 @@ class ApiController {
                     delete data.shipping_id
                     data.shipping_method = shipping.name
                     data.transport_fee += shipping.price
+                })(),
+                (async () => {
+                    listCart = await Cart.find({ _id: { $in: data.listIdCart } })
                 })()
             ])
 

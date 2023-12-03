@@ -277,50 +277,53 @@ class ApiController {
     }
 
     async updateAvatar(req, res) {
-        const userId = req.body.userId
-        if (req.file != null && req.file != undefined) {
-            const filename = req.file.filename
-            const filepath = req.file.path
-            try {
+
+        try {
+            const userId = req.body.userId
+            if (req.file != null && req.file != undefined) {
+                const filename = req.file.filename
+                const filepath = req.file.path
                 const url = await uploadImage(filepath, filename)
-                const rs = await User.findOneAndUpdate({ userId: userId }, { $set: { avatar: url } })
-                console.log(rs)
-                res.json({ code: 200, message: url })
-            } catch (error) {
-                console.log(error)
+                const rs = await User.findOneAndUpdate({ _id: userId }, { $set: { avatar: url } })
+                rs.avatar = url
+                res.json({ code: 200, user: rs })
+            } else {
                 res.json({ code: 500, message: "Cập nhật thất bại" })
             }
-        } else {
+        } catch (error) {
+            console.log(error)
             res.json({ code: 500, message: "Cập nhật thất bại" })
         }
+
     }
 
     async updateBackground(req, res) {
-        const userId = req.body.userId
-        if (req.file != null && req.file != undefined) {
-            const filename = req.file.filename
-            const filepath = req.file.path
-            try {
+        try {
+            const userId = req.body.userId
+            if (req.file != null && req.file != undefined) {
+                const filename = req.file.filename
+                const filepath = req.file.path
                 const url = await uploadImage(filepath, filename)
-                const rs = await User.findOneAndUpdate({ userId: userId }, { $set: { background: url } })
-                console.log(rs)
-                res.json({ code: 200, message: url })
-            } catch (error) {
-                console.log(error)
+                const rs = await User.findOneAndUpdate({ _id: userId }, { $set: { background: url } })
+                rs.background = url
+                res.json({ code: 200, user: rs })
+            } else {
                 res.json({ code: 500, message: "Cập nhật thất bại" })
             }
-        } else {
+        } catch (error) {
+            console.log(error)
             res.json({ code: 500, message: "Cập nhật thất bại" })
         }
+
     }
 
     updateFullname(req, res) {
         const userId = req.body.userId
         const fullname = req.body.fullname
-        User.findOneAndUpdate({ userId: userId }, { $set: { fullname: fullname } })
+        User.findOneAndUpdate({ _id: userId }, { $set: { fullname: fullname } })
             .then((rs) => {
-                console.log(rs)
-                res.json({ code: 200, message: fullname })
+                rs.fullname = fullname
+                res.json({ code: 200, user: rs })
             })
             .catch((error) => {
                 console.log(error)
@@ -352,7 +355,6 @@ class ApiController {
         } catch (error) {
             console.log(error)
             res.json(error)
-
         }
     }
 
