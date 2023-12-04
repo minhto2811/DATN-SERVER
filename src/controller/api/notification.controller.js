@@ -6,7 +6,7 @@ class ApiController {
     async getAll(req, res) {
         try {
             if (!req.body.userId) return res.json([])
-            const noti = await Notification.find({ userId: req.body.userId }).sort({ time: -1, seen: 1 })
+            const noti = await Notification.find({ userId: { $in: [req.body.userId, null] } }).sort({ time: -1, seen: 1 })
             res.json(noti)
         } catch (error) {
             console.log(error)
@@ -17,7 +17,7 @@ class ApiController {
     async seenAll(req, res) {
         try {
             res.json({ code: 200 })
-            await Notification.updateMany({ userId: req.body.userId, seen: false }, { $set: { seen: true } })
+            await Notification.updateMany({ userId: { $in: [req.body.userId, null] }, seen: false }, { $set: { seen: true } })
         } catch (error) {
             console.log(error)
             res.json({ code: 500 })

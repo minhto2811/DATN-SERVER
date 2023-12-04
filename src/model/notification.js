@@ -9,11 +9,9 @@ const Notification = new Schema({
     body: { type: String, require: true },
     image: { type: String, require: true },
     seen: { type: Boolean, default: false },
-    route: { type: String, require: true, default: 'Buttomnavigation' },// có thể trống => điều hướng ứng dụng
+    route: { type: String, require: true, default: "ButtomNavigation" },// có thể trống => điều hướng ứng dụng
     time: { type: Date, default: Date.now, index: { expires: 2592000 } },
-    productId: { type: String },// có thể trống
-    variationId: { type: String },// có thể trống
-    billId: { type: String },// có thể trống
+    dataId: { type: String },// có thể trống, hoặc id sản phẩm, hóa đơn, biến thể , ...
 }, {
     collection: "Notification"
 })

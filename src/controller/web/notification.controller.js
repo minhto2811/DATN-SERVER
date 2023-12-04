@@ -1,5 +1,7 @@
 const Noti = require("../../model/notification");
 const { uploadImage, deleteImage } = require("../../utils/uploadImage");
+const PushNotification = require('../../utils/pushNotification')
+
 
 class Controller {
   async list(req, res) {
@@ -24,20 +26,21 @@ class Controller {
     if (req.method == "POST") {
       try {
         const body = req.body;
-
         if (req.file != null && req.file != undefined) {
           const filename = req.file.filename;
           const filepath = req.file.path;
           const url = await uploadImage(filepath, filename);
           body.image = url;
         }
-  
-        await Noti.create(body);
-        return res.redirect("/notification");
+        Noti.create(body);
+        body.route = "ButtonNavigation"
+        console.log(body)
+        PushNotification.sendPushNotification(body)
+        res.redirect("/notification")
       } catch (error) {
         console.log(error);
       }
-     
+
     }
     res.render("notification/addNoti", { layout: "layouts/main" });
   }
@@ -61,18 +64,18 @@ class Controller {
       const url = await uploadImage(filepath, filename);
       image = url;
     }
-  
-    await Noti.findByIdAndUpdate(_id,{
+
+    await Noti.findByIdAndUpdate(_id, {
       title: title,
-      description : description,
+      description: description,
       image: image
     });
-  
+
     res.redirect('/notification');
   }
 
   async delete(req, res) {
-     const id = req.params.id;
+    const id = req.params.id;
 
     await Noti.findByIdAndDelete(id)
       .then((notification) => {

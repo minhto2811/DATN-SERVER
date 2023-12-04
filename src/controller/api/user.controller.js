@@ -106,10 +106,11 @@ class ApiController {
             res.json({ code: 200, message: "Tạo tài khoản thành công" })
             let noti = {
                 userId: user._id,
-                title: `Hi, ${user.fullname}!`,
-                body: "Chào mừng bạn đến với ứng dụng mua sắm điện thoại E-tech",
-                image: "https://img.freepik.com/premium-vector/e-tech-logo_110852-50.jpg"
-            }
+                title: "Thông báo mới",
+                body: `Chào mừng đến với ứng dụng mua sắm điện thoại Etech.`,
+                image: "https://img.freepik.com/premium-vector/e-tech-logo_110852-50.jpg",
+                route: "ButtonNavigation"
+              }
             await Notification.create(noti)
 
         } catch (error) {
