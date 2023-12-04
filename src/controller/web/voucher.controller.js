@@ -14,6 +14,31 @@ class Controller {
   async detail(req, res) {
     try {
       const data = await Voucher.findById({ _id: req.params.id });
+      if (data.type != undefined) {
+        switch (data.type) {
+          case 0:
+            data.typeText = "Giảm chi phí vận chuyển";
+            break;
+          case 1:
+            data.typeText = "Giảm giá sản phẩm";
+            break;
+          default:
+            break;
+        }
+      }
+
+      if (data.discount_type != undefined) {
+        switch (data.discount_type) {
+          case 0:
+            data.discount_type_Text = "Giảm tiền mặt";
+            break;
+          case 1:
+            data.discount_type_Text = "Phần trăm giảm";
+            break;
+          default:
+            break;
+        }
+      }
       res.render("voucher/detailVoucher", { layout: "layouts/main", data: data, title: "Detail Voucher" });
     } catch (error) {
       res.json(error);
