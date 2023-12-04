@@ -32,6 +32,7 @@ class Controller {
       res.render("product/viewProduct.ejs", {
         layout: "layouts/main",
         data: array,
+        title: "Product"
       });
     } catch (error) {
       res.json(error);
@@ -55,7 +56,7 @@ class Controller {
       })()
       ])
 
-      res.render("product/newProduct.ejs", { layout: "./layouts/main", brand: arrBrand, type: typeProduct });
+      res.render("product/newProduct.ejs", { layout: "./layouts/main", brand: arrBrand, type: typeProduct, title: "Add Product" });
     } catch (error) {
       console.log(error)
       res.json(error)
@@ -64,6 +65,11 @@ class Controller {
 
   newProduct(req, res) {
     const body = req.body
+
+    req.session.message = {
+      type: "success",
+      message: "Created successfully",
+    };
     Product.create(body)
       .then((rs) => {
         res.redirect('/product')
@@ -76,6 +82,12 @@ class Controller {
   async deleteProduct(req, res) {
     try {
       const id = req.params.id
+
+      req.session.message = {
+        type: "success",
+        message: "Deleted successfully",
+      };
+
       await Promise.all([
         (async () => {
           const product = await Product.findByIdAndUpdate(id, { $set: { delete: true } })
@@ -99,6 +111,12 @@ class Controller {
   async updateProduct(req, res) {
     const body = req.body
     const id = req.params.id
+
+    req.session.message = {
+      type: "success",
+      message: "Edited successfully",
+    };
+
     try {
       const update = await Product.findOneAndUpdate({ _id: id }, { $set: body })
       if (!update) {
@@ -114,6 +132,13 @@ class Controller {
   async addDescription(req, res) {
     const data = req.body
     const id = req.params.id
+
+    req.session.message = {
+      type: "success",
+      message: "Created successfully",
+    };
+
+
     try {
       const product = await Product.findById(id)
       if (!product) {  
@@ -144,16 +169,21 @@ class Controller {
 
   async add2Description(req, res) {
     const id = req.params.id
-    res.render('description/addDes', {layout: './layouts/main', productId: id})
+    res.render('description/addDes', {layout: './layouts/main', productId: id, title: "Add Product"})
   }
   async editDescription(req, res) {
     const id = req.params.id;
     const data = await Description.findById(id);
-    res.render('description/editDes', {layout: './layouts/main', data})
+    res.render('description/editDes', {layout: './layouts/main', data, title: "Edit Product"})
   }
 
   async edit2Description(req, res) {
     let { title, description, image, _id, img, productId } = req.body;
+
+    req.session.message = {
+      type: "success",
+      message: "Edited successfully",
+    };
 
     if (req.file != null && req.file != undefined) {
       await deleteImage(img);
@@ -176,6 +206,11 @@ class Controller {
     const id = req.params.id
     const id_product = req.params.id_product
 
+    req.session.message = {
+      type: "success",
+      message: "Deleted successfully",
+    };
+
     await Description.findByIdAndDelete(id)
       .then((description) => {
         if (!description) {
@@ -194,9 +229,9 @@ class Controller {
   async pageVariations(req, res) {
     const productId = req.params.id
     try {
-      const data = await Variations.find({ productId: productId, delete: false }).sort({ _id: -1 })
+      const data = await Variations.find({ productId: productId, delete: false })
       data.forEach(item => delete item.delete)
-      res.render('product/variations.ejs', { layout: './layouts/main', data, productId: productId })
+      res.render('product/variations.ejs', { layout: './layouts/main', data, productId: productId, title: "Product" })
     } catch (error) {
       res.json(error)
     }
@@ -226,7 +261,7 @@ class Controller {
         }
       })()
       ])
-      res.render('product/detailProduct.ejs', { layout: './layouts/main', product: data, brand: arrBrand, type: typeProduct })
+      res.render('product/detailProduct.ejs', { layout: './layouts/main', product: data, brand: arrBrand, type: typeProduct, title: "Update Product" })
     } catch (error) {
       res.json(error)
     }
@@ -239,7 +274,7 @@ class Controller {
       if (!product)
         throw "Không tìm thấy sản phẩm"
       const condition = (product.product_type_id == "6554f942866f4e5773778e10")
-      res.render('product/newVariations.ejs', { layout: './layouts/main', productId: productId, condition: condition })
+      res.render('product/newVariations.ejs', { layout: './layouts/main', productId: productId, condition: condition, title: "Add Product" })
     } catch (error) {
       res.json(error)
     }
@@ -249,6 +284,11 @@ class Controller {
     const data = req.body
     const productId = req.params.id
     data.productId = productId
+
+    req.session.message = {
+      type: "success",
+      message: "Created successfully",
+    };
 
     try {
       if (!req.file) {
@@ -315,14 +355,18 @@ class Controller {
     const condition = (product.product_type_id == "6554f942866f4e5773778e10")
 
     const variations = await Variations.findById(id);
-    console.log(productId);
 
-    res.render('product/editVariations',{layout: './layouts/main', condition, productId, data: variations} )
+    res.render('product/editVariations',{layout: './layouts/main', condition, productId, data: variations, title: "Edit Product"} )
 
   }
 
   async editPostVariations(req, res) {
     let { price, color, ram, rom, quantity, image, _id, img, productId } = req.body;
+
+    req.session.message = {
+      type: "success",
+      message: "Edited successfully",
+    };
 
     if (req.file != null && req.file != undefined) {
       await deleteImage(img);
@@ -355,7 +399,7 @@ class Controller {
       if (!descriptions) {
         throw "Không lấy được mô tả sản phẩm"
       }
-      res.render('description/viewDes.ejs', { layout: './layouts/main', productId: id, descriptions: descriptions })
+      res.render('description/viewDes.ejs', { layout: './layouts/main', productId: id, descriptions: descriptions, title: "Product" })
     } catch (error) {
       console.log(error)
       res.json(error)
@@ -366,6 +410,11 @@ class Controller {
   async deleteVariations(req, res) {
     const id = req.params.id
     const id_product = req.params.product_id
+
+    req.session.message = {
+      type: "success",
+      message: "Deleted successfully",
+    };
 
     try {
       const variation = await Variations.findByIdAndUpdate(id, { $set: { delete: true } })

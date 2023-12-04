@@ -11,6 +11,7 @@ class ApiController {
         try {
             var data = req.body
             console.log("----------------------\n", data)
+            let import_total = 0
             let total_price = 0
             var listCart = []
             await Promise.all([
@@ -51,6 +52,7 @@ class ApiController {
                 })
                 variations.quantity -= item.quantity
                 variationsUpdate.push(variations)
+                import_total += variations.import_price * item.quantity
                 total_price += item.quantity * price_item
             }))
 
@@ -81,6 +83,7 @@ class ApiController {
                 total_price += data.transport_fee
             }
             data.total_price = total_price
+            data.import_total = import_total
             const bill = await Bill.create(data)
             if (!bill) throw "Tạo hóa đơn thất bại"
             res.json({ message: "Đơn hàng của bạn đã tồn tại trên hệ thống" })

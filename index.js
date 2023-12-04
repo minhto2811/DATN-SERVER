@@ -23,6 +23,15 @@ app.use(require('express-session')({
         
     })
 }))
+
+//meaasge
+app.use((req, res, next) => {
+    res.locals.message = req.session.message;
+    delete req.session.message;
+    next();
+  });
+
+
 app.use(passport.initialize())
 app.use(passport.session())
 
@@ -50,14 +59,11 @@ app.set('view engine', 'ejs');
 app.set('layout', './src/views/layouts');
 
 
-
 //socket io
 initializeSocket(server)
 
 
 router(app)
-
-
 
 
 app.listen(PORT, () => {

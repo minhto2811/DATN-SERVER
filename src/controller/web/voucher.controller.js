@@ -4,8 +4,8 @@ const { uploadImage, deleteImage } = require("../../utils/uploadImage");
 class Controller {
   async list(req, res) {
     try {
-      const data = await Voucher.find();
-      res.render("voucher/viewVoucher", { layout: "layouts/main", data });
+      const data = await Voucher.find({all: true});
+      res.render("voucher/viewVoucher", { layout: "layouts/main", data, title: "Voucher" });
     } catch (error) {
       res.json(error);
     }
@@ -14,7 +14,7 @@ class Controller {
   async detail(req, res) {
     try {
       const data = await Voucher.findById({ _id: req.params.id });
-      res.render("voucher/detailVoucher", { layout: "layouts/main", data: data });
+      res.render("voucher/detailVoucher", { layout: "layouts/main", data: data, title: "Detail Voucher" });
     } catch (error) {
       res.json(error);
     }
@@ -25,6 +25,13 @@ class Controller {
       try {
         const body = req.body;
 
+        req.session.message = {
+          type: "success",
+          message: "Created successfully",
+        };
+
+        body.all = true;
+
         await Voucher.create(body);
         return res.redirect("/voucher");
       } catch (error) {
@@ -32,7 +39,7 @@ class Controller {
       }
      
     }
-    res.render("voucher/addVoucher", { layout: "layouts/main" });
+    res.render("voucher/addVoucher", { layout: "layouts/main", title: "Add Voucher" });
   }
 
   async edit(req, res) {
@@ -41,6 +48,7 @@ class Controller {
     res.render("voucher/editVoucher", {
       layout: "layouts/main",
       data,
+      title: "Edit Voucher"
     });
   }
 
@@ -50,6 +58,11 @@ class Controller {
     if(expiration_date2 != ''){
       expiration_date = expiration_date2;
     }
+
+    req.session.message = {
+      type: "success",
+      message: "Edited successfully",
+    };
   
     
     await Voucher.findByIdAndUpdate(_id,{
@@ -66,6 +79,11 @@ class Controller {
 
   async delete(req, res) {
      const id = req.params.id;
+
+     req.session.message = {
+      type: "success",
+      message: "Deleted successfully",
+    };
 
     await Voucher.findByIdAndDelete(id)
       .then((voucher) => {
