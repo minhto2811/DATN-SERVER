@@ -5,7 +5,7 @@ class Controller {
   async list(req, res) {
     try {
       const data = await Brand.find();
-      res.render("brand/viewBrand", { layout: "layouts/main", data });
+      res.render("brand/viewBrand", { layout: "layouts/main", data, title: "Brand" });
     } catch (error) {
       res.json(error);
     }
@@ -14,7 +14,7 @@ class Controller {
   async detail(req, res) {
     try {
       const data = await Brand.findById({ _id: req.params.id });
-      res.render("brand/detailBrand", { layout: "layouts/main", data: data });
+      res.render("brand/detailBrand", { layout: "layouts/main", data: data, title: "Detail Brand" });
     } catch (error) {
       res.json(error);
     }
@@ -31,6 +31,11 @@ class Controller {
           const url = await uploadImage(filepath, filename);
           body.image = url;
         }
+
+        req.session.message = {
+          type: "success",
+          message: "Created successfully",
+        };
   
         await Brand.create(body);
         return res.redirect("/brand");
@@ -39,7 +44,7 @@ class Controller {
       }
      
     }
-    res.render("brand/addBrand", { layout: "layouts/main" });
+    res.render("brand/addBrand", { layout: "layouts/main", title: "Add Brand" });
   }
 
   async edit(req, res) {
@@ -48,6 +53,7 @@ class Controller {
     res.render("brand/editBrand", {
       layout: "layouts/main",
       data,
+      title: "Edit Brand"
     });
   }
 
@@ -61,6 +67,11 @@ class Controller {
       const url = await uploadImage(filepath, filename);
       image = url;
     }
+
+    req.session.message = {
+      type: "success",
+      message: "Edited successfully",
+    };
   
     await Brand.findByIdAndUpdate(_id,{
       brand: brand,
@@ -73,6 +84,11 @@ class Controller {
 
   async delete(req, res) {
      const id = req.params.id;
+
+     req.session.message = {
+      type: "success",
+      message: "Deleted successfully",
+    };
 
     await Brand.findByIdAndDelete(id)
       .then((brand) => {

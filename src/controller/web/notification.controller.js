@@ -4,8 +4,8 @@ const { uploadImage, deleteImage } = require("../../utils/uploadImage");
 class Controller {
   async list(req, res) {
     try {
-      const data = await Noti.find();
-      res.render("notification/viewNoti", { layout: "layouts/main", data });
+      const data = await Noti.find({all: true});
+      res.render("notification/viewNoti", { layout: "layouts/main", data, title: "Notification" });
     } catch (error) {
       res.json(error);
     }
@@ -13,8 +13,9 @@ class Controller {
 
   async detail(req, res) {
     try {
+      delete req.session.message;
       const data = await Noti.findById({ _id: req.params.id });
-      res.render("notification/detailNoti", { layout: "layouts/main", data });
+      res.render("notification/detailNoti", { layout: "layouts/main", data, title: "Detail notification" });
     } catch (error) {
       res.json(error);
     }
@@ -31,7 +32,14 @@ class Controller {
           const url = await uploadImage(filepath, filename);
           body.image = url;
         }
-  
+
+        req.session.message = {
+          type: "success",
+          message: "Created successfully",
+        };
+
+        body.all = true;
+    
         await Noti.create(body);
         return res.redirect("/notification");
       } catch (error) {
@@ -39,15 +47,18 @@ class Controller {
       }
      
     }
-    res.render("notification/addNoti", { layout: "layouts/main" });
-  }
+    req.session.message = '';
+    res.render("notification/addNoti", { layout: "layouts/main", title: "Add notification"  });
+  } 
 
   async edit(req, res) {
     const data = await Noti.findById({ _id: req.params.id });
+    delete req.session.message;
 
     res.render("notification/editNoti", {
       layout: "layouts/main",
       data,
+      title: "Notification of successful editing"
     });
   }
 
@@ -61,6 +72,11 @@ class Controller {
       const url = await uploadImage(filepath, filename);
       image = url;
     }
+
+    req.session.message = {
+      type: "success",
+      message: "Edited successfully",
+    };
   
     await Noti.findByIdAndUpdate(_id,{
       title: title,
@@ -73,6 +89,11 @@ class Controller {
 
   async delete(req, res) {
      const id = req.params.id;
+
+     req.session.message = {
+      type: "success",
+      message: "Deleted successfully",
+    };
 
     await Noti.findByIdAndDelete(id)
       .then((notification) => {

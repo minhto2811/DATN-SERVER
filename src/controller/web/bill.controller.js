@@ -45,6 +45,7 @@ class Controller {
         amount,
         amount2,
         req,
+        title: "Bill"
       });
     } catch (error) {
       res.json(error);
@@ -94,7 +95,7 @@ class Controller {
         })
       );
 
-      res.render("bill/detailBill", { layout: "layouts/main", data: bill });
+      res.render("bill/detailBill", { layout: "layouts/main", data: bill, title: "Detail Bill" });
     } catch (error) {
       res.json(error);
     }

@@ -6,7 +6,7 @@ class Controller {
   async list(req, res) {
     try {
       const array = await bannerModel.find();
-      res.render("banner/viewBanner", { layout: "layouts/main", data: array });
+      res.render("banner/viewBanner", { layout: "layouts/main", data: array, title: "Banner" });
     } catch (error) {
       res.json(error);
     }
@@ -15,7 +15,7 @@ class Controller {
   async detail(req, res) {
     try {
       const data = await bannerModel.findById({ _id: req.params.id });
-      res.render("banner/detailBanner", { layout: "layouts/main", data: data });
+      res.render("banner/detailBanner", { layout: "layouts/main", data: data, title: "Detail Banner" });
     } catch (error) {
       res.json(error);
     }
@@ -33,6 +33,11 @@ class Controller {
           body.image = url;
         }
 
+        req.session.message = {
+          type: "success",
+          message: "Created successfully",
+        };
+
         // await bannerModel
         //   .create(body)
         //   .then((rs) => {
@@ -46,7 +51,7 @@ class Controller {
       }
     }
 
-    res.render("banner/addBanner", { layout: "layouts/main"});
+    res.render("banner/addBanner", { layout: "layouts/main", title: "Add Banner"});
   }
 
   // async putContent(req, res) {
@@ -80,7 +85,8 @@ class Controller {
 
     res.render("banner/editBanner", {
       layout: "layouts/main",
-      data
+      data,
+      title: "Edit Banner"
     });
   }
 
@@ -95,6 +101,11 @@ class Controller {
       image = url;
     }
 
+    req.session.message = {
+      type: "success",
+      message: "Edited successfully",
+    };
+
     await bannerModel.findByIdAndUpdate(_id, {
       title: title,
       keyword: keyword,
@@ -106,6 +117,11 @@ class Controller {
 
   async delete(req, res) {
     const id = req.params.id;
+
+    req.session.message = {
+      type: "success",
+      message: "Deleted successfully",
+    };
 
     await bannerModel
       .findByIdAndDelete(id)

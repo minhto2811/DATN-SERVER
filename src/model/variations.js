@@ -5,6 +5,7 @@ const Schema = mongoose.Schema;
 
 const Variations = new Schema({
     productId: { type: String, require: true },
+    import_price: { type: Number, require: true},
     price: { type: Number, require: true, default: 0 },
     image: { type: String },
     color: { type: String },

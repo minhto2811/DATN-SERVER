@@ -9,7 +9,6 @@ router.use(checkAdmin);
 router.post('/add', controller.newProduct)
 router.get('/', controller.pageHome)
 router.get('/new', controller.pageNewProduct)
-
 router.get('/update/:id', controller.detailProduct)
 router.put('/update/:id', controller.updateProduct)
 router.delete('/delete/:id', controller.deleteProduct)

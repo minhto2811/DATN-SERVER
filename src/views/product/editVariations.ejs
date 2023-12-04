@@ -92,10 +92,17 @@
             <input class="form-control" type="number" id="quantity" name="quantity" step="1" min="0" value="<%= data.quantity %>" required>
           </div>
         </div>
+
+        <div class="row form-group mb-4">
+          <div class="col">
+            <label for="price">Giá nhập:</label>
+            <input class="form-control" type="number" id="import_price" name="import_price" value="<%= data.import_price %>" required step="1000" min="0">
+          </div>
+        </div>
   
         <div class="row form-group mb-4">
           <div class="col">
-            <label for="price">Giá tiền:</label>
+            <label for="price">Giá bán:</label>
             <input class="form-control" type="number" id="price" name="price" value="<%= data.price %>"  required step="1000" min="0">
           </div>
         </div>

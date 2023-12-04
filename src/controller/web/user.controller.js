@@ -144,8 +144,8 @@ class Controller {
 
   async list(req, res) {
     try {
-      const array = await User.find().sort({ time: -1 });
-      res.render("user/viewUser", { layout: "layouts/main", data: array });
+      const array = await User.find({ role: false });
+      res.render("user/viewUser", { layout: "layouts/main", data: array, title: "User" });
     } catch (error) {
       res.json(error);
     }
@@ -154,7 +154,7 @@ class Controller {
   async detail(req, res) {
     try {
       const data = await User.findById({ _id: req.params.id });
-      res.render("user/detailUser", { layout: "layouts/main", data: data });
+      res.render("user/detailUser", { layout: "layouts/main", data: data, title: "Detail User" });
     } catch (error) {
       res.json(error);
     }
@@ -162,6 +162,12 @@ class Controller {
 
   async insert(req, res) {
     if (req.method == "POST") {
+
+      req.session.message = {
+        type: "success",
+        message: "Created successfully",
+      };
+
       const body = req.body;
       const salt = await bcrypt.genSalt(10);
       const password = body.password;
@@ -171,7 +177,7 @@ class Controller {
       await User.create(body);
       return res.redirect("/user");
     }
-    res.render("user/addUser", { layout: "layouts/main" });
+    res.render("user/addUser", { layout: "layouts/main", title: "Add User" });
   }
 
   async edit(req, res) {
@@ -181,6 +187,7 @@ class Controller {
     res.render("user/editUser", {
       layout: "layouts/main",
       data,
+      title: "Edit User"
     });
   }
 
@@ -188,6 +195,11 @@ class Controller {
 
   async delete(req, res) {
     const id = req.params.id;
+
+    req.session.message = {
+      type: "success",
+      message: "Deleted successfully",
+    };
 
     await User.findByIdAndDelete(id)
       .then((user) => {
@@ -205,7 +217,7 @@ class Controller {
 
   async logout(req, res) {
   
-    res.render('auth/logout', {layout: "layouts/main"})
+    res.render('auth/logout', {layout: "layouts/main", title: 'Logout'})
    
     
   }
