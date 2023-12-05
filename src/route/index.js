@@ -54,7 +54,7 @@ function route(app) {
 
 
     app.get('/', checkAdmin, (req, res) => {
-        res.redirect('/user/login')
+        res.redirect('/product')
     })
 
 
