@@ -191,7 +191,7 @@ class Controller {
       const endDate = new Date();
       const last6Month = new Date(
         endDate.getFullYear(),
-        endDate.getMonth() - 4,
+        endDate.getMonth() - 5,
         1
       );
       let currentDate = new Date(last6Month);
