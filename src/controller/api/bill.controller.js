@@ -10,12 +10,12 @@ class ApiController {
     async createBill(req, res) {
         try {
             var data = req.body
-            console.log("----------------------\n", data)
             let import_total = 0
             let total_price = 0
             var listCart = []
             await Promise.all([
                 (() => {
+                    if (typeof data.address === "string") throw "Vui lòng nhập đúng địa chỉ?"
                     delete data.address._id
                     delete data.address.__v
                     delete data.address.time
@@ -28,6 +28,7 @@ class ApiController {
                     data.transport_fee += shipping.price
                 })(),
                 (async () => {
+                    if (!data.listIdCart || data.listIdCart.length == 0) throw "Hãy chọn ít nhất 1 sản phẩm trong giỏ hàng"
                     listCart = await Cart.find({ _id: { $in: data.listIdCart } })
                 })()
             ])
@@ -134,7 +135,6 @@ class ApiController {
     }
 
     async getAll(req, res) {
-
         try {
             const userId = req.body.userId
             const bills = await Bill.find({ userId: userId, delete: false }).lean()
@@ -157,7 +157,14 @@ class ApiController {
             bill.status = -1
             bill.cancel_order = cancel_order
             res.json({ code: 200, message: "Hủy đơn thành công" })
-            await bill.save()
+            bill.save()
+            await Promise.all(bill.products.map(async (item) => {
+                const variations = await Variations.findById(item.variations_id)
+                if (variations) {
+                    variations.quantity += item.quantity
+                    return variations.save()
+                }
+            }))
         } catch (error) {
             console.log(error)
             res.json({ code: 500, message: "Đã xảy ra lỗi" })
