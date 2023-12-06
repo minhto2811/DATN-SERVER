@@ -71,7 +71,14 @@ class ApiController {
             const comment = await Comment.create(data)
             if (!comment) throw "Đánh giá thất bại"
             res.json({ code: 200, message: "Đánh giá thành công" })
-            await cache.deleteOne()
+            cache.deleteOne()
+            const cm = await Comment.find({ productId: data.productId })
+            if (cm.length > 0) {
+                var num = 0
+                cm.forEach(item => num += item.numStar)
+                num / cm.length
+                Product.findOneAndUpdate(data.productId, { $set: { vote: num } })
+            }
         } catch (error) {
             console.log(error)
             res.json({ code: 500, message: error })
