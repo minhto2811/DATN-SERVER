@@ -19,7 +19,7 @@ passport.use(new LocalStrategy(
             done(null, user)
         } catch (error) {
             console.log(error)
-            done(null, false, { message: error })
+            done(null, false, { msg: error })
         }
 
     }

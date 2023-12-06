@@ -1,11 +1,22 @@
 const bannerModel = require("../../model/news");
 const Brand = require("../../model/brand");
+const Product = require("../../model/product");
 const { uploadImage, deleteImage } = require("../../utils/uploadImage");
 
 class Controller {
   async list(req, res) {
     try {
       const array = await bannerModel.find();
+
+      await Promise.all(
+        array.map(async (i) => {
+          const product = await Product.findById(i.productId);
+          if (product) {
+            i.product_name = product.product_name;;  
+          }
+        })
+      );
+
       res.render("banner/viewBanner", { layout: "layouts/main", data: array, title: "Banner" });
     } catch (error) {
       res.json(error);
@@ -15,6 +26,10 @@ class Controller {
   async detail(req, res) {
     try {
       const data = await bannerModel.findById({ _id: req.params.id });
+      const product = await Product.findById(data.productId);
+      if (product) {
+        data.product_name = product.product_name;;  
+      }
       res.render("banner/detailBanner", { layout: "layouts/main", data: data, title: "Detail Banner" });
     } catch (error) {
       res.json(error);
@@ -38,12 +53,6 @@ class Controller {
           message: "Created successfully",
         };
 
-        // await bannerModel
-        //   .create(body)
-        //   .then((rs) => {
-        //     res.redirect(`/banner`);
-        //   })
-        //   .catch((err) => res.json(err));
           await bannerModel.create(body);
           return res.redirect("/banner");
       } catch (error) {
@@ -51,47 +60,26 @@ class Controller {
       }
     }
 
-    res.render("banner/addBanner", { layout: "layouts/main", title: "Add Banner"});
+    const arr_Pro = await Product.find({ delete: false }).sort({time: -1}).lean();
+
+    res.render("banner/addBanner", { layout: "layouts/main", arr_Pro, title: "Add Banner"});
   }
 
-  // async putContent(req, res) {
-  //   const data = req.body;
-  //   const id_banner = req.params.id;
-  //   if (req.file != null && req.file != undefined) {
-  //     const filename = req.file.filename;
-  //     const filepath = req.file.path;
-  //     const url = await uploadImage(filepath, filename);
-  //     data.image = url;
-  //   }
-  //   if (Object.keys(data).length > 0) {
-  //     try {
-  //       const banner = await bannerModel.findById(id_banner);
-  //       if (!banner) {
-  //         throw "banner not found";
-  //       }
-  //       banner.content.push(data);
-  //       await banner.save();
-  //     } catch (error) {
-  //       console.log(error);
-  //       res.json(error);
-  //     }
-  //   }
-  //   res.redirect(`/banner/edit/${id_banner}`);
-  // }
 
   async edit(req, res) {
-    const id = req.params.id;
     const data = await bannerModel.findById({ _id: req.params.id });
+    const arr_Pro = await Product.find({ delete: false }).sort({time: -1}).lean();
 
     res.render("banner/editBanner", {
       layout: "layouts/main",
       data,
+      arr_Pro,
       title: "Edit Banner"
     });
   }
 
   async editPost(req, res) {
-    let { title, keyword, image, _id, img } = req.body;
+    let { title, productId, image, _id, img } = req.body;
 
     if (req.file != null && req.file != undefined) {
       await deleteImage(img);
@@ -108,7 +96,7 @@ class Controller {
 
     await bannerModel.findByIdAndUpdate(_id, {
       title: title,
-      keyword: keyword,
+      productId: productId,
       image: image,
     });
 
@@ -129,9 +117,6 @@ class Controller {
         if (!banner) {
           throw "Banner not found!";
         }
-        // for (let i = 0; i < banner.content.length; i++) {
-        //     deleteImage(banner.content[i].image)
-        //   }
         deleteImage(banner.image);
         res.redirect("/banner");
       })
