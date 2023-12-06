@@ -41,17 +41,17 @@
       required
     />
     </div>
+  </div>
+
+  <div class="row form-group mb-4">
+
     <div class="col">
-      <label style="margin: 5px;" for="lastName">Keyword</label>
-      <input
-      type="text"
-      class="form-control"
-      id="keyword"
-      name="keyword"
-      value="<%= data.keyword %>"
-      placeholder="Keyword"
-      required
-    />
+      <label for="brand_id">Product:</label>
+      <select class="form-select"  id="productId" name="productId">
+        <% for(let i=0; i < arr_Pro.length; i++) { %>
+          <option value="<%=arr_Pro[i]._id%>" <%=arr_Pro[i]._id==data.productId ? 'selected' :'' %> ><%= arr_Pro[i].product_name %></option>
+        <% } %>
+      </select>
     </div>
   </div>
 

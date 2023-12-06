@@ -33,7 +33,7 @@
         <tr>
           <th scope="col">Id</th>
           <th scope="col">Title</th>
-          <th scope="col">Keyword</th>
+          <th scope="col">Product name</th>
           <th scope="col">Created at</th>
           <th scope="col" class="text-end">Action</th>
         </tr>
@@ -44,7 +44,7 @@
           <tr class="align-middle">
             <td><%= index+1 %></td>
             <td><%= banner.title %></td>
-            <td><%= banner.keyword %></td>
+            <td><%= banner.product_name %></td>
             <td><%= banner.time.toLocaleString('en') %></td>
             <td class="text-end">
   
@@ -83,7 +83,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                Confirm product deletion?
+                Confirm banner deletion?
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Back</button>
