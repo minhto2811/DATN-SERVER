@@ -11,6 +11,7 @@ const router = require('./src/route')
 
 const { PORT, SECRECT, URI_MONGODB } = process.env
 const { passport } = require('./src/utils/authModule')
+const flash = require('connect-flash');
 const MongoStore = require('connect-mongo')
 
 app.use(require('express-session')({
@@ -24,17 +25,19 @@ app.use(require('express-session')({
     })
 }))
 
-//meaasge
-app.use((req, res, next) => {
-    res.locals.message = req.session.message;
-    delete req.session.message;
-    next();
-  });
-
 
 app.use(passport.initialize())
 app.use(passport.session())
+// Connect flash
+app.use(flash());
 
+//meaasge
+app.use((req, res, next) => {
+    res.locals.message = req.session.message;
+    res.locals.error = req.flash('error');
+    delete req.session.message;
+    next();
+  });
 
 
 const { initializeSocket } = require('./src/config/socketManager')

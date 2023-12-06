@@ -12,10 +12,11 @@ passport.use(new LocalStrategy(
         try {
             const user = await User.findOne({ username: username, role: true, enable: true })
             if (!user)
-                throw "User not found"
+                return done(null, false, { message: 'User not found' })
             const matches = await bcrypt.compare(password, user.password)
             if (matches != true)
-                throw "Password not correct"
+                return done(null, false, { message: 'Password not correct' })
+            
             done(null, user)
         } catch (error) {
             console.log(error)

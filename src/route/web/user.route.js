@@ -4,7 +4,7 @@ var router = express.Router()
 const { passport } = require('../../utils/authModule')
 const { checkAdmin } = require('../../midleware/authentication')
 
-router.post('/login', passport.authenticate('local', { failureRedirect: '/user/login', successRedirect: '/product' }))
+router.post('/login', passport.authenticate('local', { failureRedirect: '/user/login', successRedirect: '/product', failureFlash: true }))
 router.get('/login', controller.pageLogin)
 router.get('/register', controller.pageRegister)
 router.post('/register/send-code/:email', controller.sendOtp)

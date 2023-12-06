@@ -13,7 +13,8 @@ const SECRECT = process.env.SECRECT;
 
 class Controller {
   pageLogin(req, res) {
-    res.render("auth/login.ejs", { layout: "layouts/auth", data: null });
+ 
+    res.render("auth/login.ejs", { layout: "layouts/auth", data: null});
   }
 
   pageRegister(req, res) {
