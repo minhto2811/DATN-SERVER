@@ -12,9 +12,7 @@ const Notification = new Schema({
     seen: { type: Boolean, default: false },
     route: { type: String, require: true, default: 'Buttomnavigation' },// có thể trống => điều hướng ứng dụng
     time: { type: Date, default: Date.now, index: { expires: 2592000 } },
-    productId: { type: String },// có thể trống
-    variationId: { type: String },// có thể trống
-    billId: { type: String },// có thể trống
+    dataId: { type: String },// có thể trống
 }, {
     collection: "Notification"
 })

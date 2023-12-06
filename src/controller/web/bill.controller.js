@@ -140,7 +140,7 @@ class Controller {
         body: `Đơn hàng ${bill._id} ${text}`,
         image: "https://img.freepik.com/premium-vector/e-tech-logo_110852-50.jpg",
         route: "OrderDetailScreen",
-        billId: bill._id
+        dataId: bill._id
       }
       Notification.create(noti)
       PushNotification.sendPushNotification(noti);
