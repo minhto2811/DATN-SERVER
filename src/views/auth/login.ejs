@@ -30,16 +30,25 @@
           <h2>Hello, Again</h2>
           <p>We are happy to have you back.</p>
         </div>
-        <lable id="lable-error"></lable>
+        <% if(error != ''){ %>
+          <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <%= error %>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true"></span>
+            </button>
+          </div>
+          
+          <% } %>
         <form action="/user/login" method="POST">
           <div class="input-group mb-3">
             <input type="email" class="form-control form-control-lg bg-light fs-6" placeholder="Email address"
-              name="username" id="username" value="<%= data ? data.username : '' %>" />
+              name="username" id="username" value="<%= data ? data : '' %>" />
           </div>
           <div class="input-group mb-1">
             <input type="password" class="form-control form-control-lg bg-light fs-6" placeholder="Password"
-              name="password" id="password" value="<%= data ? data.password : '' %>" />
+              name="password" id="password" value="" />
           </div>
+          
           <div class="input-group mb-5 d-flex justify-content-between">
             <div class="form-check">
               <!-- <input type="checkbox" class="form-check-input" id="formCheck" />
@@ -66,12 +75,3 @@
   </div>
 </div>
 
-<script>
-  let message = "<%= data ? data.error : '' %>"
-  const color = (message.length > 0) ? 'red' : 'grey'
-  document.getElementById('username').style.borderColor = color
-  document.getElementById('password').style.borderColor = color
-  const lable = document.getElementById('lable-error')
-  lable.textContent = message
-  lable.style.display = (message.length > 0) ? 'block' : 'none'
-</script>

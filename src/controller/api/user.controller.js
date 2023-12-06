@@ -186,7 +186,7 @@ class ApiController {
             }
             const salt = await bcrypt.genSalt(10)
             const hashPass = await bcrypt.hash(password, salt)
-            const update = await User.updateOne({ username: username }, { $set: { password: password } })
+            const update = await User.updateOne({ username: username }, { $set: { password: hashPass } })
             if (!update) {
                 throw "Cập nhật thất bại"
             }
