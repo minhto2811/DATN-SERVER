@@ -8,9 +8,9 @@ const TypeProduct = require('../../model/typeProduct')
 
 class ApiController {
     async add(req, res) {
-        const userId = req.body.userId
-        const productId = req.body.productId
         try {
+            const userId = req.body.userId
+            const productId = req.body.productId
             res.json({ code: 200, message: "Thêm sản phẩm yêu thích thành công" })
             const favoriteFind = await Favorite.findOne({ userId: userId, productId: productId })
             if (!favoriteFind) await Favorite.create({ userId: userId, productId: productId })
@@ -21,8 +21,8 @@ class ApiController {
     }
 
     async getAll(req, res) {
-        const userId = req.body.userId
         try {
+            const userId = req.body.userId
             const favorite = await Favorite.find({ userId: userId })
             if (favorite.length == 0) return res.json([])
             var list_favorite = []
@@ -45,7 +45,7 @@ class ApiController {
                         }
                     })(),
                 ])
-                list_favorite.push(product)
+                list_favorite.push(product[0])
             }))
             res.json(list_favorite)
         } catch (error) {
@@ -55,9 +55,9 @@ class ApiController {
     }
 
     async delete(req, res) {
-        const userId = req.body.userId
-        const productId = req.body.productId
         try {
+            const userId = req.body.userId
+            const productId = req.body.productId
             res.json({ code: 200, message: "Xóa dữ liệu thành công" })
             await Favorite.findOneAndDelete({ userId: userId, productId: productId })
         } catch (error) {
@@ -66,10 +66,23 @@ class ApiController {
         }
     }
 
-    async check(req, res) {
-        const userId = req.body.userId
-        const productId = req.body.productId
+    async deleteList(req, res) {
         try {
+            const userId = req.body.userId
+            const listProductId = req.body.listProductId
+            res.json({ code: 200, message: "Xóa dữ liệu thành công" })
+            const fav = await Favorite.find({ userId: userId, productId: { $in: listProductId } })
+            fav.forEach(item => item.deleteOne())
+        } catch (error) {
+            console.log(error)
+            res.json(error)
+        }
+    }
+
+    async check(req, res) {
+        try {
+            const userId = req.body.userId
+            const productId = req.body.productId
             const favorite = await Favorite.findOne({ userId: userId, productId: productId })
             res.json(!(!favorite))
         } catch (error) {

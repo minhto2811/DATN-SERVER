@@ -164,6 +164,9 @@ class ApiController {
             if (!user.avatar) {
                 user.avatar = "https://firebasestorage.googleapis.com/v0/b/shopping-6b085.appspot.com/o/user%2Fuser.png?alt=media&token=794ad4dc-302b-4708-b102-ccbaf80ea567&_gl=1*e1jpw6*_ga*NDE5OTAxOTY1LjE2OTUwMDQ5MjM.*_ga_CW55HF8NVT*MTY5NzExMzA0MS4yMS4xLjE2OTcxMTMzMjcuNTkuMC4w"
             }
+            if (!user.background) {
+                user.background = "https://s3.cloud.cmctelecom.vn/tinhte2/2019/07/4731556_Cover.jpg"
+            }
             delete user.password
             delete user.enable
             delete user.role

@@ -30,6 +30,7 @@ class ApiController {
                 (async () => {
                     if (!data.listIdCart || data.listIdCart.length == 0) throw "Hãy chọn ít nhất 1 sản phẩm trong giỏ hàng"
                     listCart = await Cart.find({ _id: { $in: data.listIdCart } })
+                    if(listCart.length ==0) throw "Hãy chọn ít nhất 1 sản phẩm trong giỏ hàng"
                 })()
             ])
 
