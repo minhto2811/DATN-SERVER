@@ -203,18 +203,16 @@ class ApiController {
     async addAddress(req, res) {
         const data = req.body
         try {
-            const numberPhonePattern = /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/
+            const numberPhonePattern = /^(0[2-9]|84[2-9]|\\+84[2-9]|00842[2-9])[0-9]{8}$/
             const isNumberPhone = numberPhonePattern.test(data.numberphone)
-            if (!isNumberPhone) {
-                throw "Số điện thoại không hợp lệ!"
-            }
-            const user = await User.findById(data.userId)
+            if (!isNumberPhone) throw "Số điện thoại không hợp lệ!"
             const address = await Address.create(data)
-            // if (!user.default_address) {
-            //     user.default_address = address
-            //     await user.save()
-            // }
-            res.json({ code: 200, message: "Thêm địa chỉ thành công", address: address })
+            res.json({ code: 200, message: "Thêm địa chỉ thành công" })
+            const user = await User.findById(data.userId)
+            if (!user.default_address) {
+                user.default_address = address
+                await user.save()
+            }
         } catch (error) {
             console.log(error)
             res.json({ code: 500, message: error })
@@ -227,10 +225,10 @@ class ApiController {
         const userId = req.body.userId
         try {
             const address = await Address.find({ userId: userId })
-            res.json({ code: 200, data: address })
+            res.json(address)
         } catch (error) {
             console.log(error)
-            res.json({ code: 500, message: error })
+            res.json([])
         }
     }
 
@@ -241,6 +239,7 @@ class ApiController {
             if (!address) {
                 throw "Không tìm thấy địa chỉ!"
             }
+            res.json({ code: 200, message: "Cập nhật địa chỉ thành công" })
             await address.updateOne({ $set: data })
             const user = await User.findById(data.userId)
 
@@ -248,7 +247,7 @@ class ApiController {
                 user.default_address = data
                 await user.save()
             }
-            res.json({ code: 200, message: "Cập nhật địa chỉ thành công", data })
+
 
         } catch (error) {
             console.log(error)
@@ -257,22 +256,49 @@ class ApiController {
     }
 
     async deleteAddress(req, res) {
-        const data = req.body
+
         try {
-            const address = await Address.findById(data._id)
+            const addressId = req.body.addressId
+            const address = await Address.findById(addressId)
             if (!address) {
                 throw "Không tìm thấy địa chỉ!"
             }
-            await address.deleteOne()
-            const user = await User.findById(data.userId)
-            if (user.default_address._id == data._id) {
+            res.json({ code: 200, message: "Xóa địa chỉ thành công" })
+            address.deleteOne()
+            const user = await User.findById(req.body.userId)
+            if (user.default_address._id == addressId) {
+                const newAdress = await Address.findOne({ userId: req.body.userId })
+                if (newAdress) {
+                    user.default_address = newAdress
+                    await user.save()
+                }
+            }
+        } catch (error) {
+            console.log(error)
+            res.json({ code: 500, message: error })
+        }
+    }
+
+
+    async deleteListAddress(req, res) {
+        try {
+            const listAddressId = req.body.listAddressId
+            if (listAddressId.length == 0) throw "Lỗi"
+            res.json({ code: 200, message: "Xóa địa chỉ thành công" })
+            const deletePromises = listAddressId.map(async (id) => {
+                const result = await Address.findByIdAndDelete(id);
+                return result;
+            });
+            await Promise.all(deletePromises)
+            const user = await User.findById(req.body.userId)
+            if (listAddressId.lastIndexOf(user.default_address._id) > 0) {
                 const newAdress = await Address.findOne({ userId: data.userId })
                 if (newAdress) {
                     user.default_address = newAdress
                     await user.save()
                 }
             }
-            res.json({ code: 200, message: "Xóa địa chỉ thành công" })
+
         } catch (error) {
             console.log(error)
             res.json({ code: 500, message: error })
@@ -352,7 +378,7 @@ class ApiController {
             const hashPass = await bcrypt.hash(newPass, salt)
             user.password = hashPass
             await user.save()
-            const token = await jwt.sign({ userId: user._id, password: newPass, role: user.role }, SECRECT)
+            const token = await jwt.sign({ userId: user._id, password: newPass }, SECRECT)
             if (!token) throw "Tạo token mới thất bại"
             res.json({ token: token })
         } catch (error) {
