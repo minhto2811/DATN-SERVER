@@ -6,7 +6,7 @@ const expirationDate = new Date(currentDate);
 expirationDate.setDate(currentDate.getDate() + 30);
 
 const Voucher = new Schema({
-    userId: { type: Schema.ObjectId, require: true },
+    userId: { type: Schema.ObjectId},
     code: { type: String, require: true },
     all: { type: Boolean, default: false },
     condition: { type: Number, default: 0, require: true },// Điều kiện sử dụng, giá trị hóa đơn bao gồm phí vận chuyển

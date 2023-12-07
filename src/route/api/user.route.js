@@ -19,7 +19,9 @@ router.post('/forgot-password', controller.forgotPassword)
 router.post('/address/new', checkUser, controller.addAddress)
 router.get('/address/get-all', checkUser, controller.getAddress)
 router.post('/address/update', checkUser, controller.updateAddress)
-router.delete('/address/delete', checkUser, controller.deleteAddress)
+router.post('/address/delete', checkUser, controller.deleteAddress)
+router.post('/address/delete-list', checkUser, controller.deleteListAddress)
+
 
 //Cập nhật
 router.post('/update/avatar',  upload.single('avatar') , checkUser, controller.updateAvatar)
