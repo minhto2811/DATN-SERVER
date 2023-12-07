@@ -1,5 +1,6 @@
 const Noti = require("../../model/notification");
 const { uploadImage, deleteImage } = require("../../utils/uploadImage");
+const PushNotification = require('../../utils/pushNotification');
 
 class Controller {
   async list(req, res) {
@@ -39,8 +40,11 @@ class Controller {
         };
 
         body.all = true;
-    
         await Noti.create(body);
+
+        body.route = "ButtonNavigation"
+        PushNotification.sendPushNotification(body);
+
         return res.redirect("/notification");
       } catch (error) {
         console.log(error);
