@@ -121,7 +121,6 @@ class ApiController {
 
     async login(req, res) {
         const { username, password } = req.body
-        console.log(username, password)
         try {
             const user = await User.findOne({ username: username.toLowerCase(), enable: true, role: false }).lean()
             if (!user) {
@@ -180,17 +179,19 @@ class ApiController {
     }
 
     async forgotPassword(req, res) {
-        const username = req.body.username
-        const password = req.body.password
         try {
+            const { username, password } = req.body
+            console.log(username, password)
             const otp = await Otp.findOne({ username: username }).sort({ _id: -1 })
             if (!otp || otp.type != 2 || otp.confirm == false) {
                 throw "Yêu cầu xác nhận email"
             }
             const salt = await bcrypt.genSalt(10)
             const hashPass = await bcrypt.hash(password, salt)
+            console.log(salt, hashPass)
             const update = await User.updateOne({ username: username }, { $set: { password: hashPass } })
-            if (!update) {
+            console.log(update)
+            if (update.modifiedCount == 0) {
                 throw "Cập nhật thất bại"
             }
             res.json({ code: 200, message: "Cập nhật thành công" })
