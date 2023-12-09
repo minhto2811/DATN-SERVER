@@ -10,6 +10,12 @@ router.get('/register', controller.pageRegister)
 router.post('/register/send-code/:email', controller.sendOtp)
 router.post('/register', controller.register)
 
+router.get('/email', controller.fogortpw)
+router.post('/email', controller.fogortpw2)
+router.post('/send-code', controller.sendOtp2)
+router.post('/passwd', controller.passWd)
+
+
 router.use(checkAdmin);
 
 router.get('/', controller.list)

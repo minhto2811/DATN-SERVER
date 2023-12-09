@@ -34,11 +34,11 @@
           <div class="alert alert-danger alert-dismissible fade show" role="alert">
             <%= error %>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
-              <span aria-hidden="true"></span>
+              <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          
           <% } %>
+
         <form action="/user/login" method="POST">
           <div class="input-group mb-3">
             <input type="email" class="form-control form-control-lg bg-light fs-6" placeholder="Email address"
@@ -55,7 +55,7 @@
               <label for="formCheck" class="form-check-label text-secondary"><small>Remember Me</small></label> -->
             </div>
             <div class="forgot">
-              <small><a href="#">Forgot Password?</a></small>
+              <small><a href="/user/email">Forgot Password?</a></small>
             </div>
           </div>
           <div class="input-group mb-3">

@@ -339,6 +339,7 @@ async function getTotalCustomer(previusDate, nowDate) {
       $gte: previusDate,
       $lte: nowDate,
     },
+    role: false
   });
   if (listClient) {
     return listClient.length;

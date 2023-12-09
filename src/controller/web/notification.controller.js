@@ -51,7 +51,7 @@ class Controller {
       }
      
     }
-    req.session.message = '';
+
     res.render("notification/addNoti", { layout: "layouts/main", title: "Add notification"  });
   } 
 
@@ -67,7 +67,7 @@ class Controller {
   }
 
   async editPost(req, res) {
-    let { title, description, image, _id, img } = req.body;
+    let { title, body, image, _id, img } = req.body;
 
     if (req.file != null && req.file != undefined) {
       await deleteImage(img);
@@ -84,7 +84,7 @@ class Controller {
   
     await Noti.findByIdAndUpdate(_id,{
       title: title,
-      description : description,
+      body : body,
       image: image
     });
   

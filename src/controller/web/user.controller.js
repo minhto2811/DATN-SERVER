@@ -4,8 +4,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const otpGenerator = require("otp-generator");
 const { sendEmail } = require("../../utils/emailSender");
-const { uploadImage, deleteImage } = require('../../utils/uploadImage')
-
+const { uploadImage, deleteImage } = require("../../utils/uploadImage");
 
 require("dotenv").config;
 
@@ -13,8 +12,7 @@ const SECRECT = process.env.SECRECT;
 
 class Controller {
   pageLogin(req, res) {
- 
-    res.render("auth/login.ejs", { layout: "layouts/auth", data: null});
+    res.render("auth/login.ejs", { layout: "layouts/auth", data: null });
   }
 
   pageRegister(req, res) {
@@ -98,6 +96,113 @@ class Controller {
       });
     }
   }
+  async fogortpw(req, res) {
+    res.render("auth/email.ejs", {
+      layout: "layouts/auth",
+      error: null,
+    });
+  }
+
+  async fogortpw2(req, res) {
+
+      const email = req.body.email;
+        const emailPattern = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+        const isEmail = emailPattern.test(email);
+        if (!isEmail) {
+          return res.render("auth/email.ejs", {
+            layout: "layouts/auth",
+            error: "Email invalid!",
+          });
+        }
+
+        const check = await User.findOne({ username: email, role: true });
+        if (!check) {
+          return res.render("auth/email.ejs", {
+            layout: "layouts/auth",
+            error: "User not found",
+          });
+        }
+        
+        const num = await otpGenerator.generate(6, {
+          upperCaseAlphabets: false,
+          specialChars: false,
+          lowerCaseAlphabets: false,
+        });
+        const salt = await bcrypt.genSalt(10);
+        const subject = "Xác nhận email";
+        const text = `Mã xác nhận của bạn là ${num}`;
+
+        sendEmail(email, subject, text);
+        const otp = await bcrypt.hash(num, salt);
+        await Otp.create({ username: email, otp: otp });
+
+        res.render("auth/otp.ejs", {
+          layout: "layouts/auth",
+          error: null,
+          username: email
+        });
+     
+  }
+
+  async sendOtp2(req, res) {
+
+    const otp = req.body.code;
+    const username = req.body.username;
+
+    try {
+      const otpHolder = await Otp.findOne({username: req.body.username}).sort({
+        time: -1,
+      });
+      if (!otpHolder) {
+        throw "OTP authentication failed!";
+      }
+      if (otpHolder.length == 0) {
+        throw "Please verify your email before registering";
+      }
+      const hashOtp = otpHolder.otp;
+      const matches = await bcrypt.compare(otp, hashOtp);
+      if (!matches) {
+        throw "OTP not correct!";
+      }
+      await Otp.deleteMany({username: req.body.username});
+
+      res.render("auth/password.ejs", {
+        layout: "layouts/auth",
+        error: null,
+        username
+      });
+
+    } catch (error) {
+      console.log(error);
+      res.render("auth/otp.ejs", {
+        layout: "layouts/auth",
+        error: error,
+        username
+      });
+    }
+
+  }
+
+  async passWd(req, res) {
+    const {username, password, password1} = req.body;
+    const user = await User.findOne({ username: req.body.username })
+
+    if(password != password1){
+      return res.render("auth/password.ejs", {
+        layout: "layouts/auth",
+        error: 'Passwords do not match',
+        username
+      });
+    }
+
+    const salt = await bcrypt.genSalt(10);
+    const hashPass = await bcrypt.hash(password, salt);
+    user.password = hashPass;
+    user.save();
+
+    res.redirect('/user/login');
+
+  }
 
   async register(req, res) {
     const body = req.body;
@@ -105,7 +210,9 @@ class Controller {
     const otp = body.code;
     delete body.code;
     try {
-      const otpHolder = await Otp.findOne({ username: body.username }).sort({ time: -1})
+      const otpHolder = await Otp.findOne({ username: body.username }).sort({
+        time: -1,
+      });
       if (!otpHolder) {
         throw "OTP authentication failed!";
       }
@@ -146,7 +253,12 @@ class Controller {
   async list(req, res) {
     try {
       const array = await User.find({ role: false });
-      res.render("user/viewUser", { layout: "layouts/main", data: array, title: "User" });
+      console.log(array.length);
+      res.render("user/viewUser", {
+        layout: "layouts/main",
+        data: array,
+        title: "User",
+      });
     } catch (error) {
       res.json(error);
     }
@@ -155,7 +267,11 @@ class Controller {
   async detail(req, res) {
     try {
       const data = await User.findById({ _id: req.params.id });
-      res.render("user/detailUser", { layout: "layouts/main", data: data, title: "Detail User" });
+      res.render("user/detailUser", {
+        layout: "layouts/main",
+        data: data,
+        title: "Detail User",
+      });
     } catch (error) {
       res.json(error);
     }
@@ -163,7 +279,6 @@ class Controller {
 
   async insert(req, res) {
     if (req.method == "POST") {
-
       req.session.message = {
         type: "success",
         message: "Created successfully",
@@ -188,11 +303,11 @@ class Controller {
     res.render("user/editUser", {
       layout: "layouts/main",
       data,
-      title: "Edit User"
+      title: "Edit User",
     });
   }
 
-  async editPost(req, res) { }
+  async editPost(req, res) {}
 
   async delete(req, res) {
     const id = req.params.id;
@@ -207,7 +322,7 @@ class Controller {
         if (!user) {
           throw "User not found!";
         }
-        // deleteImage(user.avatar);
+        // if(user.avatar != 'https://s.net.vn/za1l') deleteImage(user.avatar);
         res.redirect("/user");
       })
       .catch((err) => {
@@ -217,27 +332,17 @@ class Controller {
   }
 
   async logout(req, res) {
-  
-    res.render('auth/logout', {layout: "layouts/main", title: 'Logout'})
-   
-    
+    res.render("auth/logout", { layout: "layouts/main", title: "Logout" });
   }
 
   async logoutP(req, res) {
-  
-    req.logout(function(err) {
-      if (err) { return next(err); }
-      res.redirect('/');
+    req.logout(function (err) {
+      if (err) {
+        return next(err);
+      }
+      res.redirect("/");
     });
-   
   }
-
- 
 }
-
-
-
-
-
 
 module.exports = new Controller();
