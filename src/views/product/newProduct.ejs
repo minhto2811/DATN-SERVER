@@ -1,6 +1,6 @@
 <div class="d-flex justify-content-between flex-wrap flex-md nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
 
-  <h1 class="h2">Product</h1>
+  <h1 class="h2">Sản phẩm</h1>
   <div class="btn-toolbar mb-2 mb-md 0">
     <div class="btn-group me-2">
     </div>
@@ -12,13 +12,13 @@
     <div class="col">
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="/product">Product</a></li>
-          <li class="breadcrumb-item active">New product</li>
+          <li class="breadcrumb-item"><a href="/product">Sản phẩm</a></li>
+          <li class="breadcrumb-item active">sản phẩm mới</li>
         </ol>
       </nav>
     </div>
     <div class="col text-end fw-lighter">
-      <b>Product</b>
+
     </div>
   </div>
 </div>
@@ -28,7 +28,7 @@
   <div class="row form-group mb-4">
 
     <div class="col">
-      <label for="product_type_id">Chọn loại sản phẩm:</label>
+      <label for="product_type_id">Chọn loại:</label>
       <select class="form-select"  id="product_type_id" name="product_type_id">
         <% for(let i=0; i < type.length; i++) { %>
           <option value="<%=type[i]._id%>"><%= type[i].name %></option>
@@ -48,7 +48,7 @@
   <div class="row form-group mb-4">
 
     <div class="col">
-      <label for="brand_id">Chọn hãng sản phẩm:</label>
+      <label for="brand_id">Chọn hãng:</label>
       <select class="form-select"  id="brand_id" name="brand_id">
         <% for(let i=0; i < brand.length; i++) { %>
           <option value="<%=brand[i]._id%>"><%= brand[i].brand %></option>
@@ -59,7 +59,7 @@
 
   <div class="row form-group mb-4">
     <div class="col">
-      <label for="percent_discount">Phần trăm giảm giá:</label>
+      <label for="percent_discount">Giảm giá(%):</label>
       <input class="form-control" type="number" step="1" id="percent_discount" name="percent_discount" value="0"
         required>
     </div>

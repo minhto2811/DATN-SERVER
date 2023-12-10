@@ -257,7 +257,7 @@ class Controller {
       res.render("user/viewUser", {
         layout: "layouts/main",
         data: array,
-        title: "User",
+        title: "Người dùng",
       });
     } catch (error) {
       res.json(error);
@@ -270,7 +270,7 @@ class Controller {
       res.render("user/detailUser", {
         layout: "layouts/main",
         data: data,
-        title: "Detail User",
+        title: "Người dùng",
       });
     } catch (error) {
       res.json(error);
@@ -293,7 +293,7 @@ class Controller {
       await User.create(body);
       return res.redirect("/user");
     }
-    res.render("user/addUser", { layout: "layouts/main", title: "Add User" });
+    res.render("user/addUser", { layout: "layouts/main", title: "Người dùng" });
   }
 
   async edit(req, res) {
@@ -332,7 +332,7 @@ class Controller {
   }
 
   async logout(req, res) {
-    res.render("auth/logout", { layout: "layouts/main", title: "Logout" });
+    res.render("auth/logout", { layout: "layouts/main", title: "Đăng xuất" });
   }
 
   async logoutP(req, res) {

@@ -9,7 +9,7 @@ totalInterests = JSON.parse(totalInterests)
 
 var options = {
     title: {
-        text: 'Revenue statistics table',
+        text: 'Bảng thống kê doanh thu',
         align: 'center',
         style: {
             fontSize: '23px',
@@ -19,13 +19,13 @@ var options = {
         },
     },
     series: [{
-        name: 'Revenue',
+        name: 'Doanh thu',
         data:  totalBills
     }, {
-        name: 'Expense',
+        name: 'Chi phí',
         data: totalBillsProduct
     }, {
-        name: 'Profit',
+        name: 'Lợi nhuận',
         data: totalInterests
     }],
     colors: [

@@ -5,7 +5,7 @@ class Controller {
   async list(req, res) {
     try {
       const data = await Brand.find();
-      res.render("brand/viewBrand", { layout: "layouts/main", data, title: "Brand" });
+      res.render("brand/viewBrand", { layout: "layouts/main", data, title: "Thương hiệu" });
     } catch (error) {
       res.json(error);
     }
@@ -14,7 +14,7 @@ class Controller {
   async detail(req, res) {
     try {
       const data = await Brand.findById({ _id: req.params.id });
-      res.render("brand/detailBrand", { layout: "layouts/main", data: data, title: "Detail Brand" });
+      res.render("brand/detailBrand", { layout: "layouts/main", data: data, title: "Thương hiệu" });
     } catch (error) {
       res.json(error);
     }
@@ -44,7 +44,7 @@ class Controller {
       }
      
     }
-    res.render("brand/addBrand", { layout: "layouts/main", title: "Add Brand" });
+    res.render("brand/addBrand", { layout: "layouts/main", title: "Thương hiệu" });
   }
 
   async edit(req, res) {

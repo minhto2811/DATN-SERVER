@@ -32,7 +32,7 @@ class Controller {
       res.render("product/viewProduct.ejs", {
         layout: "layouts/main",
         data: array,
-        title: "Product"
+        title: "Sản phẩm"
       });
     } catch (error) {
       res.json(error);
@@ -56,7 +56,7 @@ class Controller {
       })()
       ])
 
-      res.render("product/newProduct.ejs", { layout: "./layouts/main", brand: arrBrand, type: typeProduct, title: "Add Product" });
+      res.render("product/newProduct.ejs", { layout: "./layouts/main", brand: arrBrand, type: typeProduct, title: "Sản phẩm" });
     } catch (error) {
       console.log(error)
       res.json(error)
@@ -169,12 +169,12 @@ class Controller {
 
   async add2Description(req, res) {
     const id = req.params.id
-    res.render('description/addDes', {layout: './layouts/main', productId: id, title: "Add Product"})
+    res.render('description/addDes', {layout: './layouts/main', productId: id, title: "Sản phẩm"})
   }
   async editDescription(req, res) {
     const id = req.params.id;
     const data = await Description.findById(id);
-    res.render('description/editDes', {layout: './layouts/main', data, title: "Edit Product"})
+    res.render('description/editDes', {layout: './layouts/main', data, title: "Sản phẩm"})
   }
 
   async edit2Description(req, res) {
@@ -231,7 +231,7 @@ class Controller {
     try {
       const data = await Variations.find({ productId: productId, delete: false })
       data.forEach(item => delete item.delete)
-      res.render('product/variations.ejs', { layout: './layouts/main', data, productId: productId, title: "Product" })
+      res.render('product/variations.ejs', { layout: './layouts/main', data, productId: productId, title: "Sản phẩm" })
     } catch (error) {
       res.json(error)
     }
@@ -261,7 +261,7 @@ class Controller {
         }
       })()
       ])
-      res.render('product/detailProduct.ejs', { layout: './layouts/main', product: data, brand: arrBrand, type: typeProduct, title: "Update Product" })
+      res.render('product/detailProduct.ejs', { layout: './layouts/main', product: data, brand: arrBrand, type: typeProduct, title: "Sản phẩm" })
     } catch (error) {
       res.json(error)
     }
@@ -274,7 +274,7 @@ class Controller {
       if (!product)
         throw "Không tìm thấy sản phẩm"
       const condition = (product.product_type_id == "6554f942866f4e5773778e10")
-      res.render('product/newVariations.ejs', { layout: './layouts/main', productId: productId, condition: condition, title: "Add Product" })
+      res.render('product/newVariations.ejs', { layout: './layouts/main', productId: productId, condition: condition, title: "Sản phẩm" })
     } catch (error) {
       res.json(error)
     }
@@ -356,7 +356,7 @@ class Controller {
 
     const variations = await Variations.findById(id);
 
-    res.render('product/editVariations',{layout: './layouts/main', condition, productId, data: variations, title: "Edit Product"} )
+    res.render('product/editVariations',{layout: './layouts/main', condition, productId, data: variations, title: "Sản phẩm"} )
 
   }
 
@@ -399,7 +399,7 @@ class Controller {
       if (!descriptions) {
         throw "Không lấy được mô tả sản phẩm"
       }
-      res.render('description/viewDes.ejs', { layout: './layouts/main', productId: id, descriptions: descriptions, title: "Product" })
+      res.render('description/viewDes.ejs', { layout: './layouts/main', productId: id, descriptions: descriptions, title: "Sản phẩm" })
     } catch (error) {
       console.log(error)
       res.json(error)

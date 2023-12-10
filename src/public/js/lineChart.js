@@ -5,7 +5,7 @@ totalCustomers = JSON.parse(totalCustomers)
 
 var options = {
     title: {
-        text: 'Number of new customers',
+        text: 'Số lượng khách hàng mới',
         align: 'left',
         style: {
             fontSize: '18px',

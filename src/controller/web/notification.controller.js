@@ -6,7 +6,7 @@ class Controller {
   async list(req, res) {
     try {
       const data = await Noti.find({all: true});
-      res.render("notification/viewNoti", { layout: "layouts/main", data, title: "Notification" });
+      res.render("notification/viewNoti", { layout: "layouts/main", data, title: "Thông báo" });
     } catch (error) {
       res.json(error);
     }
@@ -16,7 +16,7 @@ class Controller {
     try {
       delete req.session.message;
       const data = await Noti.findById({ _id: req.params.id });
-      res.render("notification/detailNoti", { layout: "layouts/main", data, title: "Detail notification" });
+      res.render("notification/detailNoti", { layout: "layouts/main", data, title: "Thông báo" });
     } catch (error) {
       res.json(error);
     }
@@ -45,14 +45,14 @@ class Controller {
         body.route = "ButtonNavigation"
         PushNotification.sendPushNotification(body);
 
-        return res.redirect("/notification");
+        return res.redirect("/Thông báo");
       } catch (error) {
         console.log(error);
       }
      
     }
 
-    res.render("notification/addNoti", { layout: "layouts/main", title: "Add notification"  });
+    res.render("notification/addNoti", { layout: "layouts/main", title: "Thông báo"  });
   } 
 
   async edit(req, res) {
@@ -62,7 +62,7 @@ class Controller {
     res.render("notification/editNoti", {
       layout: "layouts/main",
       data,
-      title: "Notification of successful editing"
+      title: "Thông báo"
     });
   }
 
@@ -105,7 +105,7 @@ class Controller {
           throw "Notification not found!";
         }
         deleteImage(notification.image);
-        res.redirect("/notification");
+        res.redirect("/Thông báo");
       })
       .catch((err) => {
         console.log(err);

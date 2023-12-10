@@ -1,9 +1,8 @@
 <div class="d-flex justify-content-between flex-wrap flex-md nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-    <h1 class="h2">Detail Bill</h1>
+    <h1 class="h2">Chi tiết hóa đơn</h1>
     <div class="btn-toolbar mb-2 mb-md 0">
       <div class="btn-group me-2">
-        <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
-        <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
+        
       </div>
     </div>
   </div>
@@ -14,13 +13,13 @@
       <div class="col">
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="/bill/?status=0">Bill</a></li>
+            <li class="breadcrumb-item"><a href="/bill/?status=0">Hóa đơn</a></li>
             <li class="breadcrumb-item active">...</li>
           </ol>
         </nav>
       </div>
       <div class="col text-end fw-lighter">
-        <b>Bill</b>
+        <b></b>
       </div>
     </div>
   
@@ -31,7 +30,7 @@
   
     <li class="list-group-item"> 
       <div class="row">
-        <div class="col" style="max-width: 140px"> <b>User name:</b></div>
+        <div class="col" style="max-width: 140px"> <b>Người dùng:</b></div>
         <div class="col"><%= data?.username %></div>
       </div>
     </li>
@@ -39,7 +38,7 @@
   
     <li class="list-group-item"> 
       <div class="row">
-        <div class="col" style="max-width: 140px"> <b>Product:</b></div>
+        <div class="col" style="max-width: 140px"> <b>Sản phẩm:</b></div>
             <% for (let pro of data?.products) {%>
           <div class="col">
             <tr>
@@ -64,21 +63,21 @@
 
     <li class="list-group-item"> 
       <div class="row">
-        <div class="col" style="max-width: 140px"> <b>Transport_fee:</b></div>
+        <div class="col" style="max-width: 140px"> <b>Phí vận chuyển:</b></div>
         <div class="col"><%= data?.transport_fee%></div>
       </div>
     </li>
 
     <li class="list-group-item"> 
         <div class="row">
-          <div class="col" style="max-width: 140px"> <b>Shipping method:</b></div>
+          <div class="col" style="max-width: 140px"> <b>Phương pháp vận chuyển:</b></div>
           <div class="col"><%= data?.shipping_method%></div>
         </div>
       </li>
 
       <li class="list-group-item"> 
         <div class="row">
-          <div class="col" style="max-width: 140px"> <b>Payment method:</b></div>
+          <div class="col" style="max-width: 140px"> <b>Phương thức thanh toán:</b></div>
           <div class="col"><%= data?.payment_method%></div>
         </div>
       </li>
@@ -92,7 +91,7 @@
 
       <li class="list-group-item"> 
         <div class="row">
-          <div class="col" style="max-width: 140px"> <b>Status:</b></div>
+          <div class="col" style="max-width: 140px"> <b>Trạng thái:</b></div>
           <div class="col"><%= data?.statusText%></div>
         </div>
       </li>
@@ -100,21 +99,21 @@
   
       <li class="list-group-item"> 
         <div class="row">
-          <div class="col" style="max-width: 140px"> <b>Note:</b></div>
+          <div class="col" style="max-width: 140px"> <b>Ghi chú:</b></div>
           <div class="col"><%= (data?.note) ? data?.note : "No data" %></div>
         </div>
       </li>
 
       <li class="list-group-item"> 
         <div class="row">
-          <div class="col" style="max-width: 140px"> <b>Import total:</b></div>
+          <div class="col" style="max-width: 140px"> <b>Tổng tiền chi:</b></div>
           <div class="col"><%= (data?.import_total) ? data?.import_total : "No data" %></div>
         </div>
       </li>
 
     <li class="list-group-item"> 
         <div class="row">
-          <div class="col" style="max-width: 140px"> <b>Total:</b></div>
+          <div class="col" style="max-width: 140px"> <b>Tổng tiền thu:</b></div>
           <div class="col"><%= data?.total_price.toLocaleString() %> VND</div>
         </div>
       </li>
@@ -122,7 +121,7 @@
      
     <li class="list-group-item"> 
       <div class="row">
-        <div class="col" style="max-width: 140px"> <b>Date Created:</b></div>
+        <div class="col" style="max-width: 140px"> <b>Ngày tạo:</b></div>
         <div class="col"><%= data?.time.toLocaleString('en') %></div>
       </div>
     </li>

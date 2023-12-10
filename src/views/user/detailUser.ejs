@@ -1,5 +1,5 @@
 <div class="d-flex justify-content-between flex-wrap flex-md nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-    <h1 class="h2">Detail data</h1>
+    <h1 class="h2">Chi tiết người dùng</h1>
     <div class="btn-toolbar mb-2 mb-md 0">
       <div class="btn-group me-2">
         
@@ -13,13 +13,13 @@
       <div class="col">
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="/">User</a></li>
+            <li class="breadcrumb-item"><a href="/user">Người dùng</a></li>
             <li class="breadcrumb-item active"><%= data.username  %></li>
           </ol>
         </nav>
       </div>
       <div class="col text-end fw-lighter">
-        <b>User</b>
+
       </div>
     </div>
   
@@ -29,21 +29,21 @@
   
     <li class="list-group-item"> 
       <div class="row">
-        <div class="col" style="max-width: 140px" > <b>Avatar: </b></div>
+        <div class="col" style="max-width: 140px" > <b>Hình ảnh đại diện:: </b></div>
         <img class="col" style="max-width: 150px" src="<%= data.avatar %>" alt="">
       </div>
     </li>
   
     <li class="list-group-item"> 
       <div class="row">
-        <div class="col" style="max-width: 140px"> <b>Full name:</b></div>
+        <div class="col" style="max-width: 140px"> <b>Họ và tên:</b></div>
         <div class="col"><%= data.fullname %></div>
       </div>
     </li>
 
     <li class="list-group-item"> 
         <div class="row">
-          <div class="col" style="max-width: 140px"> <b>User name:</b></div>
+          <div class="col" style="max-width: 140px"> <b>Tài khoản:</b></div>
           <div class="col"><%= data.username %></div>
         </div>
       </li>
@@ -51,15 +51,15 @@
     
       <li class="list-group-item"> 
         <div class="row">
-          <div class="col" style="max-width: 140px"> <b>Phone:</b></div>
-          <div class="col"><%= (data.default_address?.numberphone) ? data.default_address?.numberphone : "No data" %></div>
+          <div class="col" style="max-width: 140px"> <b>Số điện thoại:</b></div>
+          <div class="col"><%= (data.default_address?.numberphone) ? data.default_address?.numberphone : "Không có dữ liệu" %></div>
         </div>
       </li>
 
       <li class="list-group-item"> 
         <div class="row">
-          <div class="col" style="max-width: 140px"> <b>Address:</b></div>
-          <div class="col"><%= (data.default_address?.address) ? data.default_address?.address : "No data" %></div>
+          <div class="col" style="max-width: 140px"> <b>Địa chỉ:</b></div>
+          <div class="col"><%= (data.default_address?.address) ? data.default_address?.address : "Không có dữ liệu" %></div>
         </div>
       </li>
 
@@ -67,7 +67,7 @@
    
     <li class="list-group-item"> 
       <div class="row">
-        <div class="col" style="max-width: 140px"> <b>Date Created:</b></div>
+        <div class="col" style="max-width: 140px"> <b>Ngày tạo:</b></div>
         <div class="col"><%= data.time.toLocaleString('en') %></div>
       </div>
     </li>

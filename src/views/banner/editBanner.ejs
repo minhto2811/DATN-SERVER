@@ -15,7 +15,7 @@
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="/banner">Banner</a></li>
-          <li class="breadcrumb-item active">Edit banner</li>
+          <li class="breadcrumb-item active">Chỉnh sửa banner</li>
         </ol>
       </nav>
     </div>
@@ -30,14 +30,14 @@
 
   <div class="row form-group mb-4">
     <div class="col">
-      <label style="margin: 5px;" for="lastName">Title</label>
+      <label style="margin: 5px;" for="lastName">Tiêu đề</label>
       <input
       type="text"
       class="form-control"
       id="title"
       name="title"
       value="<%= data.title %>"
-      placeholder="Title"
+      placeholder="Tiêu đề"
       required
     />
     </div>
@@ -46,7 +46,7 @@
   <div class="row form-group mb-4">
 
     <div class="col">
-      <label for="brand_id">Product:</label>
+      <label for="brand_id">Sản phẩm</label>
       <select class="form-select"  id="productId" name="productId">
         <% for(let i=0; i < arr_Pro.length; i++) { %>
           <option value="<%=arr_Pro[i]._id%>" <%=arr_Pro[i]._id==data.productId ? 'selected' :'' %> ><%= arr_Pro[i].product_name %></option>
@@ -58,7 +58,7 @@
   <div class="row form-group mb-4">
 
     <div class="row">
-        <label style="margin: 5px;" for="lastName">Image</label>
+        <label style="margin: 5px;" for="lastName">Hình ảnh</label>
         <tr>
           <td>
             <img
@@ -92,7 +92,7 @@
  
 
   <div class="form-group mb-4">
-    <button type="submit" class="btn btn-primary">Edit brand</button>
+    <button type="submit" class="btn btn-primary">Xác nhận</button>
   </div>
 </form>
 

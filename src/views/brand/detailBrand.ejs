@@ -1,5 +1,5 @@
 <div class="d-flex justify-content-between flex-wrap flex-md nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-    <h1 class="h2">Detail Brand</h1>
+    <h1 class="h2">Chi tiết Thương hiệu</h1>
     <div class="btn-toolbar mb-2 mb-md 0">
       <div class="btn-group me-2">
         
@@ -13,13 +13,13 @@
       <div class="col">
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="/brand">Brand</a></li>
+            <li class="breadcrumb-item"><a href="/brand">Thương hiệu</a></li>
             <li class="breadcrumb-item active"><%= data.brand  %></li>
           </ol>
         </nav>
       </div>
       <div class="col text-end fw-lighter">
-        <b>User</b>
+
       </div>
     </div>
   
@@ -29,21 +29,21 @@
   
     <li class="list-group-item"> 
       <div class="row">
-        <div class="col" style="max-width: 140px" > <b>Image: </b></div>
+        <div class="col" style="max-width: 140px" > <b>Hình ảnh: </b></div>
         <img class="col" style="max-width: 150px" src="<%= data.image %>" alt="">
       </div>
     </li>
   
     <li class="list-group-item"> 
       <div class="row">
-        <div class="col" style="max-width: 140px"> <b>Brand name:</b></div>
+        <div class="col" style="max-width: 140px"> <b>Tên thương hiệu:</b></div>
         <div class="col"><%= data.brand %></div>
       </div>
     </li>
 
     <li class="list-group-item"> 
         <div class="row">
-          <div class="col" style="max-width: 140px"> <b>Description:</b></div>
+          <div class="col" style="max-width: 140px"> <b>Miêu tả:</b></div>
           <div class="col"><%= data.description %></div>
         </div>
       </li>
@@ -51,7 +51,7 @@
 
     <li class="list-group-item"> 
       <div class="row">
-        <div class="col" style="max-width: 140px"> <b>Date Created:</b></div>
+        <div class="col" style="max-width: 140px"> <b>Ngày tạo:</b></div>
         <div class="col"><%= data.time.toLocaleString('en') %></div>
       </div>
     </li>

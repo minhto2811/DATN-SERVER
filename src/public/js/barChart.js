@@ -10,7 +10,7 @@ for (let i = 0; i < listProduct.length; i++) {
 
 var options = {
     title: {
-        text: 'Top best selling products',
+        text: 'Top sản phẩm bán chạy nhất',
         align: 'left',
         style: {
             fontSize: '18px',

@@ -27,8 +27,8 @@
     <div class="col-md-6 right-box">
       <div class="row align-items-center">
         <div class="header-text mb-4">
-          <h2>Hello, Again</h2>
-          <p>We are happy to have you back.</p>
+          <h2>Xin chào</h2>
+          <p>Chúng tôi rất vui khi có bạn trở lại.</p>
         </div>
         <% if(error != ''){ %>
           <div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -41,11 +41,11 @@
 
         <form action="/user/login" method="POST">
           <div class="input-group mb-3">
-            <input type="email" class="form-control form-control-lg bg-light fs-6" placeholder="Email address"
+            <input type="email" class="form-control form-control-lg bg-light fs-6" placeholder="Nhập email"
               name="username" id="username" value="<%= data ? data : '' %>" />
           </div>
           <div class="input-group mb-1">
-            <input type="password" class="form-control form-control-lg bg-light fs-6" placeholder="Password"
+            <input type="password" class="form-control form-control-lg bg-light fs-6" placeholder="Mật khẩu"
               name="password" id="password" value="" />
           </div>
           
@@ -55,11 +55,11 @@
               <label for="formCheck" class="form-check-label text-secondary"><small>Remember Me</small></label> -->
             </div>
             <div class="forgot">
-              <small><a href="/user/email">Forgot Password?</a></small>
+              <small><a href="/user/email">Quên mật khẩu?</a></small>
             </div>
           </div>
           <div class="input-group mb-3">
-            <button class="btn btn-lg btn-primary w-100 fs-6">Login</button>
+            <button class="btn btn-lg btn-primary w-100 fs-6">Đăng nhập</button>
           </div>
         </form>
         <!-- <div class="input-group mb-3">

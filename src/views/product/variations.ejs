@@ -15,12 +15,12 @@
   <% } %>
 
 <div class="d-flex justify-content-between flex-wrap flex-md nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-  <h1 class="h2">Variations</h1>
+  <h1 class="h2">Các biến thể</h1>
   <div class="col-md-3">
   </div>
   <div class="btn-toolbar mb-2 mb-md 0">
     <div class="btn-group me-2">
-      <a href=" /product/<%=productId%>/variations/add" class="btn btn-sm btn-outline-secondary">+ New variations</a>
+      <a href=" /product/<%=productId%>/variations/add" class="btn btn-sm btn-outline-secondary">+ Biến thể mới</a>
     </div>
   </div>
 </div>
@@ -31,16 +31,16 @@
   <table class="table table-striped table-sm">
     <thead>
       <tr>
-        <th scope="col">Id</th>
-        <th scope="col">image</th>
-        <th scope="col">color</th>
+        <th scope="col">STT</th>
+        <th scope="col">Hình ảnh</th>
+        <th scope="col">Màu sắc</th>
         <%  if(data[0].ram || data[0].rom){ %>
-        <th scope="col">ram</th>
-        <th scope="col">rom</th>
+        <th scope="col">Ram</th>
+        <th scope="col">Bộ nhớ</th>
         <% }  %>
-        <th scope="col">quantity</th>
-        <th scope="col">price</th>
-        <th scope="col" class="text-end">Action</th>
+        <th scope="col">Số lượng</th>
+        <th scope="col">Giá</th>
+        <th scope="col" class="text-end">Hoạt động</th>
       </tr>
     </thead>
 
@@ -96,15 +96,15 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="modalLabel">Delete variation</h1>
+        <h1 class="modal-title fs-5" id="modalLabel">Biến thể</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        Confirm variation deletion?
+        Xác nhận xoá biến thể này?
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Back</button>
-        <button type="button" class="btn btn-primary" id="btn-delete">Continue</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+        <button type="button" class="btn btn-primary" id="btn-delete">Xác nhận</button>
       </div>
     </div>
   </div>

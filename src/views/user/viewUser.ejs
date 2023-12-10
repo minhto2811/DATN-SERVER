@@ -15,12 +15,12 @@
   <% } %>
 
 <div class="d-flex justify-content-between flex-wrap flex-md nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-    <h1 class="h2">User</h1>
+    <h1 class="h2">Người dùng</h1>
     <div class="col-md-3">  
     </div>
     <div class="btn-toolbar mb-2 mb-md 0">
       <div class="btn-group me-2">
-        <a href="/user/insert" class="btn btn-sm btn-outline-secondary">+ New User</a>
+        <a href="/user/insert" class="btn btn-sm btn-outline-secondary">+ Người dùng mới</a>
       </div>
     </div>
   </div>
@@ -31,10 +31,10 @@
     <table class="table table-striped table-sm">
       <thead>
         <tr>
-          <th scope="col">Id</th>
-          <th scope="col">User name</th>
-          <th scope="col">Full name</th>
-          <th scope="col">Created at</th>
+          <th scope="col">STT</th>
+          <th scope="col">Tài khoản</th>
+          <th scope="col">Họ và tên</th>
+          <th scope="col">Ngày tạo</th>
           <th scope="col" class="text-end">Action</th>
         </tr>
       </thead>
@@ -76,15 +76,15 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="modalLabel">Delete user</h1>
+                <h1 class="modal-title fs-5" id="modalLabel">Người dùng</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                Confirm user deletion?
+                Xác nhận xóa người dùng này?
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Back</button>
-                <button type="button" class="btn btn-primary" id="btn-delete-product">Continue</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                <button type="button" class="btn btn-primary" id="btn-delete-product">Xác nhận</button>
             </div>
         </div>
     </div>

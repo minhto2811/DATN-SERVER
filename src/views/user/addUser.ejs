@@ -1,7 +1,7 @@
 <div
   class="d-flex justify-content-between flex-wrap flex-md nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"
 >
-  <h1 class="h2">User</h1>
+  <h1 class="h2">Người dùng</h1>
   <div class="btn-toolbar mb-2 mb-md 0">
     <div class="btn-group me-2">
 
@@ -14,13 +14,13 @@
     <div class="col">
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="/user">User</a></li>
-          <li class="breadcrumb-item active">New user</li>
+          <li class="breadcrumb-item"><a href="/user">Người dùng</a></li>
+          <li class="breadcrumb-item active">người dùng mới</li>
         </ol>
       </nav>
     </div>
     <div class="col text-end fw-lighter">
-      <b>User</b>
+
     </div>
   </div>
 </div>
@@ -28,14 +28,14 @@
 <form action="/user/insert" method="POST">
   <div class="row form-group mb-4">
     <div class="col">
-      <label for="firstName">User Name</label>
+      <label for="firstName">Tài khoản</label>
       <input
         type="email"
         class="form-control"
         id="username"
         name="username"
         value=""
-        placeholder="User Name"
+        placeholder="Tài khoản"
         required
       />
     </div>
@@ -44,14 +44,14 @@
   <div class="row form-group mb-4">
 
     <div class="col">
-      <label for="lastName">Password</label>
+      <label for="lastName">Mật khẩu</label>
       <input
         type="password"
         class="form-control"
         id="password"
         name="password"
         value=""
-        placeholder="Password"
+        placeholder="Mật khẩu"
         required
       />
     </div>
@@ -59,14 +59,14 @@
 
   <div class="row form-group mb-4">
     <div class="col">
-      <label for="tel">Full name</label>
+      <label for="tel">Họ và tên</label>
       <input
         type="text"
         class="form-control"
         id="fullname"
         name="fullname"
         value=""
-        placeholder="Full name"
+        placeholder="Họ và tên"
         required
       />
     </div>
@@ -75,6 +75,6 @@
 
 
   <div class="form-group mb-4">
-    <button type="submit" class="btn btn-primary">Add User</button>
+    <button type="submit" class="btn btn-primary">Xác nhận</button>
   </div>
 </form>

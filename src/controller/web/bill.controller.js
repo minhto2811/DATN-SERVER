@@ -23,16 +23,16 @@ class Controller {
         if (array[i].status != undefined) {
           switch (array[i].status) {
             case 0:
-              array[i].statusText = "Unconfimred";
+              array[i].statusText = "Chưa được xác nhận";
               break;
             case 1:
-              array[i].statusText = "Delivering";
+              array[i].statusText = "Đang giao hàng";
               break;
             case 2:
-              array[i].statusText = "Delivered";
+              array[i].statusText = "Đã giao hàng";
               break;
             case -1:
-              array[i].statusText = "Canceled";
+              array[i].statusText = "Đơn hàng đã hủy";
               break;
             default:
               break;
@@ -45,7 +45,7 @@ class Controller {
         amount,
         amount2,
         req,
-        title: "Bill"
+        title: "Hóa đơn"
       });
     } catch (error) {
       res.json(error);
@@ -64,16 +64,16 @@ class Controller {
       if (bill.status != undefined) {
         switch (bill.status) {
           case 0:
-            bill.statusText = "Unconfimred";
+            bill.statusText = "Chưa được xác nhận";
             break;
           case 1:
-            bill.statusText = "Delivering";
+            bill.statusText = "Đang giao hàng";
             break;
           case 2:
-            bill.statusText = "Delivered";
+            bill.statusText = "Đã giao hàng";
             break;
           case -1:
-            bill.statusText = "Canceled";
+            bill.statusText = "Đơn hàng đã hủy";
             break;
           default:
             break;
@@ -95,7 +95,7 @@ class Controller {
         })
       );
 
-      res.render("bill/detailBill", { layout: "layouts/main", data: bill, title: "Detail Bill" });
+      res.render("bill/detailBill", { layout: "layouts/main", data: bill, title: "Hóa đơn" });
     } catch (error) {
       res.json(error);
     }
@@ -203,7 +203,7 @@ class Controller {
           currentDate.getMonth() + 1,
           1
         ).toISOString();
-        let date = currentDate.toLocaleString("en", {
+        let date = currentDate.toLocaleString("vie", {
           month: "long",
           year: "numeric",
         });
@@ -223,7 +223,7 @@ class Controller {
 
       res.render("dashBoard/dashboard", {
         layout: "layouts/main",
-        title: "Dashboard",
+        title: "Thống kê",
         listProduct: JSON.stringify(listProduct),
         months: JSON.stringify(months),
         totalBills: JSON.stringify(totalBills),
@@ -262,7 +262,7 @@ class Controller {
 
       res.render("dashBoard/dashboard", {
         layout: "layouts/main",
-        title: "Dashboard",
+        title: "Thống kê",
         listProduct: JSON.stringify(listProduct),
         months: JSON.stringify(months),
         totalBills: JSON.stringify(totalBills),

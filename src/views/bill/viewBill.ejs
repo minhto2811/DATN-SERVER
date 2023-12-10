@@ -1,7 +1,7 @@
 <div
   class="d-flex justify-content-between flex-wrap flex-md nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"
 >
-  <h1 class="h2">Bill</h1>
+  <h1 class="h2">Hóa đơn</h1>
   <div class="col-md-3"></div>
 </div>
 
@@ -9,93 +9,93 @@
   <% if(req.query.status == 0 ) { %>
   <li style="background-color: rgb(223, 221, 221)" class="list-group-item">
     <a style="text-decoration: none; padding: 10px 20px" href="/bill/?status=0"
-      >Unconfimred
+      >Chưa được xác nhận
       <span class="badge bg-danger rounded-pill"><%= amount.length %></span></a
     >
   </li>
   <li class="list-group-item">
     <a style="text-decoration: none; padding: 10px 20px" href="/bill/?status=1"
-      >Delivering
+      >Đang giao hàng
       <span class="badge bg-danger rounded-pill"><%= amount2.length %></span></a
     >
   </li>
   <li class="list-group-item">
     <a style="text-decoration: none; padding: 10px 20px" href="/bill/?status=2"
-      >Delivered</a
+      >Đã giao hàng</a
     >
   </li>
   <li class="list-group-item">
     <a style="text-decoration: none; padding: 10px 20px" href="/bill/?status=-1"
-      >Canceled</a
+      >Đơn hàng đã hủy</a
     >
   </li>
   <%}else if(req.query.status == 1){%>
   <li class="list-group-item">
     <a style="text-decoration: none; padding: 10px 20px" href="/bill/?status=0"
-      >Unconfimred
+      >Chưa được xác nhận
       <span class="badge bg-danger rounded-pill"><%= amount.length %></span></a
     >
   </li>
   <li style="background-color: rgb(223, 221, 221)" class="list-group-item">
     <a style="text-decoration: none; padding: 10px 20px" href="/bill/?status=1"
-      >Delivering
+      >Đang giao hàng
       <span class="badge bg-danger rounded-pill"><%= amount2.length %></span></a
     >
   </li>
   <li class="list-group-item">
     <a style="text-decoration: none; padding: 10px 20px" href="/bill/?status=2"
-      >Delivered</a
+      >Đã giao hàng</a
     >
   </li>
   <li class="list-group-item">
     <a style="text-decoration: none; padding: 10px 20px" href="/bill/?status=-1"
-      >Canceled</a
+      >Đơn hàng đã hủy</a
     >
   </li>
   <%}else if(req.query.status == 2){%>
   <li class="list-group-item">
     <a style="text-decoration: none; padding: 10px 20px" href="/bill/?status=0"
-      >Unconfimred
+      >Chưa được xác nhận
       <span class="badge bg-danger rounded-pill"><%= amount.length %></span></a
     >
   </li>
   <li class="list-group-item">
     <a style="text-decoration: none; padding: 10px 20px" href="/bill/?status=1"
-      >Delivering
+      >Đang giao hàng
       <span class="badge bg-danger rounded-pill"><%= amount2.length %></span></a
     >
   </li>
   <li style="background-color: rgb(223, 221, 221)" class="list-group-item">
     <a style="text-decoration: none; padding: 10px 20px" href="/bill/?status=2"
-      >Delivered</a
+      >Đã giao hàng</a
     >
   </li>
   <li class="list-group-item">
     <a style="text-decoration: none; padding: 10px 20px" href="/bill/?status=-1"
-      >Canceled</a
+      >Đơn hàng đã hủy</a
     >
   </li>
   <% }else{ %>
   <li class="list-group-item">
     <a style="text-decoration: none; padding: 10px 20px" href="/bill/?status=0"
-      >Unconfimred
+      >Chưa được xác nhận
       <span class="badge bg-danger rounded-pill"><%= amount.length %></span></a
     >
   </li>
   <li class="list-group-item">
     <a style="text-decoration: none; padding: 10px 20px" href="/bill/?status=1"
-      >Delivering
+      >Đang giao hàng
       <span class="badge bg-danger rounded-pill"><%= amount2.length %></span></a
     >
   </li>
   <li class="list-group-item">
     <a style="text-decoration: none; padding: 10px 20px" href="/bill/?status=2"
-      >Delivered</a
+      >Đã giao hàng</a
     >
   </li>
   <li style="background-color: rgb(223, 221, 221)" class="list-group-item">
     <a style="text-decoration: none; padding: 10px 20px" href="/bill/?status=-1"
-      >Canceled</a
+      >Đơn hàng đã hủy</a
     >
   </li>
   <% }%>
@@ -106,12 +106,12 @@
   <table class="table table-striped table-sm">
     <thead>
       <tr>
-        <th scope="col">Id</th>
-        <th scope="col">User name</th>
-        <th scope="col">Amount product</th>
-        <th scope="col">Total price</th>
-        <th scope="col">Status</th>
-        <th scope="col">Created at</th>
+        <th scope="col">Stt</th>
+        <th scope="col">Người dùng</th>
+        <th scope="col">Số lượng sản phẩm</th>
+        <th scope="col">Tổng tiền</th>
+        <th scope="col">Trạng thái</th>
+        <th scope="col">Ngày tạo</th>
         <th scope="col" class="text-end">Action</th>
       </tr>
     </thead>
@@ -133,7 +133,7 @@
               class="btn btn-success btn-small"
               style="border-radius: 5px; padding-right: 12px"
             >
-              <i class="bi">Confirm bill</i>
+              <i class="bi">Xác nhận đơn hàng</i>
             </a>
             <% } else if (bill?.status == 1) { %>
             <a
@@ -141,7 +141,7 @@
               class="btn btn-success btn-small"
               style="border-radius: 5px; padding-right: 12px"
             >
-              <i class="bi">Confirm delivery</i>
+              <i class="bi">Xác nhận giao hàng</i>
             </a>
             <% }} %>
 
@@ -173,7 +173,7 @@
     </tbody>
   </table>
   <% } else{%>
-  <h1 class="text-center text-secondary mt-5">No data!</h1>
+  <h1 class="text-center text-secondary mt-5">Hiện tại không có đơn hàng nào!</h1>
   <% } %>
 </div>
 
@@ -189,7 +189,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="modalLabel">Cancelling invoice</h1>
+        <h1 class="modal-title fs-5" id="modalLabel">Đơn hàng</h1>
         <button
           type="button"
           class="btn-close"
@@ -197,13 +197,13 @@
           aria-label="Close"
         ></button>
       </div>
-      <div class="modal-body">Confirm invoice cancellation?</div>
+      <div class="modal-body">Xác nhận hủy đơn hàng này?</div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-          Back
+          Quay lại
         </button>
         <button type="button" class="btn btn-primary" id="btn-delete-product">
-          Continue
+          Tiếp tục
         </button>
       </div>
     </div>
