@@ -55,6 +55,7 @@ class Controller {
   async detail(req, res) {
     try {
       const id = req.params.id;
+      const status = req.params.status;
       const bill = await Bill.findOne({ _id: id, delete: false }).lean();
       if (!bill) throw "Không tìm thấy hóa đơn";
 
@@ -95,7 +96,7 @@ class Controller {
         })
       );
 
-      res.render("bill/detailBill", { layout: "layouts/main", data: bill, title: "Hóa đơn" });
+      res.render("bill/detailBill", { layout: "layouts/main", data: bill, title: "Hóa đơn", status });
     } catch (error) {
       res.json(error);
     }

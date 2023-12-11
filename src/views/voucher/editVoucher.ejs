@@ -15,12 +15,12 @@
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="/voucher">Voucher</a></li>
-          <li class="breadcrumb-item active">Edit Voucher</li>
+          <li class="breadcrumb-item active">chỉnh sửa Voucher</li>
         </ol>
       </nav>
     </div>
     <div class="col text-end fw-lighter">
-      <b>Voucher</b>
+
     </div>
   </div>
 </div>
@@ -51,13 +51,13 @@
           <div class="form-check">
             <input class="form-check-input" type="radio" name="type"  value="0" <%=data.type==1 ? 'selected' :'checked' %> >
             <label class="form-check-label" for="gridRadios1">
-              Reduce shipping costs
+              Giảm chi phí vận chuyển
             </label>
           </div>
           <div class="form-check">
             <input class="form-check-input" type="radio" name="type"  value="1" <%=data.type==0 ? 'selected' :'checked' %>>
             <label class="form-check-label" for="gridRadios2">
-              Product discounts
+              Giảm giá sản phẩm
             </label>
           </div>
         </div>
@@ -74,13 +74,13 @@
               <div class="form-check">
                 <input class="form-check-input" type="radio" name="discount_type"  value="0" <%=data.discount_type==1 ? 'selected' :'checked' %> >
                 <label class="form-check-label" for="gridRadios1">
-                  Cash reduction
+                  Giảm tiền mặt(VND)
                 </label>
               </div>
               <div class="form-check">
                 <input class="form-check-input" type="radio" name="discount_type"  value="1" <%=data.discount_type==0 ? 'selected' :'checked' %>>
                 <label class="form-check-label" for="gridRadios2">
-                  Percent reduction
+                  Giảm theo(%)
                 </label>
               </div>
             </div>
@@ -91,7 +91,7 @@
 
   <div class="row form-group mb-4">
     <div class="col">
-      <label style="margin: 5px;" for="lastName">Discount value</label>
+      <label style="margin: 5px;" for="lastName">Giá trị</label>
       <input
       type="text"
       class="form-control"
@@ -107,7 +107,7 @@
   <div class="row form-group mb-4">
 
   <div class="col">
-    <label style="margin: 5px;" for="lastName">Expiration date</label>
+    <label style="margin: 5px;" for="lastName">Ngày hết hạn</label>
     <input
     type="date"
     class="form-control"
@@ -125,7 +125,7 @@
   <div class="row form-group mb-4">
   
     <div class="col">
-        <label style="margin: 5px;" for="lastName">Descrition</label>
+        <label style="margin: 5px;" for="lastName">Mô tả</label>
         <input
         type="text"
         class="form-control"
@@ -142,6 +142,6 @@
  
 
   <div class="form-group mb-4">
-    <button type="submit" class="btn btn-primary">Edit Voucher</button>
+    <button type="submit" class="btn btn-primary">Xác nhận</button>
   </div>
 </form>

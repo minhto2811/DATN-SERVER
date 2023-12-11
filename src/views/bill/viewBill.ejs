@@ -112,7 +112,7 @@
         <th scope="col">Tổng tiền</th>
         <th scope="col">Trạng thái</th>
         <th scope="col">Ngày tạo</th>
-        <th scope="col" class="text-end">Action</th>
+        <th scope="col" class="text-end">Hoạt động</th>
       </tr>
     </thead>
 
@@ -146,7 +146,7 @@
             <% }} %>
 
             <a
-              href="/bill/detail/<%= bill._id %>"
+              href="/bill/detail/<%= bill._id %>/<%=req.query.status%>"
               type="button"
               class="btn btn-primary btn-small"
             >

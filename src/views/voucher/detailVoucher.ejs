@@ -1,5 +1,5 @@
 <div class="d-flex justify-content-between flex-wrap flex-md nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-    <h1 class="h2">Detail Notification</h1>
+    <h1 class="h2">Chi tiết Voucher</h1>
     <div class="btn-toolbar mb-2 mb-md 0">
       <div class="btn-group me-2">
        
@@ -19,7 +19,7 @@
         </nav>
       </div>
       <div class="col text-end fw-lighter">
-        <b>Voucher</b>
+
       </div>
     </div>
   
@@ -37,28 +37,28 @@
   
     <li class="list-group-item"> 
       <div class="row">
-        <div class="col" style="max-width: 140px"> <b>Condition:</b></div>
+        <div class="col" style="max-width: 140px"> <b>Tình trạng:</b></div>
         <div class="col"><%= data.condition %></div>
       </div>
     </li>
 
     <li class="list-group-item"> 
         <div class="row">
-          <div class="col" style="max-width: 140px"> <b>Type:</b></div>
+          <div class="col" style="max-width: 140px"> <b>Loại:</b></div>
           <div class="col"><%= data.typeText %></div>
         </div>
       </li>
 
       <li class="list-group-item"> 
         <div class="row">
-          <div class="col" style="max-width: 140px"> <b>Discount_type:</b></div>
+          <div class="col" style="max-width: 140px"> <b>Giảm giá:</b></div>
           <div class="col"><%= data.discount_type_Text %></div>
         </div>
     </li>
 
     <li class="list-group-item"> 
         <div class="row">
-          <div class="col" style="max-width: 140px"> <b>Discount_value:</b></div>
+          <div class="col" style="max-width: 140px"> <b>Giá trị:</b></div>
           <div class="col"><%= data.discount_value %></div>
         </div>
     </li>
@@ -67,21 +67,21 @@
     
     <li class="list-group-item"> 
         <div class="row">
-          <div class="col" style="max-width: 140px"> <b>Description:</b></div>
+          <div class="col" style="max-width: 140px"> <b>Mô tả:</b></div>
           <div class="col"><%= data.description %></div>
         </div>
     </li>
   
     <li class="list-group-item"> 
       <div class="row">
-        <div class="col" style="max-width: 140px"> <b>Release_date:</b></div>
+        <div class="col" style="max-width: 140px"> <b>Ngày tạo:</b></div>
         <div class="col"><%= data.release_date.toLocaleString('en') %></div>
       </div>
     </li>
 
     <li class="list-group-item"> 
         <div class="row">
-          <div class="col" style="max-width: 140px"> <b>Expiration_date:</b></div>
+          <div class="col" style="max-width: 140px"> <b>Ngày hết hạn:</b></div>
           <div class="col"><%= data.expiration_date.toLocaleString('en') %></div>
         </div>
       </li>
