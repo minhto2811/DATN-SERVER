@@ -135,6 +135,7 @@ class Controller {
       await bill.save();
       res.redirect(`/bill/?status=${bill.status - 1}`);
       const text = bill.status == 1 ? " đang trên đường vận chuyển" : " đã giao thành công"
+      if(bill.status == -1) text = ' đã bị hủy.'
       let noti = {
         userId: bill.userId,
         title: "Thông báo mới",

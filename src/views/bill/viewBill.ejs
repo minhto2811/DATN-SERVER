@@ -109,7 +109,7 @@
         <th scope="col">Stt</th>
         <th scope="col">Người dùng</th>
         <th scope="col">Số lượng sản phẩm</th>
-        <th scope="col">Tổng tiền</th>
+        <th scope="col">Tổng tiền(VND)</th>
         <th scope="col">Trạng thái</th>
         <th scope="col">Ngày tạo</th>
         <th scope="col" class="text-end">Hoạt động</th>
@@ -122,7 +122,7 @@
         <td><%= index+1 %></td>
         <td><%= bill.username %></td>
         <td><%= bill.products.length %></td>
-        <td><%= bill.total_price %></td>
+        <td><%= bill.total_price.toLocaleString() %></td>
         <td><%= bill.statusText %></td>
         <td><%= bill.time.toLocaleString('en') %></td>
         <td class="text-end">

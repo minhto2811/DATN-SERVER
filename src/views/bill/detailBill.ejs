@@ -85,7 +85,7 @@
       <li class="list-group-item"> 
         <div class="row">
           <div class="col" style="max-width: 140px"> <b>Voucher:</b></div>
-          <div class="col"><%= (data?.voucher) ? data?.voucher : "No data" %></div>
+          <div class="col"><%= (data?.voucher) ? data?.voucher : "Không sử dụng voucher" %></div>
         </div>
       </li>
 
@@ -100,14 +100,14 @@
       <li class="list-group-item"> 
         <div class="row">
           <div class="col" style="max-width: 140px"> <b>Ghi chú:</b></div>
-          <div class="col"><%= (data?.note) ? data?.note : "No data" %></div>
+          <div class="col"><%= (data?.note) ? data?.note : "Không có dữ liệu" %></div>
         </div>
       </li>
 
       <li class="list-group-item"> 
         <div class="row">
           <div class="col" style="max-width: 140px"> <b>Tổng tiền chi:</b></div>
-          <div class="col"><%= (data?.import_total) ? data?.import_total : "No data" %></div>
+          <div class="col"><%= (data?.import_total) ? data?.import_total.toLocaleString() : "No data" %></div>
         </div>
       </li>
 

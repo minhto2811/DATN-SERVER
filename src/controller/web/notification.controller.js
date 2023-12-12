@@ -45,7 +45,7 @@ class Controller {
         body.route = "ButtonNavigation"
         PushNotification.sendPushNotification(body);
 
-        return res.redirect("/Thông báo");
+        return res.redirect("/notification");
       } catch (error) {
         console.log(error);
       }
@@ -105,7 +105,7 @@ class Controller {
           throw "Notification not found!";
         }
         deleteImage(notification.image);
-        res.redirect("/Thông báo");
+        res.redirect("/notification");
       })
       .catch((err) => {
         console.log(err);

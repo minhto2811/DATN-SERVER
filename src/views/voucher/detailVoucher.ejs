@@ -56,15 +56,25 @@
         </div>
     </li>
 
-    <li class="list-group-item"> 
+    <% if(data.discount_value <= 100){ %>
+      <li class="list-group-item"> 
         <div class="row">
           <div class="col" style="max-width: 140px"> <b>Giá trị:</b></div>
-          <div class="col"><%= data.discount_value %></div>
+          <div class="col"><%= data.discount_value.toLocaleString() %>%</div>
         </div>
     </li>
+      <% }else{ %>
+        <li class="list-group-item"> 
+          <div class="row">
+            <div class="col" style="max-width: 140px"> <b>Giá trị:</b></div>
+            <div class="col"><%= data.discount_value.toLocaleString() %> VND</div>
+          </div>
+      </li>
+      <% } %>
+
+   
 
   
-    
     <li class="list-group-item"> 
         <div class="row">
           <div class="col" style="max-width: 140px"> <b>Mô tả:</b></div>

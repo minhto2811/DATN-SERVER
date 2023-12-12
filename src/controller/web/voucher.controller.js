@@ -4,7 +4,7 @@ const { uploadImage, deleteImage } = require("../../utils/uploadImage");
 class Controller {
   async list(req, res) {
     try {
-      const data = await Voucher.find({all: true});
+      const data = await Voucher.find({all: true, userId: null});
       res.render("voucher/viewVoucher", { layout: "layouts/main", data, title: "Voucher" });
     } catch (error) {
       res.json(error);
@@ -39,7 +39,7 @@ class Controller {
             break;
         }
       }
-      res.render("voucher/detailVoucher", { layout: "layouts/main", data: data, title: "Detail Voucher" });
+      res.render("voucher/detailVoucher", { layout: "layouts/main", data: data, title: "Voucher" });
     } catch (error) {
       res.json(error);
     }
@@ -64,7 +64,7 @@ class Controller {
       }
      
     }
-    res.render("voucher/addVoucher", { layout: "layouts/main", title: "Add Voucher" });
+    res.render("voucher/addVoucher", { layout: "layouts/main", title: "Voucher" });
   }
 
   async edit(req, res) {
@@ -73,7 +73,7 @@ class Controller {
     res.render("voucher/editVoucher", {
       layout: "layouts/main",
       data,
-      title: "Edit Voucher"
+      title: "Voucher"
     });
   }
 
