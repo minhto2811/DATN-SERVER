@@ -39,7 +39,8 @@
         <th scope="col">Bộ nhớ</th>
         <% }  %>
         <th scope="col">Số lượng</th>
-        <th scope="col">Giá</th>
+        <th scope="col">Giá nhập(VND)</th>
+        <th scope="col">Giá bán(VND)</th>
         <th scope="col" class="text-end">Hoạt động</th>
       </tr>
     </thead>
@@ -66,7 +67,10 @@
             <%= sp.quantity %>
           </td>
           <td>
-            <%= sp.price %>
+            <%= sp.import_price.toLocaleString() %>
+          </td>
+          <td>
+            <%= sp.price.toLocaleString() %>
           </td>
           <td class="text-end">
 

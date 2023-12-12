@@ -56,7 +56,7 @@ function route(app) {
 
 
     app.get('/', checkAdmin, (req, res) => {
-        res.redirect('/product')
+        res.redirect('/bill/?status=0')
     })
 
 
