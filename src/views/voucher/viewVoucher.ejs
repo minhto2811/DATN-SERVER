@@ -33,9 +33,10 @@
     <thead>
       <tr>
         <th scope="col">STT</th>
+        <th scope="col">Mô tả</th>
+        <th scope="col">Giá trị</th>
         <th scope="col">Được tạo vào lúc</th>
         <th scope="col">Hết hạn vào lúc</th>
-        <th scope="col">Giá trị</th>
         <th scope="col" class="text-end">Hoạt động</th>
       </tr>
     </thead>
@@ -44,13 +45,14 @@
       <% data.forEach((voucher, index) =>{ %>
       <tr class="align-middle">
         <td><%= index+1 %></td>
+        <td><%= voucher.description %></td>
+        <% if(voucher.discount_value <= 100){ %>
+          <td><%= voucher.discount_value.toLocaleString() %>%</td>
+          <% }else{ %>
+          <td><%= voucher.discount_value.toLocaleString() %> VND</td>
+          <% } %>
         <td><%= voucher.release_date.toLocaleString('en') %></td>
         <td><%= voucher.expiration_date.toLocaleString('en') %></td>
-        <% if(voucher.discount_value <= 100){ %>
-        <td><%= voucher.discount_value.toLocaleString() %>%</td>
-        <% }else{ %>
-        <td><%= voucher.discount_value.toLocaleString() %> VND</td>
-        <% } %>
         <td class="text-end">
           <div class="d-flex flex-row justify-content-end gap-2">
             <a

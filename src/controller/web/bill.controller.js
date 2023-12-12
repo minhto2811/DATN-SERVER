@@ -251,7 +251,7 @@ class Controller {
       const previusDate = req.body.start_at;
       const nowDate = req.body.expries_at;
 
-      months.push(`Start ${previusDate} - End ${nowDate}`);
+      months.push(`${previusDate} - ${nowDate}`);
 
       let total = await getTotalBill(previusDate, nowDate);
       let product = await getTotalProduct(previusDate, nowDate);

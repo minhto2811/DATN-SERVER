@@ -1,9 +1,9 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
-const currentDate = new Date();
-const expirationDate = new Date(currentDate);
-expirationDate.setDate(currentDate.getDate() + 30);
+// const currentDate = new Date();
+// const expirationDate = new Date(currentDate);
+// expirationDate.setDate(currentDate.getDate() + 30);
 
 const Voucher = new Schema({
     userId: { type: Schema.ObjectId },
@@ -16,14 +16,12 @@ const Voucher = new Schema({
     used: { type: Boolean, require: true, default: false },// đã sử dụng 
     description: { type: String, require: true },
     release_date: { type: Date, default: Date.now },
-    expiration_date: { type: Date, require: true, default: expirationDate }, //ngày hết hạn
+    expiration_date: { type: Date, require: true }, //ngày hết hạn
 }, {
     collection: "Voucher"
 })
 
-
-
-
+Voucher.index( { "expiration_date": 1 }, { expireAfterSeconds: 0 } );
 
 
 module.exports = mongoose.model('Voucher', Voucher) 
