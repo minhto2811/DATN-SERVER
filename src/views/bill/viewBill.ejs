@@ -107,8 +107,8 @@
     <thead>
       <tr>
         <th scope="col">Stt</th>
+        <th scope="col">Mã đơn hàng</th>
         <th scope="col">Người dùng</th>
-        <th scope="col">Số lượng sản phẩm</th>
         <th scope="col">Tổng tiền(VND)</th>
         <th scope="col">Trạng thái</th>
         <th scope="col">Ngày tạo</th>
@@ -120,8 +120,8 @@
       <% data.forEach((bill, index) =>{ %>
       <tr class="align-middle">
         <td><%= index+1 %></td>
+        <td><%= bill._id %></td>
         <td><%= bill.username %></td>
-        <td><%= bill.products.length %></td>
         <td><%= bill.total_price.toLocaleString() %></td>
         <td><%= bill.statusText %></td>
         <td><%= bill.time.toLocaleString('en') %></td>
@@ -141,7 +141,7 @@
               class="btn btn-success btn-small"
               style="border-radius: 5px; padding-right: 12px"
             >
-              <i class="bi">Xác nhận giao hàng</i>
+              <i class="bi">Xác nhận đã giao hàng</i>
             </a>
             <% }} %>
 
