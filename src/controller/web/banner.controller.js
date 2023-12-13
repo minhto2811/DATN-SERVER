@@ -50,7 +50,7 @@ class Controller {
 
         req.session.message = {
           type: "success",
-          message: "Created successfully",
+          message: "Đã tạo thành công",
         };
 
           await bannerModel.create(body);
@@ -91,7 +91,7 @@ class Controller {
 
     req.session.message = {
       type: "success",
-      message: "Edited successfully",
+      message: "Đã chỉnh sửa thành công",
     };
 
     await bannerModel.findByIdAndUpdate(_id, {
@@ -108,7 +108,7 @@ class Controller {
 
     req.session.message = {
       type: "success",
-      message: "Deleted successfully",
+      message: "Đã xoá thành công",
     };
 
     await bannerModel

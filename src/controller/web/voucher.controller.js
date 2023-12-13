@@ -33,7 +33,7 @@ class Controller {
             data.discount_type_Text = "Giảm tiền mặt";
             break;
           case 1:
-            data.discount_type_Text = "Phần trăm giảm";
+            data.discount_type_Text = "Giảm theo %";
             break;
           default:
             break;
@@ -52,7 +52,7 @@ class Controller {
 
         req.session.message = {
           type: "success",
-          message: "Created successfully",
+          message: "Đã tạo thành công",
         };
 
         body.all = true;
@@ -86,7 +86,7 @@ class Controller {
 
     req.session.message = {
       type: "success",
-      message: "Edited successfully",
+      message: "Đã chỉnh sửa thành công",
     };
   
     
@@ -107,7 +107,7 @@ class Controller {
 
      req.session.message = {
       type: "success",
-      message: "Deleted successfully",
+      message: "Đã xoá thành công",
     };
 
     await Voucher.findByIdAndDelete(id)

@@ -68,7 +68,7 @@ class Controller {
 
     req.session.message = {
       type: "success",
-      message: "Created successfully",
+      message: "Đã tạo thành công",
     };
     Product.create(body)
       .then((rs) => {
@@ -85,7 +85,7 @@ class Controller {
 
       req.session.message = {
         type: "success",
-        message: "Deleted successfully",
+        message: "Đã xoá thành công",
       };
 
       await Promise.all([
@@ -114,7 +114,7 @@ class Controller {
 
     req.session.message = {
       type: "success",
-      message: "Edited successfully",
+      message: "Đã chỉnh sửa thành công",
     };
 
     try {
@@ -135,7 +135,7 @@ class Controller {
 
     req.session.message = {
       type: "success",
-      message: "Created successfully",
+      message: "Đã tạo thành công",
     };
 
 
@@ -182,7 +182,7 @@ class Controller {
 
     req.session.message = {
       type: "success",
-      message: "Edited successfully",
+      message: "Đã chỉnh sửa thành công",
     };
 
     if (req.file != null && req.file != undefined) {
@@ -208,7 +208,7 @@ class Controller {
 
     req.session.message = {
       type: "success",
-      message: "Deleted successfully",
+      message: "Đã xoá thành công",
     };
 
     await Description.findByIdAndDelete(id)
@@ -287,7 +287,7 @@ class Controller {
 
     req.session.message = {
       type: "success",
-      message: "Created successfully",
+      message: "Đã tạo thành công",
     };
 
     try {
@@ -365,7 +365,7 @@ class Controller {
 
     req.session.message = {
       type: "success",
-      message: "Edited successfully",
+      message: "Đã chỉnh sửa thành công",
     };
 
     if (req.file != null && req.file != undefined) {
@@ -413,7 +413,7 @@ class Controller {
 
     req.session.message = {
       type: "success",
-      message: "Deleted successfully",
+      message: "Đã xoá thành công",
     };
 
     try {
