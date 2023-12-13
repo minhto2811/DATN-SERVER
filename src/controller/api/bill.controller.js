@@ -24,7 +24,7 @@ class ApiController {
                     const shipping = await Shipping.findById(data.shipping_id)
                     if (!shipping) throw "Không tìm thấy phương thức vận chuyển"
                     delete data.shipping_id
-                    data.shipping_method = shipping.name
+                    data.shipping_method = shipping.code
                     data.transport_fee += shipping.price
                 })(),
                 (async () => {
