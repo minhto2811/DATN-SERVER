@@ -23,9 +23,8 @@ class ApiController {
                 (async () => {
                     const shipping = await Shipping.findById(data.shipping_id)
                     if (!shipping) throw "Không tìm thấy phương thức vận chuyển"
-                    delete data.shipping_id
                     data.shipping_method = shipping.code
-                    data.transport_fee += shipping.price
+                    data.transport_fee = shipping.price
                 })(),
                 (async () => {
                     if (!data.listIdCart || data.listIdCart.length == 0) throw "Hãy chọn ít nhất 1 sản phẩm trong giỏ hàng"
@@ -138,7 +137,7 @@ class ApiController {
         try {
             const userId = req.body.userId
             const status = req.params.status
-            const bills = await Bill.find({ userId: userId, status: status, delete: false }).lean()
+            const bills = await Bill.find({ userId: userId, status: status, delete: false }).sort({time:-1}).lean()
             if (!bills) throw "Không tìm thấy danh sách hóa đơn của bạn"
             res.json(bills)
         } catch (error) {
@@ -150,7 +149,7 @@ class ApiController {
     async getAll(req, res) {
         try {
             const userId = req.body.userId
-            const bills = await Bill.find({ userId: userId, delete: false }).lean()
+            const bills = await Bill.find({ userId: userId, delete: false }).sort({time:-1}).lean()
             if (!bills) throw "Không tìm thấy danh sách hóa đơn của bạn"
             res.json(bills)
         } catch (error) {
