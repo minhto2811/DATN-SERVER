@@ -31,12 +31,12 @@ class Controller {
     try {
       const user = await User.findOne({ username: data.username, role: true });
       if (!user) {
-        throw "Username not found";
+        throw "Không tìm thấy người dùng";
       }
       const hashPassword = user.password;
       const matches = await bcrypt.compare(data.password, hashPassword);
       if (!matches) {
-        throw "Username or password invalid";
+        throw "Tên đăng nhập hoặc mật khẩu không hợp lệ";
       }
 
       user.password = null;
@@ -61,11 +61,11 @@ class Controller {
       const emailPattern = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
       const isEmail = emailPattern.test(email);
       if (!isEmail) {
-        throw "Email invalid!";
+        throw "Email không hợp lệ!";
       }
       const check = await User.findOne({ username: email });
       if (check) {
-        throw "Email already exists!";
+        throw "Email đã tồn tại!";
       }
       const num = await otpGenerator.generate(6, {
         upperCaseAlphabets: false,
@@ -111,7 +111,7 @@ class Controller {
         if (!isEmail) {
           return res.render("auth/email.ejs", {
             layout: "layouts/auth",
-            error: "Email invalid!",
+            error: "Email không hợp lệ!",
           });
         }
 
@@ -119,7 +119,7 @@ class Controller {
         if (!check) {
           return res.render("auth/email.ejs", {
             layout: "layouts/auth",
-            error: "User not found",
+            error: "Không tìm thấy người dùng",
           });
         }
         
@@ -154,15 +154,12 @@ class Controller {
         time: -1,
       });
       if (!otpHolder) {
-        throw "OTP authentication failed!";
-      }
-      if (otpHolder.length == 0) {
-        throw "Please verify your email before registering";
+        throw "Xác thực OTP không thành công!";
       }
       const hashOtp = otpHolder.otp;
       const matches = await bcrypt.compare(otp, hashOtp);
       if (!matches) {
-        throw "OTP not correct!";
+        throw "OTP không đúng!";
       }
       await Otp.deleteMany({username: req.body.username});
 
@@ -187,10 +184,18 @@ class Controller {
     const {username, password, password1} = req.body;
     const user = await User.findOne({ username: req.body.username })
 
+    if(password1.length < 6){
+      return res.render("auth/password.ejs", {
+        layout: "layouts/auth",
+        error: 'Mật khẩu phải đủ 6 kí tự trở lên!',
+        username
+      });
+    }
+
     if(password != password1){
       return res.render("auth/password.ejs", {
         layout: "layouts/auth",
-        error: 'Passwords do not match',
+        error: 'Mật khẩu không trùng nhau!',
         username
       });
     }
@@ -281,7 +286,7 @@ class Controller {
     if (req.method == "POST") {
       req.session.message = {
         type: "success",
-        message: "Created successfully",
+        message: "Đã tạo thành công",
       };
 
       const body = req.body;
@@ -303,7 +308,7 @@ class Controller {
     res.render("user/editUser", {
       layout: "layouts/main",
       data,
-      title: "Edit User",
+      title: "Người dùng",
     });
   }
 
@@ -314,7 +319,7 @@ class Controller {
 
     req.session.message = {
       type: "success",
-      message: "Deleted successfully",
+      message: "Đã xoá thành công",
     };
 
     await User.findByIdAndDelete(id)

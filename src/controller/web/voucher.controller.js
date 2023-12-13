@@ -4,7 +4,7 @@ const { uploadImage, deleteImage } = require("../../utils/uploadImage");
 class Controller {
   async list(req, res) {
     try {
-      const data = await Voucher.find({all: true});
+      const data = await Voucher.find({all: true, userId: null});
       res.render("voucher/viewVoucher", { layout: "layouts/main", data, title: "Voucher" });
     } catch (error) {
       res.json(error);
@@ -33,13 +33,13 @@ class Controller {
             data.discount_type_Text = "Giảm tiền mặt";
             break;
           case 1:
-            data.discount_type_Text = "Phần trăm giảm";
+            data.discount_type_Text = "Giảm theo %";
             break;
           default:
             break;
         }
       }
-      res.render("voucher/detailVoucher", { layout: "layouts/main", data: data, title: "Detail Voucher" });
+      res.render("voucher/detailVoucher", { layout: "layouts/main", data: data, title: "Voucher" });
     } catch (error) {
       res.json(error);
     }
@@ -52,7 +52,7 @@ class Controller {
 
         req.session.message = {
           type: "success",
-          message: "Created successfully",
+          message: "Đã tạo thành công",
         };
 
         body.all = true;
@@ -64,7 +64,7 @@ class Controller {
       }
      
     }
-    res.render("voucher/addVoucher", { layout: "layouts/main", title: "Add Voucher" });
+    res.render("voucher/addVoucher", { layout: "layouts/main", title: "Voucher" });
   }
 
   async edit(req, res) {
@@ -73,7 +73,7 @@ class Controller {
     res.render("voucher/editVoucher", {
       layout: "layouts/main",
       data,
-      title: "Edit Voucher"
+      title: "Voucher"
     });
   }
 
@@ -86,7 +86,7 @@ class Controller {
 
     req.session.message = {
       type: "success",
-      message: "Edited successfully",
+      message: "Đã chỉnh sửa thành công",
     };
   
     
@@ -107,7 +107,7 @@ class Controller {
 
      req.session.message = {
       type: "success",
-      message: "Deleted successfully",
+      message: "Đã xoá thành công",
     };
 
     await Voucher.findByIdAndDelete(id)
