@@ -30,7 +30,7 @@ class ApiController {
                 (async () => {
                     if (!data.listIdCart || data.listIdCart.length == 0) throw "Hãy chọn ít nhất 1 sản phẩm trong giỏ hàng"
                     listCart = await Cart.find({ _id: { $in: data.listIdCart } })
-                    if(listCart.length ==0) throw "Hãy chọn ít nhất 1 sản phẩm trong giỏ hàng"
+                    if (listCart.length == 0) throw "Hãy chọn ít nhất 1 sản phẩm trong giỏ hàng"
                 })()
             ])
 
@@ -88,7 +88,7 @@ class ApiController {
             data.import_total = import_total
             const bill = await Bill.create(data)
             if (!bill) throw "Tạo hóa đơn thất bại"
-            res.json({ message: "Đơn hàng của bạn đã tồn tại trên hệ thống" })
+            res.json({ billId: bill._id })
             await Promise.all(variationsUpdate.map(async (item) => {
                 return item.save()
             }))
@@ -96,6 +96,18 @@ class ApiController {
         } catch (error) {
             console.log(error)
             res.json(error)
+        }
+    }
+
+    async updateStatusPayment(req, res) {
+        try {
+            const { billId, status } = req.body
+            const response = await Bill.findByIdAndUpdate(billId, { $set: { payment_status: status } })
+            if (!response) throw "Cập nhật thất bại"
+            res.json({ code: 200, message: "Cập nhật trạng thái thanh toán thành công" })
+        } catch (error) {
+            console.log(error)
+            res.json({ code: 500, message: "Đã xảy ra lỗi" })
         }
     }
 
