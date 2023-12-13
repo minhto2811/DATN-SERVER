@@ -11,10 +11,11 @@ const Bill = new Schema({
     }],
     transport_fee: { type: Number, require: true, default: 0 },//tiền vận chuyển
     shipping_method: { type: String, require: true },//phương thức vận chuyển
-    payment_method: { type: String, require: true, default:"Thanh toán khi nhận hàng" },//phương thức thanh toán
-    voucher: { type: Number, default:0 },//giá trị voucher
+    payment_method: { type: Number, require: true, default:0 },// 0 "Thanh toán khi nhận hàng",1 momo
+    payment_status: { type: Number, require: true, default: 0 }, // trạng thái thanh toán 0 chưa thanh toán, 1 đã thanh toán
+    voucher: { type: Number, default: 0 },//giá trị voucher
     total_price: { type: Number, require: true },//tổng tiền thu
-    import_total: { type: Number},//tổng tiền chi
+    import_total: { type: Number },//tổng tiền chi
     status: { type: Number, default: 0 },//trạng thái đơn
     note: { type: String },
     time: { type: Date, default: Date.now },
