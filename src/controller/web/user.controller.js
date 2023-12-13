@@ -286,7 +286,7 @@ class Controller {
     if (req.method == "POST") {
       req.session.message = {
         type: "success",
-        message: "Created successfully",
+        message: "Đã tạo thành công",
       };
 
       const body = req.body;
@@ -308,7 +308,7 @@ class Controller {
     res.render("user/editUser", {
       layout: "layouts/main",
       data,
-      title: "Edit User",
+      title: "Người dùng",
     });
   }
 
@@ -319,7 +319,7 @@ class Controller {
 
     req.session.message = {
       type: "success",
-      message: "Deleted successfully",
+      message: "Đã xoá thành công",
     };
 
     await User.findByIdAndDelete(id)

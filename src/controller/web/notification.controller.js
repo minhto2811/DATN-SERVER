@@ -36,7 +36,7 @@ class Controller {
 
         req.session.message = {
           type: "success",
-          message: "Created successfully",
+          message: "Đã tạo thành công",
         };
 
         body.all = true;
@@ -79,7 +79,7 @@ class Controller {
 
     req.session.message = {
       type: "success",
-      message: "Edited successfully",
+      message: "Đã chỉnh sửa thành công",
     };
   
     await Noti.findByIdAndUpdate(_id,{
@@ -96,7 +96,7 @@ class Controller {
 
      req.session.message = {
       type: "success",
-      message: "Deleted successfully",
+      message: "Đã xoá thành công",
     };
 
     await Noti.findByIdAndDelete(id)
