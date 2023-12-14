@@ -29,9 +29,10 @@ class PushNotification {
     async sendPushNotification(obj) {
         try {
             const { access_token } = await this.getAccessToken()
+            console.log(access_token)
             const key = await Token.find({ userId: String(obj.userId) })
             if (key.length == 0) throw "Không tìm thấy device token"
-            key.map((item) => {
+            key.map(async (item) => {
                 try {
                     const message = {
                         message: {
@@ -47,7 +48,7 @@ class PushNotification {
                             }
                         }
                     }
-                    axios.post(
+                    const response = await axios.post(
                         'https://fcm.googleapis.com/v1/projects/shopping-6b085/messages:send',
                         message,
                         {
@@ -56,11 +57,12 @@ class PushNotification {
                             }
                         }
                     )
+                    console.log('Push notification sent successfully:', response.data);
                 } catch (error) {
                     console.log(error)
                 }
             })
-            console.log('Push notification sent successfully:', response.data);
+
         } catch (error) {
             console.error('Failed to send push notification:', error.message);
         }

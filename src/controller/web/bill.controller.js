@@ -135,7 +135,7 @@ class Controller {
       await bill.save();
       res.redirect(`/bill/?status=${bill.status - 1}`);
       const text = bill.status == 1 ? " đang trên đường vận chuyển" : " đã giao thành công"
-      if(bill.status == -1) text = ' đã bị hủy.'
+      if (bill.status == -1) text = ' đã bị hủy.'
       let noti = {
         userId: bill.userId,
         title: "Thông báo mới",
@@ -169,10 +169,15 @@ class Controller {
             });
           }
 
-          const product = await Product.findById(variations.productId);
-          if (product) {
-            product.sold += item.quantity;
-            await product.save();
+          if (bill.status == 2) {
+            const product = await Product.findById(variations.productId);
+            if (product) {
+              product.sold += item.quantity
+              await product.save();
+            }
+          } else if (bill.status == -1) {
+            variations.quantity += item.quantity
+            await variations.save()
           }
         })
       );
