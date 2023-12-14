@@ -79,7 +79,7 @@ class ApiController {
                 }
                 total_price = total_price + data.transport_fee - data.voucher
                 delete data.voucher_id
-                await Voucher.deleteOne({ _id: data.voucher_id })
+                await voucher.updateOne({ $set: { used: true } })
             } else {
                 total_price += data.transport_fee
             }
@@ -137,7 +137,7 @@ class ApiController {
         try {
             const userId = req.body.userId
             const status = req.params.status
-            const bills = await Bill.find({ userId: userId, status: status, delete: false }).sort({time:-1}).lean()
+            const bills = await Bill.find({ userId: userId, status: status, delete: false }).sort({ time: -1 }).lean()
             if (!bills) throw "Không tìm thấy danh sách hóa đơn của bạn"
             res.json(bills)
         } catch (error) {
@@ -149,7 +149,7 @@ class ApiController {
     async getAll(req, res) {
         try {
             const userId = req.body.userId
-            const bills = await Bill.find({ userId: userId, delete: false }).sort({time:-1}).lean()
+            const bills = await Bill.find({ userId: userId, delete: false }).sort({ time: -1 }).lean()
             if (!bills) throw "Không tìm thấy danh sách hóa đơn của bạn"
             res.json(bills)
         } catch (error) {
