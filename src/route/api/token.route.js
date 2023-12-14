@@ -5,6 +5,6 @@ const { checkUser } = require('../../midleware/authentication')
 
 
 router.post('/update', checkUser, controller.update)
-router.delete('/delete', checkUser, controller.delete)
+router.post('/delete', checkUser, controller.delete)
 
 module.exports = router

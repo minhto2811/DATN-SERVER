@@ -20,7 +20,8 @@ class ApiController {
 
     async delete(req, res) {
         try {
-            await Token.findOneAndDelete({ userId: req.body.userId })
+            const { userId, token } = req.body
+            await Token.findOneAndDelete({ userId: userId, token: token })
             res.json({ code: 200, message: "Xóa device token thành công" })
         } catch (error) {
             console.log(error)
