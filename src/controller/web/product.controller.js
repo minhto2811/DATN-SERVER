@@ -361,7 +361,7 @@ class Controller {
   }
 
   async editPostVariations(req, res) {
-    let { price, color, ram, rom, quantity, image, _id, img, productId } = req.body;
+    let { price, import_price, color, ram, rom, quantity, image, _id, img, productId } = req.body;
 
     req.session.message = {
       type: "success",
@@ -378,6 +378,7 @@ class Controller {
    
   
     await Variations.findByIdAndUpdate(_id,{
+      import_price: import_price,
       price: price,
       color : color,
       ram : ram,
