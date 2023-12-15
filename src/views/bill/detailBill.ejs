@@ -46,14 +46,14 @@
                   <img class="col" style="max-width: 150px" src="<%= pro.image %>" alt="">
               </td>
               <td class="text-bottom">
-                <div>Name: <%= pro.product_name %></div>
-                <div>Color: <%= pro.color %></div>
+                <div>Tên: <%= pro.product_name %></div>
+                <div>Màu: <%= pro.color %></div>
                 <% if(pro.ram != undefined){ %>
                 <div>Ram: <%= pro.ram %></div>
-                <div>Rom: <%= pro.rom %></div>
+                <div>Bộ nhớ: <%= pro.rom %></div>
                 <% } %>
-                <div>Quantity: <%= pro.quantity %></div>
-                <div class="text-danger">Price: <%= pro.price.toLocaleString() %> VND</div>
+                <div>Số lượng: <%= pro.quantity %></div>
+                <div class="text-danger">Giá: <%= pro.price.toLocaleString() %> VND</div>
               </td>   
             </tr>   
           </div>         
