@@ -180,12 +180,14 @@ class ApiController {
                 })
             })(),
             (async () => {
-                const refunds = {
-                    userId: bill.userId,
-                    billId: bill._id,
-                    price: bill.total_price - bill.transport_fee
+                if (bill.payment_method == 1 && bill.payment_status == 1) {
+                    const refunds = {
+                        userId: bill.userId,
+                        billId: bill._id,
+                        price: bill.total_price - bill.transport_fee
+                    }
+                    Refunds.create(refunds)
                 }
-                Refunds.create(refunds)
             })()
             ])
 
