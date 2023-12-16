@@ -315,6 +315,7 @@ class ApiController {
                 const filepath = req.file.path
                 const url = await uploadImage(filepath, filename)
                 const rs = await User.findOneAndUpdate({ _id: userId }, { $set: { avatar: url } })
+                if(!rs) throw rs
                 rs.avatar = url
                 res.json({ code: 200, user: rs })
             } else {
@@ -335,6 +336,7 @@ class ApiController {
                 const filepath = req.file.path
                 const url = await uploadImage(filepath, filename)
                 const rs = await User.findOneAndUpdate({ _id: userId }, { $set: { background: url } })
+                if(!rs) throw rs
                 rs.background = url
                 res.json({ code: 200, user: rs })
             } else {
