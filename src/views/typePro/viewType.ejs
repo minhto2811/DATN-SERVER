@@ -1,0 +1,113 @@
+<% if(message) { %>
+    <div
+      class="alert alert-dismissible fade show alert-<%=message.type%>"
+      role="alert"
+      style="margin-top: 20px;"
+    >
+      <button
+        class="btn-close"
+        type="button"
+        data-bs-dismiss="alert"
+        aria-label="Close"
+      ></button>
+      <strong><%= message.message %></strong>
+    </div>
+    <% } %>
+  
+  <div class="d-flex justify-content-between flex-wrap flex-md nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+      <h1 class="h2">Loại sản phẩm</h1>
+      <div class="col-md-3">  
+      </div>
+      <div class="btn-toolbar mb-2 mb-md 0">
+        <div class="btn-group me-2">
+          <a href="/type/insert" class="btn btn-sm btn-outline-secondary">+ Loại sản phẩm mới</a>
+        </div>
+      </div>
+    </div>
+    
+  
+    
+    <div class="table-responsive">
+      <table class="table table-striped table-sm">
+        <thead>
+          <tr>
+            <th scope="col">STT</th>
+            <th scope="col">Hình ảnh</th>
+            <th scope="col">Tên loại</th>
+            <th scope="col">Ngày tạo</th>
+            <th scope="col" class="text-end">Hoạt động</th>
+          </tr>
+        </thead>
+    
+        <tbody>
+          <% data.forEach((type, index) =>{ %>
+            <tr class="align-middle">
+              <td><%= index+1 %></td>
+              <td>
+                <img style="width: 50px;height: 50px;" src="<%= type.image %>" alt="error" />
+              </td>
+              <td><%= type.name %></td>
+              <td><%= type.time.toLocaleString('en') %></td>
+              <td class="text-end">
+    
+                <div class="d-flex flex-row justify-content-end gap-2">
+  
+            
+                  <a href="/type/edit/<%= type._id %>" type="button" class="btn btn-warning btn-small">
+                    <i class="bi bi-pencil"></i>
+                  </a>
+                 
+                 <div>
+                      <button type="button" class="btn btn-danger btn-small" data-bs-toggle="modal"
+                      data-bs-target="#deleteModal" data-bs-id="<%=type._id%>"> <i class="bi bi-trash"></i></button>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+  
+  
+  <form method="post" name="delete-product-form"></form>
+  
+  
+  <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="modalLabel">Loại sản phẩm</h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                  Xác nhận xóa loại sản phẩm này?
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                  <button type="button" class="btn btn-primary" id="btn-delete-product">Tiếp tục</button>
+              </div>
+          </div>
+      </div>
+  </div>
+  
+  
+  
+  <script>
+      document.addEventListener("DOMContentLoaded", function () {
+          var id
+          var deleteForm = document.forms['delete-product-form']
+  
+          const deleteModal = document.getElementById('deleteModal')
+          deleteModal.addEventListener('show.bs.modal', event => {
+              const button = event.relatedTarget;
+              id = button.getAttribute('data-bs-id')
+          })
+  
+          var btn_del = document.getElementById('btn-delete-product')
+          btn_del.onclick = function () {
+              deleteForm.action = 'type/delete/' + id + "?_method=DELETE"
+              deleteForm.submit()
+          }
+      });
+  </script>

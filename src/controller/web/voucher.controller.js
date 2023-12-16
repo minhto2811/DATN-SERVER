@@ -4,8 +4,12 @@ const { uploadImage, deleteImage } = require("../../utils/uploadImage");
 class Controller {
   async list(req, res) {
     try {
-      const data = await Voucher.find({all: true, userId: null});
-      res.render("voucher/viewVoucher", { layout: "layouts/main", data, title: "Voucher" });
+      const data = await Voucher.find({ all: true, userId: null });
+      res.render("voucher/viewVoucher", {
+        layout: "layouts/main",
+        data,
+        title: "Voucher",
+      });
     } catch (error) {
       res.json(error);
     }
@@ -39,7 +43,11 @@ class Controller {
             break;
         }
       }
-      res.render("voucher/detailVoucher", { layout: "layouts/main", data: data, title: "Voucher" });
+      res.render("voucher/detailVoucher", {
+        layout: "layouts/main",
+        data: data,
+        title: "Voucher",
+      });
     } catch (error) {
       res.json(error);
     }
@@ -49,6 +57,15 @@ class Controller {
     if (req.method == "POST") {
       try {
         const body = req.body;
+
+        if (body.discount_type == 1 && body.discount_value > 100) {
+          req.session.message = {
+            type: "danger",
+            message: "Tạo voucher thất bại: % không được lớn hơn 100",
+          };
+
+          return res.redirect("/voucher");
+        }
 
         req.session.message = {
           type: "success",
@@ -60,11 +77,18 @@ class Controller {
         await Voucher.create(body);
         return res.redirect("/voucher");
       } catch (error) {
-        console.log(error);
+        req.session.message = {
+          type: "danger",
+          message: "Tạo voucher thất bại",
+        };
+
+        return res.redirect("/voucher");
       }
-     
     }
-    res.render("voucher/addVoucher", { layout: "layouts/main", title: "Voucher" });
+    res.render("voucher/addVoucher", {
+      layout: "layouts/main",
+      title: "Voucher",
+    });
   }
 
   async edit(req, res) {
@@ -73,14 +97,23 @@ class Controller {
     res.render("voucher/editVoucher", {
       layout: "layouts/main",
       data,
-      title: "Voucher"
+      title: "Voucher",
     });
   }
 
   async editPost(req, res) {
-    let { code, type, discount_type, discount_value, description, expiration_date, expiration_date2, _id} = req.body;
+    let {
+      code,
+      type,
+      discount_type,
+      discount_value,
+      description,
+      expiration_date,
+      expiration_date2,
+      _id,
+    } = req.body;
 
-    if(expiration_date2 != ''){
+    if (expiration_date2 != "") {
       expiration_date = expiration_date2;
     }
 
@@ -88,24 +121,23 @@ class Controller {
       type: "success",
       message: "Đã chỉnh sửa thành công",
     };
-  
-    
-    await Voucher.findByIdAndUpdate(_id,{
+
+    await Voucher.findByIdAndUpdate(_id, {
       code: code,
       type: type,
       discount_type: discount_type,
       discount_value: discount_value,
       expiration_date: expiration_date,
-      description : description,
+      description: description,
     });
-  
-    res.redirect('/voucher');
+
+    res.redirect("/voucher");
   }
 
   async delete(req, res) {
-     const id = req.params.id;
+    const id = req.params.id;
 
-     req.session.message = {
+    req.session.message = {
       type: "success",
       message: "Đã xoá thành công",
     };
@@ -116,7 +148,7 @@ class Controller {
           throw "Voucher not found!";
         }
 
-        res.redirect('/voucher');
+        res.redirect("/voucher");
       })
       .catch((err) => {
         console.log(err);

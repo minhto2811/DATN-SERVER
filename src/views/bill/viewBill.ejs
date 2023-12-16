@@ -10,14 +10,18 @@
   <li style="background-color: rgb(223, 221, 221)" class="list-group-item">
     <a style="text-decoration: none; padding: 10px 20px" href="/bill/?status=0"
       >Chưa được xác nhận
-      <span class="badge bg-danger rounded-pill"><%= amount.length %></span></a
-    >
+      <% if(amount.length != 0){ %>
+        <span class="badge bg-danger rounded-pill"><%= amount.length %></span> 
+      <%} %>
+    </a>
   </li>
   <li class="list-group-item">
     <a style="text-decoration: none; padding: 10px 20px" href="/bill/?status=1"
       >Đang giao hàng
-      <span class="badge bg-danger rounded-pill"><%= amount2.length %></span></a
-    >
+      <% if(amount2.length != 0){ %>
+      <span class="badge bg-danger rounded-pill"><%= amount2.length %></span> 
+      <%} %>
+      </a>
   </li>
   <li class="list-group-item">
     <a style="text-decoration: none; padding: 10px 20px" href="/bill/?status=2"
@@ -26,21 +30,28 @@
   </li>
   <li class="list-group-item">
     <a style="text-decoration: none; padding: 10px 20px" href="/bill/?status=-1"
-      >Đơn hàng đã hủy</a
-    >
+      >Đơn hàng đã hủy 
+      <% if(refunds.length != 0){ %>
+       <span class="badge bg-danger rounded-pill"><%= refunds.length %></span>
+      <%} %>
+      </a>
   </li>
   <%}else if(req.query.status == 1){%>
   <li class="list-group-item">
     <a style="text-decoration: none; padding: 10px 20px" href="/bill/?status=0"
       >Chưa được xác nhận
-      <span class="badge bg-danger rounded-pill"><%= amount.length %></span></a
-    >
+      <% if(amount.length != 0){ %>
+        <span class="badge bg-danger rounded-pill"><%= amount.length %></span> 
+      <%} %>
+    </a>
   </li>
   <li style="background-color: rgb(223, 221, 221)" class="list-group-item">
     <a style="text-decoration: none; padding: 10px 20px" href="/bill/?status=1"
       >Đang giao hàng
-      <span class="badge bg-danger rounded-pill"><%= amount2.length %></span></a
-    >
+      <% if(amount2.length != 0){ %>
+        <span class="badge bg-danger rounded-pill"><%= amount2.length %></span> 
+      <%} %>
+      </a>
   </li>
   <li class="list-group-item">
     <a style="text-decoration: none; padding: 10px 20px" href="/bill/?status=2"
@@ -49,21 +60,28 @@
   </li>
   <li class="list-group-item">
     <a style="text-decoration: none; padding: 10px 20px" href="/bill/?status=-1"
-      >Đơn hàng đã hủy</a
-    >
+      >Đơn hàng đã hủy 
+      <% if(refunds.length != 0){ %>
+        <span class="badge bg-danger rounded-pill"><%= refunds.length %></span>
+      <%} %>
+      </a>
   </li>
   <%}else if(req.query.status == 2){%>
   <li class="list-group-item">
     <a style="text-decoration: none; padding: 10px 20px" href="/bill/?status=0"
       >Chưa được xác nhận
-      <span class="badge bg-danger rounded-pill"><%= amount.length %></span></a
-    >
+      <% if(amount.length != 0){ %>
+        <span class="badge bg-danger rounded-pill"><%= amount.length %></span> 
+      <%} %>
+      </a>
   </li>
   <li class="list-group-item">
     <a style="text-decoration: none; padding: 10px 20px" href="/bill/?status=1"
       >Đang giao hàng
-      <span class="badge bg-danger rounded-pill"><%= amount2.length %></span></a
-    >
+      <% if(amount2.length != 0){ %>
+        <span class="badge bg-danger rounded-pill"><%= amount2.length %></span> 
+      <%} %>
+      </a>
   </li>
   <li style="background-color: rgb(223, 221, 221)" class="list-group-item">
     <a style="text-decoration: none; padding: 10px 20px" href="/bill/?status=2"
@@ -72,21 +90,28 @@
   </li>
   <li class="list-group-item">
     <a style="text-decoration: none; padding: 10px 20px" href="/bill/?status=-1"
-      >Đơn hàng đã hủy</a
-    >
+      >Đơn hàng đã hủy 
+      <% if(refunds.length != 0){ %>
+        <span class="badge bg-danger rounded-pill"><%= refunds.length %></span>
+      <%} %>
+      </a>
   </li>
-  <% }else{ %>
+  <% }else { %>
   <li class="list-group-item">
     <a style="text-decoration: none; padding: 10px 20px" href="/bill/?status=0"
       >Chưa được xác nhận
-      <span class="badge bg-danger rounded-pill"><%= amount.length %></span></a
-    >
+      <% if(amount.length != 0){ %>
+        <span class="badge bg-danger rounded-pill"><%= amount.length %></span> 
+      <%} %>
+      </a>
   </li>
   <li class="list-group-item">
     <a style="text-decoration: none; padding: 10px 20px" href="/bill/?status=1"
       >Đang giao hàng
-      <span class="badge bg-danger rounded-pill"><%= amount2.length %></span></a
-    >
+      <% if(amount2.length != 0){ %>
+        <span class="badge bg-danger rounded-pill"><%= amount2.length %></span> 
+      <%} %>
+    </a>
   </li>
   <li class="list-group-item">
     <a style="text-decoration: none; padding: 10px 20px" href="/bill/?status=2"
@@ -95,8 +120,11 @@
   </li>
   <li style="background-color: rgb(223, 221, 221)" class="list-group-item">
     <a style="text-decoration: none; padding: 10px 20px" href="/bill/?status=-1"
-      >Đơn hàng đã hủy</a
-    >
+      >Đơn hàng đã hủy 
+      <% if(refunds.length != 0){ %>
+        <span class="badge bg-danger rounded-pill"><%= refunds.length %></span>
+      <%} %>
+    </a>
   </li>
   <% }%>
 </ul>
@@ -145,6 +173,17 @@
             </a>
             <% }} %>
 
+            <% if (bill?.status == -1 && bill?.payment_method == 1 && bill?.payment_status == 1 && bill?.refund == 0) { %>
+              <a
+                href="/bill/refund/<%= bill._id %>"
+                class="btn btn-success btn-small"
+                style="border-radius: 5px; padding-right: 12px"
+              >
+                <i class="bi">Xác nhận hoàn tiền</i>
+              </a>
+                <% } %>
+
+            
             <a
               href="/bill/detail/<%= bill._id %>/<%=req.query.status%>"
               type="button"

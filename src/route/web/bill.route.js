@@ -9,6 +9,7 @@ router.use(checkAdmin);
 router.get('/', controller.list);
 router.get('/detail/:id/:status', controller.detail);
 router.get('/confirmBill/:id', controller.confirmBill);
+router.get('/refund/:id', controller.refund);
 router.get('/canceled/:id', controller.canceled);
 
 router.post('/dashboard', controller.dashboardPost);
