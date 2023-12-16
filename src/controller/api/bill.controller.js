@@ -4,7 +4,7 @@ const Bill = require('../../model/bill')
 const Cart = require('../../model/cart')
 const Voucher = require('../../model/voucher')
 const Variations = require('../../model/variations')
-const Address = require('../../model/address')
+const Refunds = require('../../model/refunds')
 const Shipping = require('../../model/shipping')
 class ApiController {
     async createBill(req, res) {
@@ -170,13 +170,25 @@ class ApiController {
             bill.cancel_order = cancel_order
             res.json({ code: 200, message: "Hủy đơn thành công" })
             bill.save()
-            await Promise.all(bill.products.map(async (item) => {
-                const variations = await Variations.findById(item.variations_id)
-                if (variations) {
-                    variations.quantity += item.quantity
-                    return variations.save()
+            await Promise.all([(async () => {
+                bill.products.map(async (item) => {
+                    const variations = await Variations.findById(item.variations_id)
+                    if (variations) {
+                        variations.quantity += item.quantity
+                        return variations.save()
+                    }
+                })
+            })(),
+            (async () => {
+                const refunds = {
+                    userId: bill.userId,
+                    billId: bill._id,
+                    price: bill.total_price - bill.transport_fee
                 }
-            }))
+                Refunds.create(refunds)
+            })()
+            ])
+
         } catch (error) {
             console.log(error)
             res.json({ code: 500, message: "Đã xảy ra lỗi" })

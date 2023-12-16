@@ -17,6 +17,7 @@ const commentApi = require('./api/comment.route')
 const messageApi = require('./api/message.route')
 const tokenApi = require('./api/token.route')
 const addressApi = require('./api/address.route')
+const refundsApi = require('./api/refunds.route')
 //route web
 
 const userWeb = require('./web/user.route')
@@ -52,6 +53,7 @@ function route(app) {
     app.use('/api/message', messageApi)
     app.use('/api/token', tokenApi)
     app.use('/api/address', addressApi)
+    app.use('/api/refunds', refundsApi)
     //web
 
 
