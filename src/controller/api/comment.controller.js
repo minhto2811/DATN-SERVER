@@ -76,8 +76,7 @@ class ApiController {
             if (cm.length > 0) {
                 var num = 0
                 cm.forEach(item => num += item.numStar)
-                num / cm.length
-                Product.findOneAndUpdate(data.productId, { $set: { vote: num } })
+                Product.findByIdAndUpdate(data.productId, { $set: { vote: num / cm.length } })
             }
         } catch (error) {
             console.log(error)
