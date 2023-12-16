@@ -1,11 +1,11 @@
-const Brand = require("../../model/brand");
+const Type = require("../../model/typeProduct");
 const { uploadImage, deleteImage } = require("../../utils/uploadImage");
 
 class Controller {
   async list(req, res) {
     try {
-      const data = await Brand.find();
-      res.render("brand/viewBrand", { layout: "layouts/main", data, title: "Thương hiệu" });
+      const data = await Type.find();
+      res.render("typePro/viewType", { layout: "layouts/main", data, title: "Loại sản phẩm" });
     } catch (error) {
       res.json(error);
     }
@@ -14,7 +14,7 @@ class Controller {
   async detail(req, res) {
     try {
       const data = await Brand.findById({ _id: req.params.id });
-      res.render("brand/detailBrand", { layout: "layouts/main", data: data, title: "Thương hiệu" });
+      res.render("typePro/detailBrand", { layout: "layouts/main", data: data, title: "Loại sản phẩm" });
     } catch (error) {
       res.json(error);
     }
@@ -37,28 +37,28 @@ class Controller {
           message: "Đã tạo thành công",
         };
   
-        await Brand.create(body);
-        return res.redirect("/brand");
+        await Type.create(body);
+        return res.redirect("/type");
       } catch (error) {
         console.log(error);
       }
      
     }
-    res.render("brand/addBrand", { layout: "layouts/main", title: "Thương hiệu" });
+    res.render("typePro/addType", { layout: "layouts/main", title: "Loại sản phẩm" });
   }
 
   async edit(req, res) {
-    const data = await Brand.findById({ _id: req.params.id });
+    const data = await Type.findById({ _id: req.params.id });
 
-    res.render("brand/editBrand", {
+    res.render("typePro/editType", {
       layout: "layouts/main",
       data,
-      title: "Thương hiệu"
+      title: "Loại sản phẩm"
     });
   }
 
   async editPost(req, res) {
-    let { brand, description, image, _id, img } = req.body;
+    let { name,  image, _id, img } = req.body;
 
     if (req.file != null && req.file != undefined) {
       await deleteImage(img);
@@ -73,35 +73,42 @@ class Controller {
       message: "Đã chỉnh sửa thành công",
     };
   
-    await Brand.findByIdAndUpdate(_id,{
-      brand: brand,
-      description : description,
+    await Type.findByIdAndUpdate(_id,{
+      name: name,
       image: image
     });
   
-    res.redirect('/brand');
+    res.redirect('/type');
   }
 
   async delete(req, res) {
      const id = req.params.id;
 
      req.session.message = {
-      type: "success",
-      message: "Đã xoá thành công",
-    };
+        type: "danger",
+        message: "Không được xóa",
+      };
 
-    await Brand.findByIdAndDelete(id)
-      .then((brand) => {
-        if (!brand) {
-          throw "Brand not found!";
-        }
-        deleteImage(brand.image);
-        res.redirect("/brand");
-      })
-      .catch((err) => {
-        console.log(err);
-        res.json(err);
-      });
+        res.redirect("/type");
+
+
+    //  req.session.message = {
+    //   type: "success",
+    //   message: "Đã xoá thành công",
+    // };
+
+    // await Type.findByIdAndDelete(id)
+    //   .then((type) => {
+    //     if (!type) {
+    //       throw "Type not found!";
+    //     }
+    //     deleteImage(type.image);
+    //     res.redirect("/type");
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //     res.json(err);
+    //   });
   }
 }
 

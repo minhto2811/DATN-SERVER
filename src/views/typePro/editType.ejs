@@ -1,0 +1,77 @@
+<div
+  class="d-flex justify-content-between flex-wrap flex-md nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"
+>
+  <h1 class="h2">Loại sản phẩm</h1>
+  <div class="btn-toolbar mb-2 mb-md 0">
+    <div class="btn-group me-2">
+
+    </div>
+  </div>
+</div>
+
+<div class="col py-3">
+  <div class="row">
+    <div class="col">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/type">Loại sản phẩm</a></li>
+          <li class="breadcrumb-item active">Chỉnh sửa loại</li>
+        </ol>
+      </nav>
+    </div>
+    <div class="col text-end fw-lighter">
+    </div>
+  </div>
+</div>
+
+<form action="/type/edit" method="POST"  enctype="multipart/form-data">
+  
+
+  <div class="row form-group mb-4">
+    <div class="col">
+      <label style="margin: 5px;" for="email">Tên loại</label>
+      <input
+        type="text"
+        class="form-control"
+        id="name"
+        name="name"
+        value="<%= data.name %>"
+        placeholder="Tên loại"
+        required
+      />
+    </div>
+    
+  </div>
+ 
+  <div class="row form-group mb-4">
+    <div class="row">
+        <label style="margin: 5px;" for="lastName">Hình ảnh</label>
+        <tr>
+          <td>
+            <img
+              class="col"
+              style="max-width: 150px"
+              src="<%= data.image %>"
+              alt=""
+            />
+          </td>
+        </tr>
+      </div>
+    <div class="col">
+        <input
+          type="file"
+          class="form-control"
+          id="image"
+          name="image"
+          placeholder="Image"
+        />
+      </div>
+  </div>
+
+  <input type="text" id="_id" name="_id" value="<%= data._id %>" hidden>
+  <input type="text" id="img" name="img" value="<%= data.image %>" hidden>
+
+  <div class="form-group mb-4">
+    <button type="submit" class="btn btn-primary">Xác nhận</button>
+  </div>
+</form>

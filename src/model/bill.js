@@ -17,6 +17,7 @@ const Bill = new Schema({
     total_price: { type: Number, require: true },//tổng tiền thu
     import_total: { type: Number },//tổng tiền chi
     status: { type: Number, default: 0 },//trạng thái đơn
+    refund: { type: Number, default: 0 },//trạng thái hoàn tiền
     note: { type: String },
     time: { type: Date, default: Date.now },
     cancel_order: { type: String },//lý do hủy đơn

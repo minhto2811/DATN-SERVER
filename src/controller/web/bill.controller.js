@@ -5,6 +5,8 @@ const Cache = require("../../model/Cache");
 const Variations = require("../../model/variations");
 const Notification = require("../../model/notification");
 const PushNotification = require('../../utils/pushNotification')
+const Refunds = require('../../model/refunds')
+
 
 
 class Controller {
@@ -15,24 +17,20 @@ class Controller {
       const amount = await Bill.find({ status: 0 });
       const amount2 = await Bill.find({ status: 1 });
 
+      const refunds = await Refunds.find({status: 0});
+
       for (let i = 0; i < array.length; i++) {
         const data = await User.findById(array[i].userId);
 
         array[i].username = data.username;
 
-        if (array[i].status != undefined) {
-          switch (array[i].status) {
+        if (array[i].payment_status != undefined) {
+          switch (array[i].payment_status) {
             case 0:
-              array[i].statusText = "Chưa được xác nhận";
+              array[i].statusText = "Chưa thanh toán";
               break;
             case 1:
-              array[i].statusText = "Đang giao hàng";
-              break;
-            case 2:
-              array[i].statusText = "Đã giao hàng";
-              break;
-            case -1:
-              array[i].statusText = "Đơn hàng đã hủy";
+              array[i].statusText = "Đã thanh toán";
               break;
             default:
               break;
@@ -45,6 +43,7 @@ class Controller {
         amount,
         amount2,
         req,
+        refunds,
         title: "Hóa đơn"
       });
     } catch (error) {
@@ -106,16 +105,53 @@ class Controller {
     try {
       const id = req.params.id;
       const bill = await Bill.findById(id);
+      let status;
 
       if (bill.status == 0) {
+        status = bill.status
         bill.status = -1;
         await bill.save();
-        res.redirect("/bill/?status=0");
       } else {
+        status = bill.status
         bill.status = -1;
         await bill.save();
-        res.redirect("/bill/?status=1");
       }
+
+      let noti = {
+        userId: bill.userId,
+        title: "Thông báo mới",
+        body: `Đơn hàng ${bill._id} đã bị hủy.`,
+        image: "https://img.freepik.com/premium-vector/e-tech-logo_110852-50.jpg",
+        route: "OrderDetailScreen",
+        dataId: bill._id
+      }
+      await Notification.create(noti)
+      PushNotification.sendPushNotification(noti);
+
+      res.redirect(`/bill/?status=${status}`);
+
+      await Promise.all([(async () => {
+        bill.products.map(async (item) => {
+            const variations = await Variations.findById(item.variations_id)
+            if (variations) {
+                variations.quantity += item.quantity
+                return await variations.save()
+            }
+        })
+    })(),
+    (async () => {
+      if(bill.payment_method == 1 && bill.payment_status == 1){
+        console.log('chả tiền momo');
+        const refunds = {
+            userId: bill.userId,
+            billId: bill._id,
+            price: bill.total_price - bill.transport_fee
+        }
+        await Refunds.create(refunds)
+      }
+    })()
+    ])
+
     } catch (error) {
       res.json(error);
     }
@@ -129,13 +165,10 @@ class Controller {
         bill.status = 1;
       } else if (bill && bill.status == 1) {
         bill.status = 2;
-      } else {
-        bill.status = -1;
-      }
+      } 
       await bill.save();
       res.redirect(`/bill/?status=${bill.status - 1}`);
       const text = bill.status == 1 ? " đang trên đường vận chuyển" : " đã giao thành công"
-      if (bill.status == -1) text = ' đã bị hủy.'
       let noti = {
         userId: bill.userId,
         title: "Thông báo mới",
@@ -169,21 +202,41 @@ class Controller {
             });
           }
 
-          if (bill.status == 2) {
-            const product = await Product.findById(variations.productId);
-            if (product) {
-              product.sold += item.quantity
-              await product.save();
-            }
-          } else if (bill.status == -1) {
-            variations.quantity += item.quantity
-            await variations.save()
+          const product = await Product.findById(variations.productId);
+          if (product) {
+            product.sold += item.quantity
+            await product.save();
           }
         })
       );
     } catch (error) {
       console.log(error);
       res.json(error);
+    }
+  }
+
+  async refund(req, res) {
+    try {
+
+      const refund = await Refunds.findOne({
+        billId:  req.params.id,
+      });
+      const bill = await Bill.findById(req.params.id);
+
+      bill.refund = 1;
+      await bill.save();
+
+
+      if (refund && refund.status == 0) {
+        refund.status = 1;
+        await refund.save();
+      } 
+
+      res.redirect('/bill/?status=-1')
+
+  
+    } catch (error) {
+      res.json(error)
     }
   }
 

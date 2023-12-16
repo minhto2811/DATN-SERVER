@@ -27,6 +27,8 @@ const brandWeb = require('./web/brand.route')
 const bannerWeb = require('./web/banner.route')
 const voucherWeb = require('./web/voucher.router')
 const notificationWeb = require('./web/notification.router')
+const typedWeb = require('./web/type.route')
+
 
 
 const { checkAdmin } = require('../midleware/authentication')
@@ -70,6 +72,7 @@ function route(app) {
     app.use('/banner', bannerWeb)
     app.use('/voucher', voucherWeb)
     app.use('/notification', notificationWeb)
+    app.use('/type', typedWeb)
 
 }
 
