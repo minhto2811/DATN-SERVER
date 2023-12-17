@@ -23,7 +23,7 @@
   </div>
 </div>
 
-<form action="/product/add" method="POST">
+<form action="/product/add" method="POST" enctype="multipart/form-data">
 
   <div class="row form-group mb-4">
 
@@ -64,6 +64,12 @@
         required>
     </div>
 
+  </div>
+  <div class="row form-group mb-4">
+    <div class="col">
+      <label for="product_name">Hình ảnh:</label>
+      <input type="file" class="form-control" name="image" id="image" onchange="showPreviewImage(event)" required>
+    </div>
   </div>
 
 

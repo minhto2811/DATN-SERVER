@@ -63,14 +63,21 @@ class Controller {
     }
   }
 
-  newProduct(req, res) {
+  async newProduct(req, res) {
     const body = req.body
+
+    if (req.file != null && req.file != undefined) {
+      const filename = req.file.filename;
+      const filepath = req.file.path;
+      const url = await uploadImage(filepath, filename);
+      body.image_preview = url;
+    }
 
     req.session.message = {
       type: "success",
       message: "Đã tạo thành công",
     };
-    Product.create(body)
+    await Product.create(body)
       .then((rs) => {
         res.redirect('/product')
       })
@@ -116,6 +123,13 @@ class Controller {
       type: "success",
       message: "Đã chỉnh sửa thành công",
     };
+
+    if (req.file != null && req.file != undefined) {
+      const filename = req.file.filename;
+      const filepath = req.file.path;
+      const url = await uploadImage(filepath, filename);
+      body.image_preview = url;
+    }
 
     try {
       const update = await Product.findOneAndUpdate({ _id: id }, { $set: body })

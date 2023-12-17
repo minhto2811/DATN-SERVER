@@ -6,11 +6,11 @@ const { checkAdmin } = require('../../midleware/authentication')
 
 router.use(checkAdmin);
 
-router.post('/add', controller.newProduct)
+router.post('/add', upload.single('image'), controller.newProduct)
 router.get('/', controller.pageHome)
 router.get('/new', controller.pageNewProduct)
 router.get('/update/:id', controller.detailProduct)
-router.put('/update/:id', controller.updateProduct)
+router.put('/update/:id', upload.single('image'), controller.updateProduct)
 router.delete('/delete/:id', controller.deleteProduct)
 
 router.get('/:id/variations', controller.pageVariations)
