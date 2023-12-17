@@ -257,7 +257,7 @@ class Controller {
 
   async list(req, res) {
     try {
-      const array = await User.find({ role: false });
+      const array = await User.find({ role: false,  delete: false });
       console.log(array.length);
       res.render("user/viewUser", {
         layout: "layouts/main",
@@ -322,18 +322,18 @@ class Controller {
       message: "Đã xoá thành công",
     };
 
-    await User.findByIdAndDelete(id)
-      .then((user) => {
-        if (!user) {
-          throw "User not found!";
-        }
-        // if(user.avatar != 'https://s.net.vn/za1l') deleteImage(user.avatar);
-        res.redirect("/user");
-      })
-      .catch((err) => {
-        console.log(err);
-        res.json(err);
-      });
+    try {
+      const user = await User.findByIdAndUpdate(id, { $set: { delete: true } })
+      if (!user) {
+        throw "users not found!"
+      }
+      res.redirect('/user')
+    } catch (error) {
+      console.log(error)
+      res.json(error)
+
+    }
+
   }
 
   async logout(req, res) {

@@ -17,6 +17,8 @@ class Controller {
       const amount = await Bill.find({ status: 0 });
       const amount2 = await Bill.find({ status: 1 });
 
+      const amount3 = await Bill.find({ status: -1, payment_method: 1, payment_status: 1, refund: 0 });
+
       const refunds = await Refunds.find({status: 0});
 
       for (let i = 0; i < array.length; i++) {
@@ -36,12 +38,15 @@ class Controller {
               break;
           }
         }
+
+      
       }
       res.render("bill/viewBill", {
         layout: "layouts/main",
         data: array,
         amount,
         amount2,
+        amount3,
         req,
         refunds,
         title: "Hóa đơn"
@@ -60,6 +65,48 @@ class Controller {
 
       const data = await User.findById(bill.userId);
       bill.username = data.username;
+
+      if (bill.payment_status != undefined) {
+        switch (bill.payment_status) {
+          case 0:
+            bill.statusText2 = "Chưa thanh toán";
+            break;
+          case 1:
+            bill.statusText2 = "Đã thanh toán";
+            break;
+          default:
+            break;
+        }
+      }
+
+      if (bill.payment_method != undefined) {
+        switch (bill.payment_method) {
+          case 0:
+            bill.statusText3 = "Thanh toán khi nhận hàng";
+            break;
+          case 1:
+            bill.statusText3 = "Thanh toán online bằng momo";
+            break;
+          default:
+            break;
+        }
+      }
+
+      if (bill.shipping_method != undefined) {
+        switch (bill.shipping_method) {
+          case 0:
+            bill.statusText4 = "Tiết kiệm";
+            break;
+          case 1:
+            bill.statusText4 = "Nhanh";
+            break;
+          case 2:
+            bill.statusText4 = "Hỏa tốc";
+            break;
+          default:
+            break;
+        }
+      }
 
       if (bill.status != undefined) {
         switch (bill.status) {
@@ -165,6 +212,7 @@ class Controller {
         bill.status = 1;
       } else if (bill && bill.status == 1) {
         bill.status = 2;
+        bill.payment_status = 1
       } 
       await bill.save();
       res.redirect(`/bill/?status=${bill.status - 1}`);
@@ -229,6 +277,7 @@ class Controller {
 
       if (refund && refund.status == 0) {
         refund.status = 1;
+        refund.time = new Date();
         await refund.save();
       } 
 
