@@ -6,7 +6,7 @@ class ApiController {
 
     async getAll(req, res) {
         try {
-            const vouchers = await Voucher.find({ userId: null, expiration_date: { $gte: new Date() } })
+            const vouchers = await Voucher.find({ userId: null, used: false, expiration_date: { $gte: new Date() } })
             res.json(vouchers)
         } catch (error) {
             console.log(error)
@@ -24,10 +24,7 @@ class ApiController {
                 listCode = voucherUser.map((item) => item.code)
             }
             console.log(listCode)
-            const vouchers = await Voucher.find({ code: { $nin: listCode }, used: false, expiration_date: { $gte: new Date() } })
-            if (!vouchers) {
-                throw "Không tìm thấy voucher"
-            }
+            const vouchers = await Voucher.find({ code: { $nin: listCode }, userId: null, used: false, expiration_date: { $gte: new Date() } })
             res.json(vouchers)
         } catch (error) {
             console.log(error)

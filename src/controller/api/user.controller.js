@@ -184,7 +184,7 @@ class ApiController {
             console.log(username, password)
             const otp = await Otp.findOne({ username: username }).sort({ _id: -1 })
             if (!otp || otp.type != 2 || otp.confirm == false) {
-                throw "Yêu cầu xác nhận email"
+                return  res.json({ code: 404, message: "Hết thời gian xác thực" })
             }
             const salt = await bcrypt.genSalt(10)
             const hashPass = await bcrypt.hash(password, salt)
@@ -194,7 +194,7 @@ class ApiController {
             if (update.modifiedCount == 0) {
                 throw "Cập nhật thất bại"
             }
-            res.json({ code: 200, message: "Cập nhật thành công" })
+           res.json({code:200,message:"Cập nhật thành công"})
         } catch (error) {
             console.log(error)
             res.json({ code: 500, message: "Đã xảy ra lỗi" })
