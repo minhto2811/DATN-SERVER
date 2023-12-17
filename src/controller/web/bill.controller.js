@@ -16,10 +16,7 @@ class Controller {
 
       const amount = await Bill.find({ status: 0 });
       const amount2 = await Bill.find({ status: 1 });
-
       const amount3 = await Bill.find({ status: -1, payment_method: 1, payment_status: 1, refund: 0 });
-
-      const refunds = await Refunds.find({status: 0});
 
       for (let i = 0; i < array.length; i++) {
         const data = await User.findById(array[i].userId);
@@ -48,7 +45,6 @@ class Controller {
         amount2,
         amount3,
         req,
-        refunds,
         title: "Hóa đơn"
       });
     } catch (error) {

@@ -66,13 +66,13 @@ class ApiController {
 
                 if (voucher.type == 0) {
                     if (voucher.discount_type == 0) {
-                        data.voucher = data.transport_fee - voucher.discount_value
+                        data.voucher =  voucher.discount_value
                     } else {
                         data.voucher = data.transport_fee * voucher.discount_value / 100
                     }
                 } else {
                     if (voucher.discount_type == 0) {
-                        data.voucher = total_price - voucher.discount_value
+                        data.voucher = voucher.discount_value
                     } else {
                         data.voucher = total_price * voucher.discount_value / 100
                     }
