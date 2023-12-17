@@ -63,16 +63,15 @@ class ApiController {
                 const voucher = await Voucher.findOne({ _id: data.voucher_id, userId: data.userId, used: false, expiration_date: { $gte: new Date() } })
                 if (!voucher) throw "Voucher không hợp lệ"
                 if (voucher.condition > (total_price + data.transport_fee)) throw "Voucher không phù hợp với hóa đơn này"
-
                 if (voucher.type == 0) {
                     if (voucher.discount_type == 0) {
-                        data.voucher =  voucher.discount_value
+                        data.voucher =  data.transport_fee > voucher.discount_value  ? voucher.discount_value  :  voucher.discount_value 
                     } else {
                         data.voucher = data.transport_fee * voucher.discount_value / 100
                     }
                 } else {
                     if (voucher.discount_type == 0) {
-                        data.voucher = voucher.discount_value
+                        data.voucher = total_price > voucher.discount_value  ? voucher.discount_value  :  total_price
                     } else {
                         data.voucher = total_price * voucher.discount_value / 100
                     }
