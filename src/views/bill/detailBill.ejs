@@ -28,12 +28,7 @@
   <ul class="list-group" style="margin-bottom: 50px;">
   
   
-    <li class="list-group-item"> 
-      <div class="row">
-        <div class="col" style="max-width: 140px"> <b>Người dùng:</b></div>
-        <div class="col"><%= data?.username %></div>
-      </div>
-    </li>
+   
   
   
     <li class="list-group-item"> 
@@ -63,6 +58,34 @@
 
     <li class="list-group-item"> 
       <div class="row">
+        <div class="col" style="max-width: 140px"> <b>Người dùng:</b></div>
+        <div class="col"><%= data?.username %></div>
+      </div>
+    </li>
+
+    <li class="list-group-item"> 
+      <div class="row">
+        <div class="col" style="max-width: 140px"> <b>Họ và tên:</b></div>
+        <div class="col"><%= data?.address.fullname %></div>
+      </div>
+    </li>
+
+    <li class="list-group-item"> 
+      <div class="row">
+        <div class="col" style="max-width: 140px"> <b>SDT:</b></div>
+        <div class="col"><%= data?.address.numberphone %></div>
+      </div>
+    </li>
+
+    <li class="list-group-item"> 
+      <div class="row">
+        <div class="col" style="max-width: 140px"> <b>Địa chỉ:</b></div>
+        <div class="col"><%= data?.address.address %></div>
+      </div>
+    </li>
+
+    <li class="list-group-item"> 
+      <div class="row">
         <div class="col" style="max-width: 140px"> <b>Phí vận chuyển:</b></div>
         <div class="col"><%= data?.transport_fee.toLocaleString() %> VND</div>
       </div>
@@ -84,7 +107,7 @@
 
       <li class="list-group-item"> 
         <div class="row">
-          <div class="col" style="max-width: 140px"> <b>Voucher:</b></div>
+          <div class="col" style="max-width: 140px"> <b>Voucher(VND):</b></div>
           <div class="col"><%= (data?.voucher) ? data?.voucher : "Không sử dụng voucher" %></div>
         </div>
       </li>
