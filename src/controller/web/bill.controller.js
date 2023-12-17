@@ -17,6 +17,8 @@ class Controller {
       const amount = await Bill.find({ status: 0 });
       const amount2 = await Bill.find({ status: 1 });
 
+      const amount3 = await Bill.find({ status: -1, payment_method: 1, payment_status: 1, refund: 0 });
+
       const refunds = await Refunds.find({status: 0});
 
       for (let i = 0; i < array.length; i++) {
@@ -42,6 +44,7 @@ class Controller {
         data: array,
         amount,
         amount2,
+        amount3,
         req,
         refunds,
         title: "Hóa đơn"
@@ -229,6 +232,7 @@ class Controller {
 
       if (refund && refund.status == 0) {
         refund.status = 1;
+        refund.time = new Date();
         await refund.save();
       } 
 
