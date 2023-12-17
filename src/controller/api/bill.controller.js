@@ -65,7 +65,7 @@ class ApiController {
                 if (voucher.condition > (total_price + data.transport_fee)) throw "Voucher không phù hợp với hóa đơn này"
                 if (voucher.type == 0) {
                     if (voucher.discount_type == 0) {
-                        data.voucher =  data.transport_fee > voucher.discount_value  ? voucher.discount_value  :  voucher.discount_value 
+                        data.voucher =  data.transport_fee > voucher.discount_value  ? voucher.discount_value  :  voucher.transport_fee 
                     } else {
                         data.voucher = data.transport_fee * voucher.discount_value / 100
                     }
