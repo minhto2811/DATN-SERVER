@@ -28,12 +28,7 @@
   <ul class="list-group" style="margin-bottom: 50px;">
   
   
-    <li class="list-group-item"> 
-      <div class="row">
-        <div class="col" style="max-width: 140px"> <b>Người dùng:</b></div>
-        <div class="col"><%= data?.username %></div>
-      </div>
-    </li>
+   
   
   
     <li class="list-group-item"> 
@@ -63,36 +58,64 @@
 
     <li class="list-group-item"> 
       <div class="row">
+        <div class="col" style="max-width: 140px"> <b>Người dùng:</b></div>
+        <div class="col"><%= data?.username %></div>
+      </div>
+    </li>
+
+    <li class="list-group-item"> 
+      <div class="row">
+        <div class="col" style="max-width: 140px"> <b>Họ và tên:</b></div>
+        <div class="col"><%= data?.address.fullname %></div>
+      </div>
+    </li>
+
+    <li class="list-group-item"> 
+      <div class="row">
+        <div class="col" style="max-width: 140px"> <b>SDT:</b></div>
+        <div class="col"><%= data?.address.numberphone %></div>
+      </div>
+    </li>
+
+    <li class="list-group-item"> 
+      <div class="row">
+        <div class="col" style="max-width: 140px"> <b>Địa chỉ:</b></div>
+        <div class="col"><%= data?.address.address %></div>
+      </div>
+    </li>
+
+    <li class="list-group-item"> 
+      <div class="row">
         <div class="col" style="max-width: 140px"> <b>Phí vận chuyển:</b></div>
-        <div class="col"><%= data?.transport_fee%></div>
+        <div class="col"><%= data?.transport_fee.toLocaleString() %> VND</div>
       </div>
     </li>
 
     <li class="list-group-item"> 
         <div class="row">
           <div class="col" style="max-width: 140px"> <b>Phương pháp vận chuyển:</b></div>
-          <div class="col"><%= data?.shipping_method%></div>
+          <div class="col"><%= data?.statusText4%></div>
         </div>
       </li>
 
       <li class="list-group-item"> 
         <div class="row">
           <div class="col" style="max-width: 140px"> <b>Phương thức thanh toán:</b></div>
-          <div class="col"><%= data?.payment_method%></div>
+          <div class="col"><%= data?.statusText3 %></div>
         </div>
       </li>
 
       <li class="list-group-item"> 
         <div class="row">
-          <div class="col" style="max-width: 140px"> <b>Voucher:</b></div>
+          <div class="col" style="max-width: 140px"> <b>Voucher(VND):</b></div>
           <div class="col"><%= (data?.voucher) ? data?.voucher : "Không sử dụng voucher" %></div>
         </div>
       </li>
 
       <li class="list-group-item"> 
         <div class="row">
-          <div class="col" style="max-width: 140px"> <b>Trạng thái:</b></div>
-          <div class="col"><%= data?.statusText%></div>
+          <div class="col" style="max-width: 140px"> <b>Đơn hàng:</b></div>
+          <div class="col"><%= data?.statusText %></div>
         </div>
       </li>
 
@@ -107,7 +130,7 @@
       <li class="list-group-item"> 
         <div class="row">
           <div class="col" style="max-width: 140px"> <b>Tổng tiền chi:</b></div>
-          <div class="col"><%= (data?.import_total) ? data?.import_total.toLocaleString() : "No data" %></div>
+          <div class="col"><%= data?.import_total.toLocaleString() %> VND</div>
         </div>
       </li>
 
@@ -121,7 +144,7 @@
       <li class="list-group-item"> 
         <div class="row">
           <div class="col" style="max-width: 140px"> <b>Trạng thái thanh toán:</b></div>
-          <div class="col"><%= data?.payment_status %></div>
+          <div class="col"><%= data?.statusText2 %></div>
         </div>
       </li>
 
