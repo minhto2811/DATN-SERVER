@@ -21,7 +21,7 @@ app.use(require('express-session')({
     store: MongoStore.create({
         mongoUrl: URI_MONGODB,
         collectionName: 'Sessions',
-        
+
     })
 }))
 
@@ -37,7 +37,7 @@ app.use((req, res, next) => {
     res.locals.error = req.flash('error');
     delete req.session.message;
     next();
-  });
+});
 
 
 const { initializeSocket } = require('./src/config/socketManager')
@@ -45,6 +45,14 @@ const { initializeSocket } = require('./src/config/socketManager')
 
 const ejsLayout = require('express-ejs-layouts')
 const methodOverride = require('method-override')
+
+const cors = require('cors')
+const corsOption = {
+    origin: ['http://localhost:3000'],
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE"],
+}
+app.use(cors(corsOption));
 
 
 db.connect()
