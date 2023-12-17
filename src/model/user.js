@@ -13,6 +13,7 @@ const User = new Schema({
     enable: { type: Boolean, default: true },
     rewardPoints: { type: Number, default: 0 },
     default_address: { type: Object },
+    delete: { type: Boolean, default: false },
     time: { type: Date, default: Date.now }
 }, {
     collection: "User"

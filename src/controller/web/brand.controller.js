@@ -4,7 +4,7 @@ const { uploadImage, deleteImage } = require("../../utils/uploadImage");
 class Controller {
   async list(req, res) {
     try {
-      const data = await Brand.find();
+      const data = await Brand.find({delete: false});
       res.render("brand/viewBrand", { layout: "layouts/main", data, title: "Thương hiệu" });
     } catch (error) {
       res.json(error);
@@ -90,18 +90,17 @@ class Controller {
       message: "Đã xoá thành công",
     };
 
-    await Brand.findByIdAndDelete(id)
-      .then((brand) => {
-        if (!brand) {
-          throw "Brand not found!";
-        }
-        deleteImage(brand.image);
-        res.redirect("/brand");
-      })
-      .catch((err) => {
-        console.log(err);
-        res.json(err);
-      });
+    try {
+      const brand = await Brand.findByIdAndUpdate(id, { $set: { delete: true } })
+      if (!brand) {
+        throw "brands not found!"
+      }
+      res.redirect('/brand')
+    } catch (error) {
+      console.log(error)
+      res.json(error)
+
+    }
   }
 }
 
