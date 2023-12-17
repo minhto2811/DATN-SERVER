@@ -7,7 +7,7 @@ const Brand = require('../../model/brand')
 class ApiController {
     async getAll(req, res) {
         try {
-            const type_product = await TypeProduct.find({delete: false})
+            const type_product = await TypeProduct.find({ delete: false })
             if (!type_product)
                 throw "Không tìm thấy loại sản phẩm"
             res.json(type_product)
@@ -22,7 +22,7 @@ class ApiController {
     async getByType(req, res) {
         const product_type_id = req.params.product_type_id
         try {
-            const products = await Product.find({ product_type_id: product_type_id }).sort({ time: -1 }).lean()
+            const products = await Product.find({ product_type_id: product_type_id, delete: false }).sort({ time: -1 }).lean()
             if (!products) {
                 throw "Không tìm thấy sản phẩm"
             }

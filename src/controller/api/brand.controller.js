@@ -5,7 +5,7 @@ const TypeProduct = require('../../model/typeProduct')
 class ApiController {
     async getAll(req, res) {
         try {
-            const brand = await Brand.find({delete: false}).sort({ brand_name: 1 }).lean()
+            const brand = await Brand.find({ delete: false }).sort({ brand_name: 1 }).lean()
             res.json(brand)
         } catch (error) {
             console.log(error)
@@ -29,7 +29,7 @@ class ApiController {
     async getBtBrand(req, res) {
         try {
             const brand_id = req.params.brand_id
-            const products = await Product.find({ brand_id: brand_id }).sort({ time: -1 }).lean()
+            const products = await Product.find({ brand_id: brand_id, delete: false }).sort({ time: -1 }).lean()
             if (products.length == 0) return res.json([])
             await Promise.all(products.map(async (item) => {
                 await Promise.all([
