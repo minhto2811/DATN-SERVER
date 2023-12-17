@@ -105,6 +105,7 @@ class Controller {
     let {
       code,
       type,
+      condition,
       discount_type,
       discount_value,
       description,
@@ -125,6 +126,7 @@ class Controller {
     await Voucher.findByIdAndUpdate(_id, {
       code: code,
       type: type,
+      condition: condition,
       discount_type: discount_type,
       discount_value: discount_value,
       expiration_date: expiration_date,

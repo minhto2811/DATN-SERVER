@@ -122,7 +122,7 @@ class ApiController {
     async login(req, res) {
         const { username, password } = req.body
         try {
-            const user = await User.findOne({ username: username.toLowerCase(), enable: true, role: false }).lean()
+            const user = await User.findOne({ username: username.toLowerCase(), enable: true, role: false, delete: false }).lean()
             if (!user) {
                 throw "Tài khoản hoặc mật khẩu không chính xác"
             }

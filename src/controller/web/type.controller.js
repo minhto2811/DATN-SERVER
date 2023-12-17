@@ -4,7 +4,7 @@ const { uploadImage, deleteImage } = require("../../utils/uploadImage");
 class Controller {
   async list(req, res) {
     try {
-      const data = await Type.find();
+      const data = await Type.find({delete: false});
       res.render("typePro/viewType", { layout: "layouts/main", data, title: "Loại sản phẩm" });
     } catch (error) {
       res.json(error);
@@ -84,31 +84,25 @@ class Controller {
   async delete(req, res) {
      const id = req.params.id;
 
+    
      req.session.message = {
-        type: "danger",
-        message: "Không được xóa",
-      };
+      type: "success",
+      message: "Đã xoá thành công",
+    };
 
-        res.redirect("/type");
+    try {
+      const type = await Type.findByIdAndUpdate(id, { $set: { delete: true } })
+      if (!type) {
+        throw "types not found!"
+      }
+      res.redirect('/type')
+    } catch (error) {
+      console.log(error)
+      res.json(error)
 
+    }
 
-    //  req.session.message = {
-    //   type: "success",
-    //   message: "Đã xoá thành công",
-    // };
-
-    // await Type.findByIdAndDelete(id)
-    //   .then((type) => {
-    //     if (!type) {
-    //       throw "Type not found!";
-    //     }
-    //     deleteImage(type.image);
-    //     res.redirect("/type");
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //     res.json(err);
-    //   });
+   
   }
 }
 

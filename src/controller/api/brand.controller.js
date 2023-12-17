@@ -5,7 +5,7 @@ const TypeProduct = require('../../model/typeProduct')
 class ApiController {
     async getAll(req, res) {
         try {
-            const brand = await Brand.find({}).sort({ brand_name: 1 }).lean()
+            const brand = await Brand.find({delete: false}).sort({ brand_name: 1 }).lean()
             res.json(brand)
         } catch (error) {
             console.log(error)
