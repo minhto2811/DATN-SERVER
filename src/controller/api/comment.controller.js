@@ -73,10 +73,13 @@ class ApiController {
             res.json({ code: 200, message: "Đánh giá thành công" })
             cache.deleteOne()
             const cm = await Comment.find({ productId: data.productId })
+            console.log(cm.length)
             if (cm.length > 0) {
                 var num = 0
                 cm.forEach(item => num += item.numStar)
-                Product.findByIdAndUpdate(data.productId, { $set: { vote: num / cm.length } })
+                console.log(num / cm.length)
+                const c = await Product.findByIdAndUpdate(data.productId, { $set: { vote: num / cm.length } })
+                console.log(c)
             }
         } catch (error) {
             console.log(error)
