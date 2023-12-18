@@ -5,7 +5,7 @@ const PushNotification = require('../../utils/pushNotification');
 class Controller {
   async list(req, res) {
     try {
-      const data = await Noti.find({all: true});
+      const data = await Noti.find({ all: true });
       res.render("notification/viewNoti", { layout: "layouts/main", data, title: "Thông báo" });
     } catch (error) {
       res.json(error);
@@ -41,19 +41,18 @@ class Controller {
 
         body.all = true;
         await Noti.create(body);
-
+        res.redirect("/notification");
         body.route = "ButtonNavigation"
+        console.log(body)
         PushNotification.sendPushNotification(body);
-
-        return res.redirect("/notification");
       } catch (error) {
         console.log(error);
       }
-     
-    }
 
-    res.render("notification/addNoti", { layout: "layouts/main", title: "Thông báo"  });
-  } 
+    }else{
+      res.render("notification/addNoti", { layout: "layouts/main", title: "Thông báo" });
+    }
+  }
 
   async edit(req, res) {
     const data = await Noti.findById({ _id: req.params.id });
@@ -81,20 +80,20 @@ class Controller {
       type: "success",
       message: "Đã chỉnh sửa thành công",
     };
-  
-    await Noti.findByIdAndUpdate(_id,{
+
+    await Noti.findByIdAndUpdate(_id, {
       title: title,
-      body : body,
+      body: body,
       image: image
     });
-  
+
     res.redirect('/notification');
   }
 
   async delete(req, res) {
-     const id = req.params.id;
+    const id = req.params.id;
 
-     req.session.message = {
+    req.session.message = {
       type: "success",
       message: "Đã xoá thành công",
     };

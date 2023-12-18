@@ -30,7 +30,8 @@ class PushNotification {
         try {
             const { access_token } = await this.getAccessToken()
             console.log(access_token)
-            const key = await Token.find({ userId: String(obj.userId) })
+            const filter = obj.userId ? { userId: String(obj.userId) } : {}
+            const key = await Token.find(filter)
             if (key.length == 0) throw "Không tìm thấy device token"
             key.map(async (item) => {
                 try {
