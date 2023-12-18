@@ -36,7 +36,7 @@ class Controller {
           }
         }
 
-      
+
       }
       res.render("bill/viewBill", {
         layout: "layouts/main",
@@ -175,25 +175,25 @@ class Controller {
 
       await Promise.all([(async () => {
         bill.products.map(async (item) => {
-            const variations = await Variations.findById(item.variations_id)
-            if (variations) {
-                variations.quantity += item.quantity
-                return await variations.save()
-            }
+          const variations = await Variations.findById(item.variations_id)
+          if (variations) {
+            variations.quantity += item.quantity
+            return await variations.save()
+          }
         })
-    })(),
-    (async () => {
-      if(bill.payment_method == 1 && bill.payment_status == 1){
-        console.log('chả tiền momo');
-        const refunds = {
+      })(),
+      (async () => {
+        if (bill.payment_method == 1 && bill.payment_status == 1) {
+          console.log('chả tiền momo');
+          const refunds = {
             userId: bill.userId,
             billId: bill._id,
             price: bill.total_price - bill.transport_fee
+          }
+          await Refunds.create(refunds)
         }
-        await Refunds.create(refunds)
-      }
-    })()
-    ])
+      })()
+      ])
 
     } catch (error) {
       res.json(error);
@@ -209,7 +209,7 @@ class Controller {
       } else if (bill && bill.status == 1) {
         bill.status = 2;
         bill.payment_status = 1
-      } 
+      }
       await bill.save();
       res.redirect(`/bill/?status=${bill.status - 1}`);
       const text = bill.status == 1 ? " đang trên đường vận chuyển" : " đã giao thành công"
@@ -224,6 +224,7 @@ class Controller {
       Notification.create(noti)
       PushNotification.sendPushNotification(noti);
       if (bill.status != 2) return;
+      var productSold = []
       await Promise.all(
         bill.products.map(async (item) => {
           const cacheCheck = await Cache.findOne({
@@ -245,14 +246,29 @@ class Controller {
               variationId: item.variations_id,
             });
           }
+          if (productSold.length == 0) {
+            productSold.push({ productId: variations.productId, quantity: item.quantity })
+            return
+          }
 
-          const product = await Product.findById(variations.productId);
-          if (product) {
-            product.sold += item.quantity
-            await product.save();
+          var check = true
+          for (let i = 0; i < productSold.length; i++) {
+            if (productSold[i].productId == variations.productId) {
+              productSold[i].quantity += item.quantity
+              check = false
+              break
+            }
+          }
+
+          if (check) {
+            productSold.push({ productId: variations.productId, quantity: item.quantity })
           }
         })
       );
+
+      await Promise.all(productSold.map(async (item) => {
+        return await Product.updateOne({ _id: item.productId }, { $set: { sold: item.quantity } })
+      }))
     } catch (error) {
       console.log(error);
       res.json(error);
@@ -263,7 +279,7 @@ class Controller {
     try {
 
       const refund = await Refunds.findOne({
-        billId:  req.params.id,
+        billId: req.params.id,
       });
       const bill = await Bill.findById(req.params.id);
 
@@ -275,11 +291,11 @@ class Controller {
         refund.status = 1;
         refund.time = new Date();
         await refund.save();
-      } 
+      }
 
       res.redirect('/bill/?status=-1')
 
-  
+
     } catch (error) {
       res.json(error)
     }
