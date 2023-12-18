@@ -6,8 +6,8 @@ const Schema = mongoose.Schema
 // expirationDate.setDate(currentDate.getDate() + 30);
 
 const Voucher = new Schema({
-    userId: { type: Schema.ObjectId },
-    code: { type: String, require: true, unique: true },
+    userId: { type: String },
+    code: { type: String, require: true },
     all: { type: Boolean, default: false },
     condition: { type: Number, default: 0, require: true },// Điều kiện sử dụng, giá trị hóa đơn bao gồm phí vận chuyển
     type: { type: Number, require: true }, // 0 là giảm tiền ship, 1 giảm giá sản phẩm
@@ -21,7 +21,7 @@ const Voucher = new Schema({
     collection: "Voucher"
 })
 
-Voucher.index( { "expiration_date": 1 }, { expireAfterSeconds: 0 } );
+Voucher.index({ "expiration_date": 1 }, { expireAfterSeconds: 0 });
 
 
 module.exports = mongoose.model('Voucher', Voucher) 

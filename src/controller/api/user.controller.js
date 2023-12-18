@@ -184,7 +184,7 @@ class ApiController {
             console.log(username, password)
             const otp = await Otp.findOne({ username: username }).sort({ _id: -1 })
             if (!otp || otp.type != 2 || otp.confirm == false) {
-                return  res.json({ code: 404, message: "Hết thời gian xác thực" })
+                return res.json({ code: 404, message: "Hết thời gian xác thực" })
             }
             const salt = await bcrypt.genSalt(10)
             const hashPass = await bcrypt.hash(password, salt)
@@ -194,7 +194,7 @@ class ApiController {
             if (update.modifiedCount == 0) {
                 throw "Cập nhật thất bại"
             }
-           res.json({code:200,message:"Cập nhật thành công"})
+            res.json({ code: 200, message: "Cập nhật thành công" })
         } catch (error) {
             console.log(error)
             res.json({ code: 500, message: "Đã xảy ra lỗi" })
@@ -315,8 +315,11 @@ class ApiController {
                 const filepath = req.file.path
                 const url = await uploadImage(filepath, filename)
                 const rs = await User.findOneAndUpdate({ _id: userId }, { $set: { avatar: url } })
-                if(!rs) throw rs
+                if (!rs) throw rs
                 rs.avatar = url
+                if (!rs.background) {
+                    rs.background = "https://s3.cloud.cmctelecom.vn/tinhte2/2019/07/4731556_Cover.jpg"
+                }
                 res.json({ code: 200, user: rs })
             } else {
                 res.json({ code: 500, message: "Cập nhật thất bại" })
@@ -336,8 +339,11 @@ class ApiController {
                 const filepath = req.file.path
                 const url = await uploadImage(filepath, filename)
                 const rs = await User.findOneAndUpdate({ _id: userId }, { $set: { background: url } })
-                if(!rs) throw rs
+                if (!rs) throw rs
                 rs.background = url
+                if (!rs.avatar) {
+                    rs.avatar = "https://firebasestorage.googleapis.com/v0/b/shopping-6b085.appspot.com/o/user%2Fuser.png?alt=media&token=794ad4dc-302b-4708-b102-ccbaf80ea567&_gl=1*e1jpw6*_ga*NDE5OTAxOTY1LjE2OTUwMDQ5MjM.*_ga_CW55HF8NVT*MTY5NzExMzA0MS4yMS4xLjE2OTcxMTMzMjcuNTkuMC4w"
+                }
                 res.json({ code: 200, user: rs })
             } else {
                 res.json({ code: 500, message: "Cập nhật thất bại" })
